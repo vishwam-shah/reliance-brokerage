@@ -11,7 +11,7 @@
     },
     "hero": {
       "eyebrow": "Institutional Grade Brokerage",
-      "title": "Malaysia's Premier<br/>Institutional <em>Brokerage</em>",
+      "title": "Malaysia's Premier Institutional Brokerage",
       "description": "Architectural Stability for High-Value Transitions. We provide the structural integrity required for Malaysia's most significant SME divestments and acquisitions.",
       "cta1": "Request Valuation",
       "cta2": "View Listings"
@@ -50,7 +50,7 @@
     },
     "values": {
       "title": "The Reliance Standard",
-      "description": "We operate on the principle of \"Diam-Diam Berisi\" — quiet but substantial. Our reputation is built on the strength of our data and the discretion of our operations.",
+      "description": "We operate on the principle of Diam-Diam Berisi — quiet but substantial. Our reputation is built on the strength of our data and the discretion of our operations.",
       "klang_valley": "Klang Valley Experts",
       "klang_valley_desc": "Deep local intelligence across Malaysia's key economic hubs with real-time proprietary data.",
       "discretion": "Ironclad Discretion",
@@ -66,71 +66,12 @@
       "contact": "Contact a Lead Broker",
       "browse": "Browse Listings"
     },
-    "listings": {
-      "header_title": "Business Listings",
-      "header_description": "Pre-screened, high-value enterprises available for qualified acquirers. Every listing has undergone rigorous financial and operational vetting.",
-      "search_placeholder": "Search by name or sector…",
-      "all_sectors": "All Sectors",
-      "all_valuations": "All Valuations",
-      "count_listings": "listings",
-      "grid_view": "Grid view",
-      "list_view": "List view",
-      "sectors": {
-        "fnb": "F&B / Restaurant",
-        "manufacturing": "Manufacturing",
-        "technology": "Technology",
-        "retail": "Retail",
-        "logistics": "Logistics",
-        "healthcare": "Healthcare",
-        "services": "Professional Services"
-      },
-      "valuation_ranges": {
-        "under_500k": "Under RM 500K",
-        "500k_2m": "RM 500K – RM 2M",
-        "2m_10m": "RM 2M – RM 10M",
-        "above_10m": "Above RM 10M"
-      }
-    },
-    "auth": {
-      "sign_in_title": "Sign In",
-      "sign_in_description": "Access your Reliance Brokerage account",
+    "common": {
       "email": "Email Address",
       "password": "Password",
-      "remember_me": "Remember me",
-      "forgot_password": "Forgot password?",
       "sign_in_button": "Sign In",
-      "no_account": "Don't have an account?",
-      "register_here": "Register here",
-      "register_title": "Create Account",
-      "register_description": "Join Reliance Brokerage to list your business",
-      "name": "Full Name",
-      "company": "Company Name",
-      "confirm_password": "Confirm Password",
-      "terms_agree": "I agree to the Terms of Service and Privacy Policy",
       "register_button": "Create Account",
-      "have_account": "Already have an account?",
-      "forgot_title": "Reset Password",
-      "forgot_description": "Enter your email to receive reset instructions",
-      "send_reset": "Send Reset Link",
-      "back_to_login": "Back to Sign In"
-    },
-    "footer": {
-      "tagline": "Institutional Grade Brokerage serving the Malaysian SME and corporate landscape with architectural stability and deep-rooted integrity.",
-      "copyright": "© Reliance Brokerage Malaysia. All rights reserved.",
-      "platform": "Platform",
-      "company": "Company",
-      "legal": "Legal",
-      "access": "Access",
-      "business_listings": "Business Listings",
-      "how_it_works": "How It Works",
-      "about_us": "About Us",
-      "our_team": "Our Team",
-      "legal_hub": "Legal Hub",
-      "privacy": "Privacy Policy",
-      "terms": "Terms of Service",
-      "sign_in": "Sign In",
-      "register": "Register",
-      "broker_portal": "Broker Portal"
+      "skip_to_content": "Skip to main content"
     }
   },
   "zh": {
@@ -145,7 +86,7 @@
     },
     "hero": {
       "eyebrow": "机构级经纪业务",
-      "title": "马来西亚首屈一指的<br/>机构级<em>经纪公司</em>",
+      "title": "马来西亚首屈一指的机构级经纪公司",
       "description": "为高价值交易提供结构稳定性。我们为马来西亚最重要的中小企业出售和收购交易提供所需的结构完整性。",
       "cta1": "请求估值",
       "cta2": "查看房源"
@@ -200,71 +141,12 @@
       "contact": "联系主要经纪人",
       "browse": "查看房源"
     },
-    "listings": {
-      "header_title": "业务房源",
-      "header_description": "为合格收购方提供的经过预审的高价值企业。每个房源都经过严格的财务和运营审核。",
-      "search_placeholder": "按名称或行业搜索…",
-      "all_sectors": "所有行业",
-      "all_valuations": "所有估值",
-      "count_listings": "个房源",
-      "grid_view": "网格视图",
-      "list_view": "列表视图",
-      "sectors": {
-        "fnb": "食品饮料 / 餐厅",
-        "manufacturing": "制造业",
-        "technology": "技术",
-        "retail": "零售",
-        "logistics": "物流",
-        "healthcare": "医疗保健",
-        "services": "专业服务"
-      },
-      "valuation_ranges": {
-        "under_500k": "低于 50万令吉",
-        "500k_2m": "50万 - 200万令吉",
-        "2m_10m": "200万 - 1000万令吉",
-        "above_10m": "1000万令吉以上"
-      }
-    },
-    "auth": {
-      "sign_in_title": "登录",
-      "sign_in_description": "访问您的Reliance Brokerage账户",
-      "email": "电子邮件",
+    "common": {
+      "email": "电子邮件地址",
       "password": "密码",
-      "remember_me": "记住我",
-      "forgot_password": "忘记密码？",
       "sign_in_button": "登录",
-      "no_account": "没有账户？",
-      "register_here": "在此注册",
-      "register_title": "创建账户",
-      "register_description": "加入Reliance Brokerage以上市您的业务",
-      "name": "全名",
-      "company": "公司名称",
-      "confirm_password": "确认密码",
-      "terms_agree": "我同意服务条款和隐私政策",
       "register_button": "创建账户",
-      "have_account": "已有账户？",
-      "forgot_title": "重置密码",
-      "forgot_description": "输入您的电子邮件以接收重置说明",
-      "send_reset": "发送重置链接",
-      "back_to_login": "返回登录"
-    },
-    "footer": {
-      "tagline": "机构级经纪业务，为马来西亚中小企业和企业环境服务，具有建筑稳定性和根深蒂固的诚信。",
-      "copyright": "©Reliance Brokerage Malaysia。版权所有。",
-      "platform": "平台",
-      "company": "公司",
-      "legal": "法律",
-      "access": "访问",
-      "business_listings": "业务房源",
-      "how_it_works": "运作流程",
-      "about_us": "关于我们",
-      "our_team": "我们的团队",
-      "legal_hub": "法律中心",
-      "privacy": "隐私政策",
-      "terms": "服务条款",
-      "sign_in": "登录",
-      "register": "注册",
-      "broker_portal": "经纪人门户"
+      "skip_to_content": "跳到主要内容"
     }
   }
 }

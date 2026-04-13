@@ -1,10 +1,11 @@
 /**
  * Language Switcher Module
- * Handles translation across entire site
+ * Handles translation across entire site with comprehensive text matching
  */
 
 let translations = {};
 let currentLang = localStorage.getItem('lang') || 'en';
+let textMap = {}; // Map English text to translation keys
 
 // Load and apply translations
 (async function initLanguageSwitcher() {
@@ -19,6 +20,9 @@ let currentLang = localStorage.getItem('lang') || 'en';
     const res = await fetch(translationPath);
     if (!res.ok) throw new Error(`Failed to load translations: ${res.status}`);
     translations = await res.json();
+
+    // Build text map for reverse lookup
+    buildTextMap();
 
     // Wait for DOM to be ready
     if (document.readyState === 'loading') {
@@ -41,9 +45,26 @@ let currentLang = localStorage.getItem('lang') || 'en';
     });
   } catch (err) {
     console.error('Error loading translations:', err);
-    console.log('Translation path attempted:', translationPath);
   }
 })();
+
+function buildTextMap() {
+  // Create a map of English text to translation keys
+  const enTexts = translations['en'];
+  if (!enTexts) return;
+
+  const walkObj = (obj, prefix = '') => {
+    for (const [key, value] of Object.entries(obj)) {
+      const fullKey = prefix ? `${prefix}.${key}` : key;
+      if (typeof value === 'string') {
+        textMap[value] = fullKey;
+      } else if (typeof value === 'object') {
+        walkObj(value, fullKey);
+      }
+    }
+  };
+  walkObj(enTexts);
+}
 
 function setupLanguageButton() {
   const btn = document.getElementById('lang-toggle-btn');
@@ -70,6 +91,20 @@ function updateLanguageButtonText() {
   if (btn) btn.textContent = currentLang === 'en' ? '中文' : 'English';
 }
 
+function getValue(obj, keyPath) {
+  if (!obj) return null;
+  const keys = keyPath.split('.');
+  let value = obj;
+  for (const k of keys) {
+    if (value && typeof value === 'object') {
+      value = value[k];
+    } else {
+      return null;
+    }
+  }
+  return value;
+}
+
 function applyLanguage(lang) {
   if (!translations[lang]) return;
 
@@ -80,22 +115,12 @@ function applyLanguage(lang) {
   // Update all elements with data-i18n attribute
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.dataset.i18n;
-    const keys = key.split('.');
-    let value = t;
-    
-    for (const k of keys) {
-      if (value && typeof value === 'object') {
-        value = value[k];
-      } else {
-        value = null;
-        break;
-      }
-    }
-    
+    const value = getValue(t, key);
+
     if (value) {
       if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
         el.placeholder = value;
-      } else if (el.innerHTML && value.includes('<br/>')) {
+      } else if (typeof value === 'string' && value.includes('<br/>')) {
         el.innerHTML = value;
       } else {
         el.textContent = value;
@@ -103,67 +128,41 @@ function applyLanguage(lang) {
     }
   });
 
-  // Update navigation
-  document.querySelectorAll('a[href*=".html"]').forEach(link => {
-    const href = link.getAttribute('href');
-    let key = null;
-    
-    if (href === 'listings.html' || href.endsWith('/listings.html')) key = 'nav.listings';
-    else if (href === 'how-it-works.html' || href.endsWith('/how-it-works.html')) key = 'nav.how_it_works';
-    else if (href === 'valuations.html' || href.endsWith('/valuations.html')) key = 'nav.valuations';
-    else if (href === 'about.html' || href.endsWith('/about.html')) key = 'nav.about';
-    else if (href === 'legal-hub.html' || href.endsWith('/legal-hub.html')) key = 'nav.legal';
-    else if (href === 'sign-in.html' || href.endsWith('/sign-in.html')) key = 'nav.sign_in';
-    
+  // Walk through all text nodes and try to translate them
+  walkAndTranslateDOM(document.body, lang);
+}
+
+function walkAndTranslateDOM(node, lang) {
+  if (!node) return;
+
+  const t = translations[lang];
+  if (!t) return;
+
+  // Process text nodes
+  const walker = document.createTreeWalker(
+    node,
+    NodeFilter.SHOW_TEXT,
+    null,
+    false
+  );
+
+  let currentNode;
+  while ((currentNode = walker.nextNode())) {
+    const text = currentNode.textContent.trim();
+    if (!text || text.length < 2) continue;
+
+    // Skip if parent has data-i18n (already handled)
+    if (currentNode.parentElement?.hasAttribute('data-i18n')) continue;
+
+    // Try to find translation
+    const key = textMap[text];
     if (key) {
-      const keys = key.split('.');
-      let value = t;
-      for (const k of keys) {
-        if (value && typeof value === 'object') {
-          value = value[k];
-        }
-      }
-      if (value && !link.closest('footer')) {
-        link.textContent = value;
+      const translatedValue = getValue(t, key);
+      if (translatedValue && typeof translatedValue === 'string') {
+        currentNode.textContent = translatedValue;
       }
     }
-  });
-
-  // Update buttons
-  document.querySelectorAll('.btn').forEach(btn => {
-    const text = btn.textContent.trim();
-    const lookups = {
-      'Sign In': 'auth.sign_in_button',
-      '登录': 'auth.sign_in_button',
-      'List a Business': 'nav.list_business',
-      '上市业务': 'nav.list_business',
-      'Request Valuation': 'hero.cta1',
-      '请求估值': 'hero.cta1',
-      'View Listings': 'hero.cta2',
-      '查看房源': 'hero.cta2',
-      'Contact a Lead Broker': 'cta_final.contact',
-      '联系主要经纪人': 'cta_final.contact',
-      'Browse Listings': 'cta_final.browse',
-      'Explore the Full Process': 'process.explore',
-      '探索完整流程': 'process.explore',
-      'Create Account': 'auth.register_button',
-      '创建账户': 'auth.register_button',
-      'Send Reset Link': 'auth.send_reset',
-      '发送重置链接': 'auth.send_reset'
-    };
-
-    const key = lookups[text];
-    if (key) {
-      const keys = key.split('.');
-      let value = t;
-      for (const k of keys) {
-        if (value && typeof value === 'object') {
-          value = value[k];
-        }
-      }
-      if (value) btn.textContent = value;
-    }
-  });
+  }
 }
 
 // Export for use in other scripts
@@ -177,13 +176,6 @@ window.LanguageSwitcher = {
   },
   getTranslations: () => translations,
   translate: (key) => {
-    const keys = key.split('.');
-    let value = translations[currentLang];
-    for (const k of keys) {
-      if (value && typeof value === 'object') {
-        value = value[k];
-      }
-    }
-    return value || key;
+    return getValue(translations[currentLang], key) || key;
   }
 };
