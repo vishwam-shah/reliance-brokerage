@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Sign in to your Reliance Brokerage account to access institutional listings, manage NDAs, and track deal flow." />
+  <title>Sign In | Reliance Brokerage</title>
+  <link rel="stylesheet" href="assets/css/design-system.css" />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries" defer></script>
+</head>
+<body style="min-height:100vh; display:flex; flex-direction:column;">
+
+  <div style="display:grid; grid-template-columns:1fr; min-height:100vh;" class="auth-layout">
+    <style>.auth-layout{} @media(min-width:1024px){.auth-layout{grid-template-columns:1fr 1fr;}}</style>
+
+    <!-- LEFT: Editorial Branding -->
+    <div style="background:var(--primary); display:none; position:relative; overflow:hidden; align-items:center; justify-content:center; padding: var(--space-24);" class="auth-left">
+      <style>.auth-left{} @media(min-width:1024px){.auth-left{display:flex;}}</style>
+
+      <div style="position:absolute; inset:0; opacity:0.15;">
+        <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=900&q=60" alt="Decorative background - institutional office architecture" style="width:100%; height:100%; object-fit:cover;" loading="lazy" />
+      </div>
+
+      <div style="position:relative; z-index:1; max-width:480px; text-align:center;">
+        <a href="index.html" style="display:inline-block; margin-bottom: var(--space-12);">
+          <div style="font-family:var(--font-headline); font-size:var(--headline-lg); font-weight:700; color:var(--on-primary); letter-spacing:-0.02em;">Reliance Brokerage</div>
+        </a>
+        <h1 style="font-family:var(--font-headline); font-size:clamp(2rem, 4vw, 3rem); color:var(--on-primary); font-weight:400; line-height:1.2; margin-bottom: var(--space-8);">
+          Institutional Access.<br/><em style="font-style:italic;">Absolute Privacy.</em>
+        </h1>
+        <p style="font-size:var(--body-lg); color:rgba(254,246,243,1); line-height:1.7; font-weight:300;">
+          Your portal to Malaysia's most exclusive business acquisition network. Complete discretion, institutional-grade security.
+        </p>
+
+        <div style="margin-top: var(--space-16); display:flex; flex-direction:column; gap: var(--space-5);">
+          <div style="display:flex; align-items:center; gap: var(--space-4);">
+            <span class="material-symbols-outlined" style="color:var(--accent); font-size:1.25rem;">verified_user</span>
+            <span style="font-family:var(--font-label); font-size:var(--label-sm); color:rgba(254,246,243,0.75); text-transform:uppercase; letter-spacing:0.12em;">Bank-Grade Encryption</span>
+          </div>
+          <div style="display:flex; align-items:center; gap: var(--space-4);">
+            <span class="material-symbols-outlined" style="color:var(--accent); font-size:1.25rem;">visibility_off</span>
+            <span style="font-family:var(--font-label); font-size:var(--label-sm); color:rgba(254,246,243,0.75); text-transform:uppercase; letter-spacing:0.12em;">Ironclad Confidentiality</span>
+          </div>
+          <div style="display:flex; align-items:center; gap: var(--space-4);">
+            <span class="material-symbols-outlined" style="color:var(--accent); font-size:1.25rem;">shield</span>
+            <span style="font-family:var(--font-label); font-size:var(--label-sm); color:rgba(254,246,243,0.75); text-transform:uppercase; letter-spacing:0.12em;">PDPA &amp; AML Compliant</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Sign In Form -->
+    <div style="display:flex; align-items:center; justify-content:center; padding: var(--space-16) var(--space-8); background:var(--surface);">
+      <div style="width:100%; max-width:440px;">
+
+        <!-- Mobile Logo -->
+        <div style="display:block; margin-bottom: var(--space-10);" class="mobile-logo">
+          <style>.mobile-logo{} @media(min-width:1024px){.mobile-logo{display:none;}}</style>
+          <a href="index.html" class="nav-brand">Reliance Brokerage</a>
+        </div>
+
+        <div style="margin-bottom: var(--space-10);">
+          <span class="eyebrow">Institutional Portal</span>
+          <h2 style="font-family:var(--font-headline); font-size:var(--display-sm); color:var(--on-surface); margin-top: var(--space-5); margin-bottom: var(--space-3); font-weight:700;">Welcome Back</h2>
+          <p style="font-size:var(--body-sm); color:var(--on-surface-variant);">Sign in to your account to continue.</p>
+        </div>
+
+        <form id="sign-in-form" style="display:flex; flex-direction:column; gap: var(--space-6);">
+          <div class="form-group">
+            <label class="form-label" for="email">Email Address</label>
+            <input id="email" type="email" class="form-input" placeholder="you@company.com" autocomplete="email" required />
+          </div>
+
+          <div class="form-group">
+            <div style="display:flex; justify-content:space-between; align-items:baseline;">
+              <label class="form-label" for="password">Password</label>
+              <a href="forgot-password.html" style="font-family:var(--font-label); font-size:var(--label-xs); color:var(--on-surface-variant); text-decoration:underline;">Forgot password?</a>
+            </div>
+            <div style="position:relative;">
+              <input id="password" type="password" class="form-input" placeholder="••••••••" autocomplete="current-password" required />
+              <button type="button" style="position:absolute; right:1rem; top:50%; transform:translateY(-50%); background:none; border:none; cursor:pointer;" aria-label="Toggle password visibility">
+                <span class="material-symbols-outlined" style="font-size:1.1rem; color:var(--outline);">visibility</span>
+              </button>
+            </div>
+          </div>
+
+          <label style="display:flex; align-items:center; gap: var(--space-3); cursor:pointer;">
+            <input type="checkbox" style="width:1rem; height:1rem; accent-color:var(--primary);" />
+            <span style="font-size:var(--body-sm); color:var(--on-surface-variant);">Keep me signed in for 30 days</span>
+          </label>
+
+          <button type="submit" class="btn btn-primary" style="width:100%; padding: var(--space-5);">
+            Sign In to Portal
+          </button>
+
+          <div style="display:flex; align-items:center; gap: var(--space-4);">
+            <div style="flex:1; height:1px; background:rgba(190,176,159,0.3);"></div>
+            <span style="font-family:var(--font-label); font-size:var(--label-xs); color:var(--on-surface-variant); text-transform:uppercase; letter-spacing:0.15em; white-space:nowrap;">or</span>
+            <div style="flex:1; height:1px; background:rgba(190,176,159,0.3);"></div>
+          </div>
+
+          <a href="register.html" class="btn btn-secondary" style="width:100%; padding: var(--space-5); text-align:center; display:flex; justify-content:center;">
+            Create a New Account
+          </a>
+        </form>
+
+        <p style="margin-top: var(--space-8); font-size:var(--label-xs); color:var(--on-surface-variant); line-height:1.7; text-align:center;">
+          By signing in, you agree to the
+          <a href="legal-hub.html#terms" style="color:var(--on-surface); text-decoration:underline;">Terms of Service</a> and
+          <a href="legal-hub.html#privacy" style="color:var(--on-surface); text-decoration:underline;">Privacy Policy</a>.
+        </p>
+
+      </div>
+    </div>
+
+  </div>
+
+  <script src="assets/js/nav-component.js"></script>
+  <script src="assets/js/lang-switcher.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/event-handlers.js"></script>
+  <script src="assets/js/form-validator.js"></script>
+  <script src="assets/js/footer-component.js"></script>
+  <script src="assets/js/utils.js"></script>
+</body>
+</html>

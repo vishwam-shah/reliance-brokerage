@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Reliance Brokerage — Malaysia's premier institutional brokerage for high-value business transitions, expert SME valuations, and confidential acquisitions." />
+  <meta property="og:title" content="Reliance Brokerage | Institutional Grade Business Brokerage Malaysia" />
+  <meta property="og:description" content="Architectural stability for high-value business transitions. Serving Malaysia's most significant SME divestments and acquisitions since 2010." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&q=80" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Reliance Brokerage | Institutional Grade Business Brokerage Malaysia" />
+  <meta name="twitter:description" content="Architectural stability for high-value business transitions. Serving Malaysia's most significant SME divestments and acquisitions since 2010." />
+  <meta name="twitter:image" content="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&q=80" />
+  <title>Reliance Brokerage | Institutional Grade Business Brokerage Malaysia</title>
+
+  <!-- Performance optimization -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://images.unsplash.com">
+  <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Manrope:wght@300;400;500;600;700;800&display=swap" as="style">
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" as="style">
+
+  <link rel="stylesheet" href="assets/css/design-system.css" />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries" defer></script>
+  <style>
+    /* Tailwind token overrides to match design system */
+    :root { --tw-font-sans: 'Manrope', sans-serif; }
+    .hero-grid { display: grid; grid-template-columns: 1fr; gap: 4rem; align-items: center; }
+    @media (min-width: 1024px) { .hero-grid { grid-template-columns: 7fr 5fr; } }
+    .process-grid { display: grid; grid-template-columns: 1fr; }
+    @media (min-width: 768px) { .process-grid { grid-template-columns: repeat(5, 1fr); } }
+    .kpi-grid { display: grid; grid-template-columns: 1fr; gap: 1px; }
+    @media (min-width: 768px) { .kpi-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1280px) { .kpi-grid { grid-template-columns: repeat(4, 1fr); } }
+    .stat-card {
+      background: var(--surface-container-lowest);
+      padding: 2.5rem;
+      position: relative;
+      overflow: hidden;
+      transition: background var(--transition-base);
+      border-bottom: 2px solid rgba(47,44,42,0.12);
+    }
+    .stat-card:hover { background: var(--surface-container-low); }
+  </style>
+</head>
+<body>
+
+  <!-- Skip to main content link for accessibility -->
+  <a href="#main-content" class="skip-to-content">Skip to main content</a>
+
+  <!-- ═══════════════════════════════════════════════════════
+       TOP NAVIGATION
+  ═══════════════════════════════════════════════════════ -->
+  <nav class="nav-public" aria-label="Primary navigation">
+    <div class="nav-inner">
+
+      <a href="index.html" class="nav-brand">Reliance Brokerage</a>
+
+      <ul class="nav-links" role="list">
+        <li><a href="listings.html">Listings</a></li>
+        <li><a href="how-it-works.html">How It Works</a></li>
+        <li><a href="valuations.html">Valuations</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="legal-hub.html">Legal</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <button id="lang-toggle-btn" aria-label="Toggle language" style="background:none; border:none; padding:0.25rem; cursor:pointer; font-family:var(--font-label); font-size:var(--label-xs); font-weight:600; color:var(--on-surface-variant); text-transform:uppercase; letter-spacing:0.15em; transition:color var(--transition-fast);" title="English / 中文">
+          <span id="lang-text">中文</span>
+        </button>
+        <a href="sign-in.html" class="btn btn-ghost btn-sm">Sign In</a>
+        <a href="register.html" class="btn btn-primary btn-sm">List a Business</a>
+        <button id="nav-mobile-btn" aria-expanded="false" aria-label="Open navigation" style="display:none; background:none; border:none; padding:0.25rem; cursor:pointer;">
+          <span class="material-symbols-outlined" style="font-size:1.5rem; color:var(--on-surface);">menu</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Panel -->
+    <div id="nav-mobile-panel" style="display:none; position:absolute; top:100%; left:0; right:0; background:var(--surface); border-bottom:1px solid rgba(190,176,159,0.2); padding:1.5rem 2rem; flex-direction:column; gap:1rem; z-index:var(--z-nav);">
+      <a href="listings.html" style="font-family:var(--font-label); font-size:var(--label-sm); font-weight:600; text-transform:uppercase; letter-spacing:0.15em; color:var(--on-surface-variant); padding:0.5rem 0;">Listings</a>
+      <a href="how-it-works.html" style="font-family:var(--font-label); font-size:var(--label-sm); font-weight:600; text-transform:uppercase; letter-spacing:0.15em; color:var(--on-surface-variant); padding:0.5rem 0;">How It Works</a>
+      <a href="valuations.html" style="font-family:var(--font-label); font-size:var(--label-sm); font-weight:600; text-transform:uppercase; letter-spacing:0.15em; color:var(--on-surface-variant); padding:0.5rem 0;">Valuations</a>
+      <a href="about.html" style="font-family:var(--font-label); font-size:var(--label-sm); font-weight:600; text-transform:uppercase; letter-spacing:0.15em; color:var(--on-surface-variant); padding:0.5rem 0;">About</a>
+      <div style="margin-top:0.5rem; display:flex; gap:0.75rem;">
+        <a href="sign-in.html" class="btn btn-ghost btn-sm">Sign In</a>
+        <a href="register.html" class="btn btn-primary btn-sm">List a Business</a>
+      </div>
+    </div>
+  </nav>
+
+  <main id="main-content" style="padding-top: var(--nav-height);">
+
+    <!-- ═══════════════════════════════════════════════════════
+         HERO SECTION
+    ═══════════════════════════════════════════════════════ -->
+    <section style="background:var(--surface); padding: var(--space-24) var(--space-20) var(--space-20); min-height: 88vh; display:flex; align-items:center;"  >
+      <div class="container">
+        <div class="hero-grid">
+
+          <!-- Left: Copy -->
+          <div data-reveal>
+            <span class="eyebrow">Institutional Grade Brokerage</span>
+            <h1 class="display-hero" style="margin-top: var(--space-8); margin-bottom: var(--space-6); max-width: 680px;">
+              Malaysia's Premier<br/>Institutional <em style="font-style:italic; font-weight:400;">Brokerage</em>
+            </h1>
+            <p class="body-lead" style="max-width: 560px; margin-bottom: var(--space-12);">
+              Architectural Stability for High-Value Transitions. We provide the structural integrity required for Malaysia's most significant SME divestments and acquisitions.
+            </p>
+            <div style="display:flex; gap:var(--space-4); flex-wrap:wrap;">
+              <a href="valuations.html" class="btn btn-primary btn-lg">Request Valuation</a>
+              <a href="listings.html" class="btn btn-secondary btn-lg">View Listings</a>
+            </div>
+          </div>
+
+          <!-- Right: Image + Stat Monolith -->
+          <div style="position:relative;" data-reveal>
+            <div style="aspect-ratio:4/5; background:var(--surface-container); overflow:hidden; max-height:600px;">
+              <picture>
+                <source
+                  srcset="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=400&q=80&fm=webp 400w, https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&q=80&fm=webp 600w, https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80&fm=webp 800w, https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&q=80&fm=webp 1200w"
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  type="image/webp"
+                />
+                <img
+                  src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&q=80&fm=jpg"
+                  srcset="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=400&q=80&fm=jpg 400w, https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&q=80&fm=jpg 600w, https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80&fm=jpg 800w, https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&q=80&fm=jpg 1200w"
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  alt="Institutional architectural interior — Reliance Brokerage"
+                  style="width:100%; height:100%; object-fit:cover; filter:grayscale(80%) contrast(1.1);"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </picture>
+              <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(233,215,195,0.3), transparent);"></div>
+            </div>
+
+            <!-- Stat Monolith Overlay -->
+            <div style="position:absolute; bottom:-2rem; left:-2rem; padding:2.5rem; background:var(--primary); color:var(--on-primary); max-width:280px; box-shadow: var(--shadow-modal);">
+              <p class="label-overline" style="color:rgba(254,246,243,1); margin-bottom:0.5rem;">Market Presence</p>
+              <h3 style="font-family:var(--font-headline); font-size:2.5rem; font-weight:900; color:var(--on-primary); line-height:1; margin-bottom:0.75rem;">RM 4.2B+</h3>
+              <p style="font-size:var(--body-sm); font-weight:300; color:rgba(254,246,243,0.75); line-height:1.6;">Total enterprise value facilitated across West and East Malaysia since 2010.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+         PERFORMANCE KPIs
+    ═══════════════════════════════════════════════════════ -->
+    <section style="background:var(--surface-container);">
+      <div style="max-width:var(--container-max); margin-inline:auto;">
+        <div class="kpi-grid" style="background:rgba(133,121,106,0.15);">
+
+          <div class="stat-card">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom: var(--space-10);">
+              <span class="material-symbols-outlined" style="font-size:3rem; color:var(--on-surface);">corporate_fare</span>
+              <span class="label-overline" style="font-size:0.6rem;">verified_data_2024</span>
+            </div>
+            <div class="animate-count" data-counter="925" style="font-family:var(--font-headline); font-size:5rem; font-weight:900; color:var(--on-surface); line-height:1;">925</div>
+            <h3 style="font-family:var(--font-label); font-size:var(--label-sm); font-weight:700; text-transform:uppercase; letter-spacing:0.2em; color:var(--primary); margin-top:var(--space-3); margin-bottom:var(--space-6);">Verified Active Listings</h3>
+            <p style="color:var(--on-surface-variant); font-size:var(--body-md); line-height:1.7; max-width:360px;">Pre-screened institutional opportunities across manufacturing, logistics, and technology sectors in the Klang Valley.</p>
+          </div>
+
+          <div class="stat-card" style="border-bottom-color:var(--primary);">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom: var(--space-10);">
+              <span class="material-symbols-outlined" style="font-size:3rem; color:var(--on-surface);">handshake</span>
+              <span class="label-overline" style="font-size:0.6rem;">success_rate_verified</span>
+            </div>
+            <div class="animate-count" data-counter="642" style="font-family:var(--font-headline); font-size:5rem; font-weight:900; color:var(--on-surface); line-height:1;">642</div>
+            <h3 style="font-family:var(--font-label); font-size:var(--label-sm); font-weight:700; text-transform:uppercase; letter-spacing:0.2em; color:var(--primary); margin-top:var(--space-3); margin-bottom:var(--space-6);">Successful Business Transitions</h3>
+            <p style="color:var(--on-surface-variant); font-size:var(--body-md); line-height:1.7; max-width:360px;">High-value exits completed with absolute discretion. Our transition framework ensures operational continuity post-sale.</p>
+          </div>
+
+          <div class="stat-card">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom: var(--space-10);">
+              <span class="material-symbols-outlined" style="font-size:3rem; color:var(--on-surface);">account_balance</span>
+              <span class="label-overline" style="font-size:0.6rem;">since_2010</span>
+            </div>
+            <div style="font-family:var(--font-headline); font-size:5rem; font-weight:900; color:var(--on-surface); line-height:1;">14+</div>
+            <h3 style="font-family:var(--font-label); font-size:var(--label-sm); font-weight:700; text-transform:uppercase; letter-spacing:0.2em; color:var(--primary); margin-top:var(--space-3); margin-bottom:var(--space-6);">Years of Excellence</h3>
+            <p style="color:var(--on-surface-variant); font-size:var(--body-md); line-height:1.7; max-width:360px;">A decade and a half of navigating complex market cycles with consistent, institutional-grade results.</p>
+          </div>
+
+          <div class="stat-card" style="border-bottom-color:var(--on-surface);">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom: var(--space-10);">
+              <span class="material-symbols-outlined" style="font-size:3rem; color:var(--on-surface);">workspace_premium</span>
+              <span class="label-overline" style="font-size:0.6rem;">success_rate</span>
+            </div>
+            <div style="font-family:var(--font-headline); font-size:5rem; font-weight:900; color:var(--on-surface); line-height:1;">84%</div>
+            <h3 style="font-family:var(--font-label); font-size:var(--label-sm); font-weight:700; text-transform:uppercase; letter-spacing:0.2em; color:var(--primary); margin-top:var(--space-3); margin-bottom:var(--space-6);">Completion Rate</h3>
+            <p style="color:var(--on-surface-variant); font-size:var(--body-md); line-height:1.7; max-width:360px;">In a market where only 20% of listed businesses sell, our precision methodology keeps clients in the elite majority.</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+         5-STEP PROCESS GUIDE
+    ═══════════════════════════════════════════════════════ -->
+    <section style="background:var(--surface); padding: var(--space-40) 0; overflow:hidden;">
+      <div class="container">
+
+        <div style="margin-bottom: var(--space-32);" data-reveal>
+          <h2 class="display-section" style="max-width:640px; margin-bottom:var(--space-4);">A Simple, Transparent Process</h2>
+          <span class="section-rule"></span>
+          <p class="body-lead" style="max-width:560px;">
+            Our proprietary five-step framework is designed for the Malaysian corporate landscape, ensuring clarity at every milestone.
+          </p>
+        </div>
+
+        <div class="process-grid" style="border:1px solid rgba(133,121,106,0.12);">
+
+          <!-- Step 1 -->
+          <div class="process-step" style="padding:2.5rem; background:var(--surface); border-right:1px solid rgba(133,121,106,0.1); transition:background var(--transition-slow), color var(--transition-slow); cursor:default;" data-original-bg="var(--surface)" data-hover-bg-primary>
+            <span class="material-symbols-outlined" style="font-size:3.5rem; display:block; margin-bottom:5rem; transition:color var(--transition-base);">edit_note</span>
+            <span style="display:block; font-family:var(--font-label); font-size:0.65rem; font-weight:900; text-transform:uppercase; letter-spacing:0.25em; opacity:0.4; margin-bottom:0.5rem;">Phase 01</span>
+            <h4 style="font-family:var(--font-headline); font-size:1.5rem; font-weight:700; margin-bottom:1rem;">List</h4>
+            <p style="font-size:var(--body-sm); line-height:1.7; opacity:0.7;">Initial documentation and anonymous listing setup within our private network.</p>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="process-step" style="padding:2.5rem; background:var(--surface-container-low); border-right:1px solid rgba(133,121,106,0.1); transition:background var(--transition-slow); cursor:default;" data-original-bg="var(--surface-container-low)" data-hover-bg-primary>
+            <span class="material-symbols-outlined" style="font-size:3.5rem; display:block; margin-bottom:5rem;">filter_alt</span>
+            <span style="display:block; font-family:var(--font-label); font-size:0.65rem; font-weight:900; text-transform:uppercase; letter-spacing:0.25em; opacity:0.4; margin-bottom:0.5rem;">Phase 02</span>
+            <h4 style="font-family:var(--font-headline); font-size:1.5rem; font-weight:700; margin-bottom:1rem;">Screen</h4>
+            <p style="font-size:var(--body-sm); line-height:1.7; opacity:0.7;">Rigorous financial vetting of potential acquirers to ensure capital readiness.</p>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="process-step" style="padding:2.5rem; background:var(--surface-container); border-right:1px solid rgba(133,121,106,0.1); transition:background var(--transition-slow); cursor:default;" data-original-bg="var(--surface-container)" data-hover-bg-primary>
+            <span class="material-symbols-outlined" style="font-size:3.5rem; display:block; margin-bottom:5rem;">diversity_3</span>
+            <span style="display:block; font-family:var(--font-label); font-size:0.65rem; font-weight:900; text-transform:uppercase; letter-spacing:0.25em; opacity:0.4; margin-bottom:0.5rem;">Phase 03</span>
+            <h4 style="font-family:var(--font-headline); font-size:1.5rem; font-weight:700; margin-bottom:1rem;">Introduce</h4>
+            <p style="font-size:var(--body-sm); line-height:1.7; opacity:0.7;">Controlled meetings facilitated by our lead partners to establish synergy.</p>
+          </div>
+
+          <!-- Step 4 -->
+          <div class="process-step" style="padding:2.5rem; background:var(--surface-container-high); border-right:1px solid rgba(133,121,106,0.1); transition:background var(--transition-slow); cursor:default;" data-original-bg="var(--surface-container-high)" data-hover-bg-primary>
+            <span class="material-symbols-outlined" style="font-size:3.5rem; display:block; margin-bottom:5rem;">fact_check</span>
+            <span style="display:block; font-family:var(--font-label); font-size:0.65rem; font-weight:900; text-transform:uppercase; letter-spacing:0.25em; opacity:0.4; margin-bottom:0.5rem;">Phase 04</span>
+            <h4 style="font-family:var(--font-headline); font-size:1.5rem; font-weight:700; margin-bottom:1rem;">Due Diligence</h4>
+            <p style="font-size:var(--body-sm); line-height:1.7; opacity:0.7;">Comprehensive audit of assets, liabilities, and intellectual property.</p>
+          </div>
+
+          <!-- Step 5 -->
+          <div class="process-step" style="padding:2.5rem; background:var(--surface-container-highest); transition:background var(--transition-slow); cursor:default;" data-original-bg="var(--surface-container-highest)" data-hover-bg-primary>
+            <span class="material-symbols-outlined" style="font-size:3.5rem; display:block; margin-bottom:5rem;">verified</span>
+            <span style="display:block; font-family:var(--font-label); font-size:0.65rem; font-weight:900; text-transform:uppercase; letter-spacing:0.25em; opacity:0.4; margin-bottom:0.5rem;">Phase 05</span>
+            <h4 style="font-family:var(--font-headline); font-size:1.5rem; font-weight:700; margin-bottom:1rem;">Complete</h4>
+            <p style="font-size:var(--body-sm); line-height:1.7; opacity:0.7;">Legal execution and secure funds transfer through institutional escrow.</p>
+          </div>
+
+        </div>
+
+        <div style="text-align:center; margin-top: var(--space-12);">
+          <a href="how-it-works.html" class="btn btn-secondary">Explore the Full Process</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+         INSTITUTIONAL VALUES — EDITORIAL SECTION
+    ═══════════════════════════════════════════════════════ -->
+    <section style="background:var(--surface); padding: var(--space-40) 0; border-top:1px solid rgba(133,121,106,0.1);">
+      <div class="container">
+        <div style="display:grid; grid-template-columns:1fr; gap: var(--space-24);" class="values-layout">
+          <style>.values-layout { } @media(min-width:768px){.values-layout{grid-template-columns:5fr 7fr;}}</style>
+
+          <!-- Sticky Left -->
+          <div style="position:sticky; top:calc(var(--nav-height) + 2rem); align-self:start;" data-reveal>
+            <h2 class="display-section" style="margin-bottom: var(--space-8);">The Sovereign Standard</h2>
+            <p class="body-lead" style="margin-bottom: var(--space-12);">
+              We operate on the principle of "Diam-Diam Berisi" — quiet but substantial. Our reputation is built on the strength of our data and the discretion of our operations.
+            </p>
+            <ul style="list-style:none; display:flex; flex-direction:column; gap: var(--space-8);">
+              <li style="display:flex; align-items:flex-start; gap: var(--space-5);">
+                <span class="material-symbols-outlined" style="color:var(--primary); font-size:1.75rem; flex-shrink:0; margin-top:2px;">verified_user</span>
+                <div>
+                  <h5 style="font-family:var(--font-label); font-size:var(--label-sm); font-weight:700; text-transform:uppercase; letter-spacing:0.2em; margin-bottom:0.5rem; color:var(--on-surface);">Klang Valley Experts</h5>
+                  <p style="font-size:var(--body-sm); color:var(--on-surface-variant); line-height:1.7;">Deep local intelligence across Malaysia's key economic hubs with real-time proprietary data.</p>
+                </div>
+              </li>
+              <li style="display:flex; align-items:flex-start; gap: var(--space-5);">
+                <span class="material-symbols-outlined" style="color:var(--primary); font-size:1.75rem; flex-shrink:0; margin-top:2px;">shield</span>
+                <div>
+                  <h5 style="font-family:var(--font-label); font-size:var(--label-sm); font-weight:700; text-transform:uppercase; letter-spacing:0.2em; margin-bottom:0.5rem; color:var(--on-surface);">Ironclad Discretion</h5>
+                  <p style="font-size:var(--body-sm); color:var(--on-surface-variant); line-height:1.7;">Your transaction details are guarded with institutional security protocols and legal shielding.</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Right: Image + Value Cards -->
+          <div style="display:flex; flex-direction:column; gap: var(--space-12);" data-reveal>
+            <div style="position:relative; overflow:hidden; aspect-ratio:16/10;">
+              <img
+                src="https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=900&q=80&fm=jpg"
+                srcset="https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=600&q=80&fm=jpg 600w, https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=900&q=80&fm=jpg 900w, https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=1200&q=80&fm=jpg 1200w"
+                sizes="(max-width: 768px) 100vw, (max-width: 1280px) 80vw, 60vw"
+                alt="Reliance Brokerage institutional approach"
+                class="grayscale-hover"
+                style="width:100%; height:100%; object-fit:cover; filter:grayscale(30%); transition:filter 0.7s ease;"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap: var(--space-8);">
+              <div style="padding: var(--space-10); border-left:4px solid var(--primary); background:var(--surface-container-low);">
+                <h4 style="font-family:var(--font-headline); font-size:var(--headline-sm); font-weight:700; color:var(--on-surface); margin-bottom: var(--space-4);">Precision Valuations</h4>
+                <p style="font-size:var(--body-sm); color:var(--on-surface-variant); line-height:1.7;">Our valuation models go beyond EBITDA. We account for local supply chain dominance and Malaysian market volatility to deliver true institutional exit values.</p>
+              </div>
+              <div style="padding: var(--space-10); border-left:4px solid var(--primary); background:var(--surface-container-low);">
+                <h4 style="font-family:var(--font-headline); font-size:var(--headline-sm); font-weight:700; color:var(--on-surface); margin-bottom: var(--space-4);">Strategic Matchmaking</h4>
+                <p style="font-size:var(--body-sm); color:var(--on-surface-variant); line-height:1.7;">We don't just find buyers; we find successors. Our network includes family offices, private equity, and institutional investors seeking regional growth.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+         FINAL CTA
+    ═══════════════════════════════════════════════════════ -->
+    <section style="background:var(--primary); padding: var(--space-40) 0; text-align:center;">
+      <div class="container">
+        <div style="max-width:800px; margin-inline:auto;" data-reveal>
+          <h2 style="font-family:var(--font-headline); font-size:clamp(2.5rem, 6vw, 5rem); font-weight:900; color:var(--on-primary); line-height:1.1; letter-spacing:-0.03em; margin-bottom: var(--space-8);">
+            Secure Your Business Legacy in Malaysia.
+          </h2>
+          <p class="body-lead" style="color:rgba(254,246,243,1); max-width:560px; margin-inline:auto; margin-bottom: var(--space-12);">
+            Initiate a confidential consultation with our lead brokers today. No obligations, absolute privacy.
+          </p>
+          <div style="display:flex; justify-content:center; gap: var(--space-4); flex-wrap:wrap;">
+            <a href="about.html#contact" class="btn btn-lg" style="background:var(--on-primary); color:var(--primary);">Contact a Lead Broker</a>
+            <a href="listings.html" class="btn btn-lg" style="background:transparent; color:var(--on-primary); border:2px solid rgba(254,246,243,0.4);">Browse Listings</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ═══════════════════════════════════════════════════════
+       SITE FOOTER
+  ═══════════════════════════════════════════════════════ -->
+  <footer class="site-footer">
+    <div class="container">
+      <div style="display:grid; grid-template-columns:1fr; gap:var(--space-12); gap-row: var(--space-16);" class="footer-layout">
+        <style>
+          .footer-layout { grid-auto-flow: row; }
+          @media(min-width:768px){
+            .footer-layout{
+              grid-template-columns: 2fr repeat(4, 1fr);
+              grid-auto-flow: column;
+              gap: var(--space-8);
+              gap-row: var(--space-12);
+            }
+          }
+        </style>
+
+        <div>
+          <div class="footer-brand">Reliance Brokerage</div>
+          <p class="footer-tagline">Institutional Grade Brokerage serving the Malaysian SME and corporate landscape with architectural stability and deep-rooted integrity.</p>
+          <div style="display:flex; gap: var(--space-4); margin-top: var(--space-8);">
+            <a href="#" aria-label="LinkedIn" class="social-icon-hover" style="display:flex; align-items:center; justify-content:center; width:40px; height:40px; border-radius:50%; background:var(--primary); color:var(--on-primary); transition:opacity var(--transition-fast);">
+              <span class="material-symbols-outlined" style="font-size:1.25rem;">language</span>
+            </a>
+            <a href="#" aria-label="Email" class="social-icon-hover" style="display:flex; align-items:center; justify-content:center; width:40px; height:40px; border-radius:50%; background:var(--primary); color:var(--on-primary); transition:opacity var(--transition-fast);">
+              <span class="material-symbols-outlined" style="font-size:1.25rem;">mail</span>
+            </a>
+          </div>
+          <p class="footer-copy">© Reliance Brokerage Malaysia. All rights reserved.</p>
+        </div>
+
+        <div>
+          <div class="footer-col-title">Platform</div>
+          <ul class="footer-links">
+            <li><a href="listings.html">Business Listings</a></li>
+            <li><a href="valuations.html">Valuations</a></li>
+            <li><a href="how-it-works.html">How It Works</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="footer-col-title">Company</div>
+          <ul class="footer-links">
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="about.html#team">Our Team</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="footer-col-title">Legal</div>
+          <ul class="footer-links">
+            <li><a href="legal-hub.html">Legal Hub</a></li>
+            <li><a href="legal-hub.html#privacy">Privacy Policy</a></li>
+            <li><a href="legal-hub.html#terms">Terms of Service</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="footer-col-title">Access</div>
+          <ul class="footer-links">
+            <li><a href="sign-in.html">Sign In</a></li>
+            <li><a href="register.html">Register</a></li>
+            <li><a href="portal/dashboard.html">Broker Portal</a></li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/nav-component.js"></script>
+  <script src="assets/js/lang-switcher.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/event-handlers.js"></script>
+  <script src="assets/js/footer-component.js"></script>
+  <script src="assets/js/utils.js"></script>
+  <script>
+    // Mobile nav show/hide
+    const mobileBtn = document.getElementById('nav-mobile-btn');
+    if (window.innerWidth < 768) mobileBtn.style.display = 'block';
+    window.addEventListener('resize', () => {
+      mobileBtn.style.display = window.innerWidth < 768 ? 'block' : 'none';
+    });
+  </script>
+</body>
+</html>

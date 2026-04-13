@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Create your Reliance Brokerage account — register as a buyer or seller to access institutional-grade M&A opportunities in Malaysia." />
+  <title>Create Account | Reliance Brokerage</title>
+  <link rel="stylesheet" href="assets/css/design-system.css" />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries" defer></script>
+</head>
+<body style="min-height:100vh; display:flex; flex-direction:column;">
+
+  <div style="display:grid; grid-template-columns:1fr; min-height:100vh;" class="auth-layout">
+    <style>.auth-layout{} @media(min-width:1024px){.auth-layout{grid-template-columns:1fr 1fr;}}</style>
+
+    <!-- LEFT: Editorial Branding -->
+    <div style="background:var(--primary); display:none; position:relative; overflow:hidden; align-items:center; justify-content:center; padding: var(--space-24);" class="auth-left">
+      <style>.auth-left{} @media(min-width:1024px){.auth-left{display:flex;}}</style>
+      <div style="position:absolute; inset:0; opacity:0.12;">
+        <img src="https://images.unsplash.com/photo-1557804506-669a67965ba0?w=900&q=60" alt="Decorative background - business team collaboration" style="width:100%; height:100%; object-fit:cover;" loading="lazy" />
+      </div>
+      <div style="position:relative; z-index:1; max-width:480px; text-align:center;">
+        <a href="index.html">
+          <div style="font-family:var(--font-headline); font-size:var(--headline-lg); font-weight:700; color:var(--on-primary); letter-spacing:-0.02em; margin-bottom: var(--space-12);">Reliance Brokerage</div>
+        </a>
+        <h1 style="font-family:var(--font-headline); font-size:clamp(2rem, 4vw, 3rem); color:var(--on-primary); font-weight:400; line-height:1.2; margin-bottom: var(--space-8);">
+          Join Malaysia's<br/><em style="font-style:italic;">Most Exclusive</em><br/>M&amp;A Network
+        </h1>
+        <p style="font-size:var(--body-lg); color:rgba(254,246,243,1); line-height:1.7; font-weight:300; margin-bottom: var(--space-16);">Access pre-screened, off-market opportunities. Connect with vetted buyers, sellers, and institutional investors.</p>
+        <div style="text-align:left; display:flex; flex-direction:column; gap: var(--space-5);">
+          <div style="display:flex; align-items:center; gap: var(--space-4);">
+            <span class="material-symbols-outlined" style="color:var(--accent); font-size:1.25rem;">folder_shared</span>
+            <span style="font-size:var(--body-sm); color:rgba(254,246,243,0.75);">Access to full information memorandums</span>
+          </div>
+          <div style="display:flex; align-items:center; gap: var(--space-4);">
+            <span class="material-symbols-outlined" style="color:var(--accent); font-size:1.25rem;">lock</span>
+            <span style="font-size:var(--body-sm); color:rgba(254,246,243,0.75);">Digital NDA signing and vault access</span>
+          </div>
+          <div style="display:flex; align-items:center; gap: var(--space-4);">
+            <span class="material-symbols-outlined" style="color:var(--accent); font-size:1.25rem;">people</span>
+            <span style="font-size:var(--body-sm); color:rgba(254,246,243,0.75);">Direct line to lead brokers</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Registration Form -->
+    <div style="display:flex; align-items:center; justify-content:center; padding: var(--space-16) var(--space-8); background:var(--surface); overflow-y:auto;">
+      <div style="width:100%; max-width:500px;">
+
+        <!-- Mobile Logo -->
+        <a href="index.html" class="nav-brand" style="display:block; margin-bottom: var(--space-10);" class="mobile-logo">
+          <style>.mobile-logo{} @media(min-width:1024px){.mobile-logo{display:none;}}</style>
+          Reliance Brokerage
+        </a>
+
+        <div style="margin-bottom: var(--space-10);">
+          <span class="eyebrow">Get Started</span>
+          <h2 style="font-family:var(--font-headline); font-size:var(--display-sm); color:var(--on-surface); margin-top: var(--space-5); margin-bottom: var(--space-3); font-weight:700;">Create Your Profile</h2>
+          <p style="font-size:var(--body-sm); color:var(--on-surface-variant);">Already have an account? <a href="sign-in.html" style="color:var(--on-surface); font-weight:600; text-decoration:underline;">Sign in</a></p>
+        </div>
+
+        <!-- Role Selection -->
+        <div style="margin-bottom: var(--space-8);">
+          <p class="form-label" style="margin-bottom: var(--space-4);">I am registering as a</p>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap: var(--space-3);">
+            <label style="display:flex; flex-direction:column; align-items:center; gap: var(--space-3); padding: var(--space-6); background:var(--surface-container); cursor:pointer; border:2px solid transparent; transition:border var(--transition-fast);" id="role-buyer" onclick="selectRole('buyer')">
+              <span class="material-symbols-outlined" style="font-size:1.75rem; color:var(--primary);">payments</span>
+              <span style="font-family:var(--font-label); font-size:var(--label-sm); font-weight:700; text-transform:uppercase; letter-spacing:0.12em; color:var(--on-surface);">Business Buyer</span>
+              <span style="font-size:var(--label-xs); color:var(--on-surface-variant); text-align:center;">I want to acquire a business</span>
+              <input type="radio" name="role" value="buyer" style="display:none;" />
+            </label>
+            <label style="display:flex; flex-direction:column; align-items:center; gap: var(--space-3); padding: var(--space-6); background:var(--surface-container); cursor:pointer; border:2px solid transparent; transition:border var(--transition-fast);" id="role-seller" onclick="selectRole('seller')">
+              <span class="material-symbols-outlined" style="font-size:1.75rem; color:var(--primary);">sell</span>
+              <span style="font-family:var(--font-label); font-size:var(--label-sm); font-weight:700; text-transform:uppercase; letter-spacing:0.12em; color:var(--on-surface);">Business Seller</span>
+              <span style="font-size:var(--label-xs); color:var(--on-surface-variant); text-align:center;">I want to sell my business</span>
+              <input type="radio" name="role" value="seller" style="display:none;" />
+            </label>
+          </div>
+        </div>
+
+        <form id="register-form" style="display:flex; flex-direction:column; gap: var(--space-5);">
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap: var(--space-4);">
+            <div class="form-group">
+              <label class="form-label" for="first-name">First Name</label>
+              <input id="first-name" type="text" class="form-input" placeholder="Ahmad" autocomplete="given-name" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="last-name">Last Name</label>
+              <input id="last-name" type="text" class="form-input" placeholder="Razali" autocomplete="family-name" required />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="reg-email">Work Email</label>
+            <input id="reg-email" type="email" class="form-input" placeholder="ahmad@company.com.my" autocomplete="email" required />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="company">Company / Organisation</label>
+            <input id="company" type="text" class="form-input" placeholder="Company Name Sdn Bhd" autocomplete="organization" />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="phone">Phone Number</label>
+            <input id="phone" type="tel" class="form-input" placeholder="+60 12 345 6789" autocomplete="tel" />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="reg-password">Create Password</label>
+            <div style="position:relative;">
+              <input id="reg-password" type="password" class="form-input" placeholder="Min. 8 characters" autocomplete="new-password" required />
+              <button type="button" style="position:absolute; right:1rem; top:50%; transform:translateY(-50%); background:none; border:none; cursor:pointer;" aria-label="Toggle visibility">
+                <span class="material-symbols-outlined" style="font-size:1.1rem; color:var(--outline);">visibility</span>
+              </button>
+            </div>
+          </div>
+
+          <label style="display:flex; align-items:flex-start; gap: var(--space-3); cursor:pointer; margin-top: var(--space-3);">
+            <input type="checkbox" style="width:1rem; height:1rem; accent-color:var(--primary); flex-shrink:0; margin-top:2px;" required />
+            <span style="font-size:var(--body-sm); color:var(--on-surface-variant); line-height:1.6;">
+              I agree to the <a href="legal-hub.html#terms" style="color:var(--on-surface); text-decoration:underline;">Terms of Service</a> and <a href="legal-hub.html#privacy" style="color:var(--on-surface); text-decoration:underline;">Privacy Policy</a>. I consent to Reliance Brokerage contacting me about matched opportunities.
+            </span>
+          </label>
+
+          <button type="submit" class="btn btn-primary" style="width:100%; padding: var(--space-5); margin-top: var(--space-3);">
+            Create Account
+          </button>
+        </form>
+
+        <p style="margin-top: var(--space-8); font-size:var(--label-xs); color:var(--on-surface-variant); text-align:center; line-height:1.7;">
+          All information is held in strict confidence under our <a href="legal-hub.html">Non-Disclosure Agreement</a>.
+        </p>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="assets/js/nav-component.js"></script>
+  <script src="assets/js/lang-switcher.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/form-validator.js"></script>
+  <script src="assets/js/event-handlers.js"></script>
+  <script src="assets/js/footer-component.js"></script>
+  <script src="assets/js/utils.js"></script>
+</body>
+</html>

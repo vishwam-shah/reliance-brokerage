@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Permissions Matrix | Reliance Brokerage Portal</title>
+  <link rel="stylesheet" href="../assets/css/design-system.css" />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries" defer></script>
+  <style>
+    .permissions-select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%233a3125'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+      background-position: right 0.75rem center;
+      background-repeat: no-repeat;
+      background-size: 0.8rem;
+    }
+    .matrix-cell-active {
+      background-color: #fff !important;
+      border: 1px solid var(--on-surface) !important;
+    }
+  </style>
+</head>
+<body style="background:var(--surface);">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" aria-label="Portal navigation">
+    <div class="sidebar-brand">
+      <div class="sidebar-logo">S</div>
+      <div>
+        <div class="sidebar-brand-name">Reliance Brokerage</div>
+        <div style="font-family:var(--font-label); font-size:0.6rem; text-transform:uppercase; letter-spacing:0.2em; color:var(--outline);">Institutional Portal</div>
+      </div>
+    </div>
+    <div style="margin-bottom: var(--space-4);">
+      <p style="font-family:var(--font-label); font-size:var(--label-xs); color:var(--on-surface); font-weight:600; padding:var(--space-3) var(--space-4);">Q4 Performance Dashboard</p>
+      <p style="font-family:var(--font-label); font-size:0.6rem; text-transform:uppercase; letter-spacing:0.2em; color:var(--outline); padding:0 var(--space-4);">Hunter Analytix Sdn Bhd</p>
+    </div>
+    <nav class="sidebar-nav" role="navigation" aria-label="Sidebar navigation">
+      <a href="dashboard.html" class="sidebar-link"><span class="material-symbols-outlined">dashboard</span><span>Dashboard</span></a>
+      <a href="listing-management.html" class="sidebar-link"><span class="material-symbols-outlined">list_alt</span><span>Listings</span></a>
+      <a href="inquiry-management.html" class="sidebar-link"><span class="material-symbols-outlined">person_search</span><span>Inquiries</span></a>
+      <a href="secure-vault.html" class="sidebar-link"><span class="material-symbols-outlined">folder_shared</span><span>Secure Vault</span></a>
+      <a href="listing-analytics.html" class="sidebar-link"><span class="material-symbols-outlined">query_stats</span><span>Analytics</span></a>
+      <a href="permissions.html" class="sidebar-link active" aria-current="page"><span class="material-symbols-outlined">verified_user</span><span>Permissions</span></a>
+    </nav>
+    <div class="sidebar-footer">
+      <button class="btn btn-primary btn-sm" style="width:100%; margin-bottom: var(--space-4); display:flex; align-items:center; justify-content:center; gap: var(--space-2);" onclick="window.location.href='new-listing.html'">
+        <span class="material-symbols-outlined" style="font-size:1rem;">add</span>
+        Create New Listing
+      </button>
+      <a href="dashboard.html" class="sidebar-link"><span class="material-symbols-outlined">settings</span><span>Settings</span></a>
+      <a href="../sign-in.html" class="sidebar-link"><span class="material-symbols-outlined">logout</span><span>Sign Out</span></a>
+    </div>
+  </aside>
+
+  <!-- TOP BAR -->
+  <header class="portal-topbar" role="banner">
+    <div style="display:flex; align-items:center; gap: var(--space-8); flex:1;">
+      <button id="sidebar-toggle" aria-label="Toggle sidebar" style="background:none; border:none; cursor:pointer; padding:0.25rem; display:none;">
+        <span class="material-symbols-outlined" style="color:var(--on-primary);">menu</span>
+      </button>
+      <span style="font-family:var(--font-headline); font-size:var(--title-lg); font-weight:700; color:var(--on-primary); letter-spacing:-0.01em;">Reliance Brokerage</span>
+    </div>
+    <div style="display:flex; align-items:center; gap: var(--space-5);">
+      <button style="background:none; border:none; cursor:pointer; color:rgba(254,246,243,1);" aria-label="Notifications"><span class="material-symbols-outlined">notifications</span></button>
+      <button style="background:none; border:none; cursor:pointer; color:rgba(254,246,243,1);" aria-label="Settings"><span class="material-symbols-outlined">settings</span></button>
+      <div style="width:32px; height:32px; background:rgba(255,255,255,0.2); overflow:hidden; flex-shrink:0;">
+        <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=64&q=80" alt="Arthur Sterling" style="width:100%; height:100%; object-fit:cover;" loading="lazy" />
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="portal-main">
+    <div style="padding: var(--space-8); max-width:1280px; margin-inline:auto;">
+
+      <!-- Page Header -->
+      <div style="display:flex; flex-wrap:wrap; gap: var(--space-12); justify-content:space-between; align-items:flex-end; margin-bottom: var(--space-16);">
+        <div>
+          <div style="display:flex; align-items:center; gap: var(--space-3); margin-bottom: var(--space-8);">
+            <span style="font-family:var(--font-label); font-size:var(--label-xs); font-weight:700; text-transform:uppercase; letter-spacing:0.4em; color:var(--on-surface-variant);">Module 02: Access Control</span>
+            <div style="width:32px; height:1px; background:rgba(190,176,159,0.4);"></div>
+            <span style="font-family:var(--font-label); font-size:var(--label-xs); font-weight:700; text-transform:uppercase; letter-spacing:0.4em; color:var(--on-surface);">Secure Folder Environment</span>
+          </div>
+          <h1 style="font-family:var(--font-headline); font-size:clamp(2.5rem, 6vw, 5rem); font-weight:900; color:var(--on-surface); line-height:0.9; letter-spacing:-0.04em; margin-bottom: var(--space-8);">Permissions<br/>Matrix</h1>
+          <p style="font-size:var(--body-lg); color:var(--on-surface-variant); max-width:480px; line-height:1.7;">Institutional governance for high-stakes transactions. Define multi-tier accessibility roles across the active folder hierarchy.</p>
+        </div>
+        <div style="display:flex; flex-direction:column; align-items:flex-end; gap: var(--space-8);">
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap: var(--space-4);">
+            <div style="display:flex; align-items:center; gap: var(--space-3); padding: var(--space-5) var(--space-6); background:rgba(249,236,223,0.4); border:1px solid rgba(190,176,159,0.25);">
+              <span class="material-symbols-outlined" style="color:var(--on-surface);">verified_user</span>
+              <div>
+                <span style="display:block; font-family:var(--font-label); font-size:var(--label-xs); font-weight:900; text-transform:uppercase; letter-spacing:0.15em;">AES-256</span>
+                <span style="display:block; font-size:0.6rem; font-weight:700; opacity:0.4; text-transform:uppercase; letter-spacing:0.1em;">Active Protocol</span>
+              </div>
+            </div>
+            <div style="display:flex; align-items:center; gap: var(--space-3); padding: var(--space-5) var(--space-6); background:rgba(249,236,223,0.4); border:1px solid rgba(190,176,159,0.25);">
+              <span class="material-symbols-outlined" style="color:var(--on-surface);">branding_watermark</span>
+              <div>
+                <span style="display:block; font-family:var(--font-label); font-size:var(--label-xs); font-weight:900; text-transform:uppercase; letter-spacing:0.15em;">Watermarked</span>
+                <span style="display:block; font-size:0.6rem; font-weight:700; opacity:0.4; text-transform:uppercase; letter-spacing:0.1em;">Global Enforcement</span>
+              </div>
+            </div>
+          </div>
+          <button class="btn btn-primary" style="padding: var(--space-5) var(--space-10); letter-spacing:0.3em; text-transform:uppercase;">Publish Changes</button>
+        </div>
+      </div>
+
+      <!-- Matrix Table -->
+      <div style="background:#fff; border:1px solid rgba(190,176,159,0.25); overflow-x:auto; margin-bottom: var(--space-16);">
+        <table style="width:100%; border-collapse:collapse; min-width:800px;">
+          <thead>
+            <tr style="border-bottom:2px solid var(--on-surface);">
+              <th style="padding: var(--space-10); text-align:left; background:rgba(249,236,223,0.3); min-width:280px;">
+                <span style="font-family:var(--font-label); font-size:var(--label-xs); font-weight:700; text-transform:uppercase; letter-spacing:0.35em; color:var(--on-surface-variant);">Document Directory</span>
+              </th>
+              <th style="padding: var(--space-10); text-align:center; border-left:1px solid rgba(190,176,159,0.2); min-width:180px;">
+                <div style="font-family:var(--font-headline); font-size:var(--title-lg); font-weight:900; color:var(--on-surface);">Lead Buyer</div>
+                <div style="font-family:var(--font-label); font-size:0.6rem; font-weight:700; text-transform:uppercase; letter-spacing:0.2em; color:var(--on-surface-variant); margin-top: var(--space-1);">Institutional Entity</div>
+              </th>
+              <th style="padding: var(--space-10); text-align:center; border-left:1px solid rgba(190,176,159,0.2); min-width:180px;">
+                <div style="font-family:var(--font-headline); font-size:var(--title-lg); font-weight:900; color:var(--on-surface);">Legal Counsel</div>
+                <div style="font-family:var(--font-label); font-size:0.6rem; font-weight:700; text-transform:uppercase; letter-spacing:0.2em; color:var(--on-surface-variant); margin-top: var(--space-1);">Privileged Access</div>
+              </th>
+              <th style="padding: var(--space-10); text-align:center; border-left:1px solid rgba(190,176,159,0.2); min-width:180px;">
+                <div style="font-family:var(--font-headline); font-size:var(--title-lg); font-weight:900; color:var(--on-surface);">Financial Advisor</div>
+                <div style="font-family:var(--font-label); font-size:0.6rem; font-weight:700; text-transform:uppercase; letter-spacing:0.2em; color:var(--on-surface-variant); margin-top: var(--space-1);">Review Only</div>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Row 1 -->
+            <tr style="border-bottom:1px solid rgba(190,176,159,0.15);">
+              <td style="padding: var(--space-10);">
+                <div style="display:flex; align-items:center; gap: var(--space-6);">
+                  <div style="width:56px; height:56px; background:var(--surface-container-high); display:flex; align-items:center; justify-content:center; border:1px solid rgba(190,176,159,0.2); flex-shrink:0;">
+                    <span class="material-symbols-outlined" style="color:var(--on-surface);">folder</span>
+                  </div>
+                  <div>
+                    <div style="font-family:var(--font-headline); font-size:var(--headline-sm); font-weight:900; color:var(--on-surface);">01. Financials</div>
+                    <p style="font-size:0.65rem; color:var(--on-surface-variant); margin-top: var(--space-1); text-transform:uppercase; letter-spacing:0.05em;">Audit history, tax returns, balance sheets</p>
+                  </div>
+                </div>
+              </td>
+              <td style="padding: var(--space-8); border-left:1px solid rgba(190,176,159,0.2);">
+                <select class="permissions-select" style="width:100%; background:rgba(249,236,223,0.3); border:1px solid transparent; padding: var(--space-4) 2rem var(--space-4) var(--space-6); font-family:var(--font-label); font-size:var(--label-xs); font-weight:700; text-transform:uppercase; letter-spacing:0.15em; cursor:pointer; appearance:none; color:var(--on-surface);">
+                  <option>None</option><option selected>View Only</option><option>Download</option>
+                </select>
+              </td>
+              <td style="padding: var(--space-8); border-left:1px solid rgba(190,176,159,0.2);">
+                <select class="permissions-select" style="width:100%; background:rgba(249,236,223,0.3); border:1px solid transparent; padding: var(--space-4) 2rem var(--space-4) var(--space-6); font-family:var(--font-label); font-size:var(--label-xs); font-weight:700; text-transform:uppercase; letter-spacing:0.15em; cursor:pointer; appearance:none; color:var(--on-surface);">
+                  <option>None</option><option>View Only</option><option selected>Download</option>
+                </select>
+              </td>
+              <td style="padding: var(--space-8); border-left:1px solid rgba(190,176,159,0.2); background:rgba(244,230,214,0.4);">
+                <select class="permissions-select matrix-cell-active" style="width:100%; padding: var(--space-4) 2rem var(--space-4) var(--space-6); font-family:var(--font-label); font-size:var(--label-xs); font-weight:900; text-transform:uppercase; letter-spacing:0.15em; cursor:pointer; appearance:none; color:var(--on-surface);">
+                  <option>None</option><option selected>View Only</option><option>Download</option>
+                </select>
+              </td>
+            </tr>
+            <!-- Row 2 -->
+            <tr style="border-bottom:1px solid rgba(190,176,159,0.15);">
+              <td style="padding: var(--space-10);">
+                <div style="display:flex; align-items:center; gap: var(--space-6);">
+                  <div style="width:56px; height:56px; background:var(--surface-container-high); display:flex; align-items:center; justify-content:center; border:1px solid rgba(190,176,159,0.2); flex-shrink:0;">
+                    <span class="material-symbols-outlined" style="color:var(--on-surface);">folder</span>
+                  </div>
+                  <div>
+                    <div style="font-family:var(--font-headline); font-size:var(--headline-sm); font-weight:900; color:var(--on-surface);">02. Legal &amp; Corporate</div>
+                    <p style="font-size:0.65rem; color:var(--on-surface-variant); margin-top: var(--space-1); text-transform:uppercase; letter-spacing:0.05em;">Articles of incorporation, contracts</p>
+                  </div>
+                </div>
+              </td>
+              <td style="padding: var(--space-8); border-left:1px solid rgba(190,176,159,0.2);">
+                <select class="permissions-select" style="width:100%; background:rgba(249,236,223,0.3); border:1px solid transparent; padding: var(--space-4) 2rem var(--space-4) var(--space-6); font-family:var(--font-label); font-size:var(--label-xs); font-weight:700; text-transform:uppercase; letter-spacing:0.15em; cursor:pointer; appearance:none; color:var(--on-surface); opacity:0.35;">
+                  <option selected>None</option><option>View Only</option><option>Download</option>
+                </select>
+              </td>
+              <td style="padding: var(--space-8); border-left:1px solid rgba(190,176,159,0.2); background:rgba(244,230,214,0.4);">
+                <select class="permissions-select matrix-cell-active" style="width:100%; padding: var(--space-4) 2rem var(--space-4) var(--space-6); font-family:var(--font-label); font-size:var(--label-xs); font-weight:900; text-transform:uppercase; letter-spacing:0.15em; cursor:pointer; appearance:none; color:var(--on-surface);">
+                  <option>None</option><option>View Only</option><option selected>Download</option>
+                </select>
+              </td>
+              <td style="padding: var(--space-8); border-left:1px solid rgba(190,176,159,0.2);">
+                <select class="permissions-select" style="width:100%; background:rgba(249,236,223,0.3); border:1px solid transparent; padding: var(--space-4) 2rem var(--space-4) var(--space-6); font-family:var(--font-label); font-size:var(--label-xs); font-weight:700; text-transform:uppercase; letter-spacing:0.15em; cursor:pointer; appearance:none; color:var(--on-surface);">
+                  <option>None</option><option selected>View Only</option><option>Download</option>
+                </select>
+              </td>
+            </tr>
+            <!-- Row 3 -->
+            <tr>
+              <td style="padding: var(--space-10);">
+                <div style="display:flex; align-items:center; gap: var(--space-6);">
+                  <div style="width:56px; height:56px; background:var(--surface-container-high); display:flex; align-items:center; justify-content:center; border:1px solid rgba(190,176,159,0.2); flex-shrink:0;">
+                    <span class="material-symbols-outlined" style="color:var(--on-surface);">folder</span>
+                  </div>
+                  <div>
+                    <div style="font-family:var(--font-headline); font-size:var(--headline-sm); font-weight:900; color:var(--on-surface);">03. Operations</div>
+                    <p style="font-size:0.65rem; color:var(--on-surface-variant); margin-top: var(--space-1); text-transform:uppercase; letter-spacing:0.05em;">Logistics planning, internal procedures</p>
+                  </div>
+                </div>
+              </td>
+              <td style="padding: var(--space-8); border-left:1px solid rgba(190,176,159,0.2);">
+                <select class="permissions-select" style="width:100%; background:rgba(249,236,223,0.3); border:1px solid transparent; padding: var(--space-4) 2rem var(--space-4) var(--space-6); font-family:var(--font-label); font-size:var(--label-xs); font-weight:700; text-transform:uppercase; letter-spacing:0.15em; cursor:pointer; appearance:none; color:var(--on-surface);">
+                  <option>None</option><option selected>View Only</option><option>Download</option>
+                </select>
+              </td>
+              <td style="padding: var(--space-8); border-left:1px solid rgba(190,176,159,0.2);">
+                <select class="permissions-select" style="width:100%; background:rgba(249,236,223,0.3); border:1px solid transparent; padding: var(--space-4) 2rem var(--space-4) var(--space-6); font-family:var(--font-label); font-size:var(--label-xs); font-weight:700; text-transform:uppercase; letter-spacing:0.15em; cursor:pointer; appearance:none; color:var(--on-surface);">
+                  <option>None</option><option selected>View Only</option><option>Download</option>
+                </select>
+              </td>
+              <td style="padding: var(--space-8); border-left:1px solid rgba(190,176,159,0.2);">
+                <select class="permissions-select" style="width:100%; background:rgba(249,236,223,0.3); border:1px solid transparent; padding: var(--space-4) 2rem var(--space-4) var(--space-6); font-family:var(--font-label); font-size:var(--label-xs); font-weight:700; text-transform:uppercase; letter-spacing:0.15em; cursor:pointer; appearance:none; color:var(--on-surface);">
+                  <option>None</option><option selected>View Only</option><option>Download</option>
+                </select>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- System Stats Bar -->
+      <div style="display:grid; grid-template-columns:repeat(3, 1fr); background:var(--primary); color:var(--on-primary);">
+        <div style="padding: var(--space-14); border-right:1px solid rgba(255,255,255,0.05);">
+          <span style="display:block; font-family:var(--font-headline); font-size:clamp(2.5rem, 5vw, 4rem); font-weight:900; margin-bottom: var(--space-4);" data-counter="124">124</span>
+          <span style="font-family:var(--font-label); font-size:var(--label-xs); font-weight:700; text-transform:uppercase; letter-spacing:0.35em; opacity:0.4;">Active Managed Files</span>
+        </div>
+        <div style="padding: var(--space-14); border-right:1px solid rgba(255,255,255,0.05);">
+          <span style="display:block; font-family:var(--font-headline); font-size:clamp(2.5rem, 5vw, 4rem); font-weight:900; margin-bottom: var(--space-4);">04</span>
+          <span style="font-family:var(--font-label); font-size:var(--label-xs); font-weight:700; text-transform:uppercase; letter-spacing:0.35em; opacity:0.4;">Access Privilege Groups</span>
+        </div>
+        <div style="padding: var(--space-14);">
+          <span style="display:block; font-family:var(--font-headline); font-size:clamp(2.5rem, 5vw, 4rem); font-weight:900; margin-bottom: var(--space-4);">99.9<span style="font-size:60%;">%</span></span>
+          <span style="font-family:var(--font-label); font-size:var(--label-xs); font-weight:700; text-transform:uppercase; letter-spacing:0.35em; opacity:0.4;">System Availability</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Portal Footer -->
+    <footer style="background:var(--surface-container-highest); border-top:1px solid rgba(190,176,159,0.15); padding: var(--space-10); margin-top: var(--space-12);">
+      <div style="max-width:1280px; margin-inline:auto; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap: var(--space-6);">
+        <div>
+          <div style="font-family:var(--font-headline); font-size:var(--title-md); font-weight:700; color:var(--on-surface);">Reliance Brokerage</div>
+          <p style="font-family:var(--font-label); font-size:var(--label-xs); text-transform:uppercase; letter-spacing:0.2em; color:var(--on-surface-variant); margin-top: var(--space-2);">© 2024 Institutional Portal</p>
+        </div>
+        <div style="display:flex; gap: var(--space-8);">
+          <a href="../legal-hub.html" style="font-family:var(--font-label); font-size:var(--label-xs); text-transform:uppercase; letter-spacing:0.15em; color:var(--on-surface-variant); text-decoration:none;">Legal</a>
+          <a href="../legal-hub.html#privacy" style="font-family:var(--font-label); font-size:var(--label-xs); text-transform:uppercase; letter-spacing:0.15em; color:var(--on-surface-variant); text-decoration:none;">Privacy</a>
+          <a href="../about.html#contact" style="font-family:var(--font-label); font-size:var(--label-xs); text-transform:uppercase; letter-spacing:0.15em; color:var(--on-surface-variant); text-decoration:none;">Support</a>
+        </div>
+      </div>
+    </footer>
+
+  </main>
+
+  <script src="../assets/js/main.js"></script>
+</body>
+</html>

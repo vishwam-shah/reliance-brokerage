@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Reliance Brokerage business valuations — institutional-grade EBITDA, asset, and market-comps analysis for Malaysian SMEs." />
+  <meta property="og:title" content="Business Valuations | Reliance Brokerage" />
+  <meta property="og:description" content="Reliance Brokerage business valuations — institutional-grade EBITDA, asset, and market-comps analysis for Malaysian SMEs." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=1200&q=80" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Business Valuations | Reliance Brokerage" />
+  <meta name="twitter:description" content="Reliance Brokerage business valuations — institutional-grade EBITDA, asset, and market-comps analysis for Malaysian SMEs." />
+  <meta name="twitter:image" content="https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=1200&q=80" />
+  <title>Business Valuations | Reliance Brokerage</title>
+  <link rel="stylesheet" href="assets/css/design-system.css" />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries" defer></script>
+</head>
+<body>
+
+  <!-- Skip to main content link for accessibility -->
+  <a href="#main-content" class="skip-to-content">Skip to main content</a>
+
+  <!-- TOP NAV -->
+  <nav class="nav-public" aria-label="Primary navigation">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand">Reliance Brokerage</a>
+      <ul class="nav-links" role="list">
+        <li><a href="listings.html">Listings</a></li>
+        <li><a href="how-it-works.html">How It Works</a></li>
+        <li><a href="valuations.html" class="active" aria-current="page">Valuations</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="legal-hub.html">Legal</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button id="lang-toggle-btn" aria-label="Toggle language" style="background:none; border:none; padding:0.25rem; cursor:pointer; font-family:var(--font-label); font-size:var(--label-xs); font-weight:600; color:var(--on-surface-variant); text-transform:uppercase; letter-spacing:0.15em; transition:color var(--transition-fast);" title="English / 中文">
+          <span id="lang-text">中文</span>
+        </button>
+        <a href="sign-in.html" class="btn btn-ghost btn-sm">Sign In</a>
+        <a href="register.html" class="btn btn-primary btn-sm">Sell Your Business</a>
+      </div>
+    </div>
+  </nav>
+
+  <main id="main-content" style="padding-top: var(--nav-height);">
+
+    <!-- HERO -->
+    <section style="background:var(--primary); padding: var(--space-32) 0; position:relative; overflow:hidden;">
+      <div style="position:absolute; inset:0; opacity:0.06; pointer-events:none;">
+        <div style="position:absolute; top:0; right:0; width:50%; height:100%; background:radial-gradient(circle at center, rgba(197,160,89,0.3), transparent);"></div>
+      </div>
+      <div class="container">
+        <div style="display:grid; grid-template-columns:1fr; gap: var(--space-16); align-items:center;" class="val-hero">
+          <style>.val-hero{} @media(min-width:1024px){.val-hero{grid-template-columns:1fr 1fr;}}</style>
+
+          <!-- Copy -->
+          <div style="position:relative; z-index:1;" data-reveal>
+            <span class="badge badge-accent" style="margin-bottom: var(--space-8); display:inline-flex;">The Gold Standard in SME Valuation</span>
+            <h1 style="font-family:var(--font-headline); font-size:clamp(2.5rem, 6vw, 4.5rem); color:var(--surface-container-lowest); line-height:1.05; font-weight:400; margin-bottom: var(--space-8);">
+              Know the True<br/><em style="font-style:italic; color:var(--accent);">Value of Your Work.</em>
+            </h1>
+            <p class="body-lead" style="color:rgba(240,224,206,0.8); max-width:520px; font-weight:300;">
+              Get an accurate, reliable valuation based on Malaysian market standards. We combine institutional data with professional expertise to help business owners plan their exit with absolute certainty.
+            </p>
+          </div>
+
+          <!-- Calculator Card -->
+          <div style="background:var(--surface-container-lowest); padding: var(--space-12); border:1px solid rgba(190,176,159,0.3); box-shadow:var(--shadow-modal); position:relative;" data-reveal>
+            <div style="position:absolute; top:-1.25rem; left:-1.25rem; background:var(--accent); padding: var(--space-4); box-shadow:var(--shadow-card);">
+              <span class="material-symbols-outlined" style="color:var(--on-accent);">calculate</span>
+            </div>
+            <h3 style="font-family:var(--font-headline); font-size:var(--headline-sm); color:var(--on-surface); margin-top: var(--space-4); margin-bottom: var(--space-2); font-weight:400;">Preliminary Assessment</h3>
+            <p style="font-size:var(--body-sm); color:var(--on-surface-variant); margin-bottom: var(--space-10);">Establish a baseline estimate for your business based on sector-specific multiples.</p>
+
+            <form style="display:flex; flex-direction:column; gap: var(--space-6);">
+              <div class="form-group">
+                <label class="form-label" for="annual-revenue">Annual Revenue (MYR)</label>
+                <input id="annual-revenue" type="text" class="form-input" placeholder="RM 0.00" />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="ebitda">Adjusted EBITDA (MYR)</label>
+                <input id="ebitda" type="text" class="form-input" placeholder="RM 0.00" />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="sector">Business Sector</label>
+                <select id="sector" class="form-input form-select">
+                  <option>SME Services</option>
+                  <option>Manufacturing &amp; Industry</option>
+                  <option>Retail &amp; F&amp;B</option>
+                  <option>Professional Firms</option>
+                  <option>Technology &amp; SaaS</option>
+                  <option>Healthcare &amp; Allied</option>
+                  <option>Logistics &amp; Distribution</option>
+                </select>
+              </div>
+              <button type="button" class="btn btn-primary" style="width:100%; padding: var(--space-5);" onclick="SovToast('Preliminary estimate generated. Our advisors will follow up within 24 hours.', 'success')">
+                Calculate Preliminary Multiple
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- METHODOLOGY -->
+    <section style="background:var(--surface); padding: var(--space-32) 0;">
+      <div class="container">
+
+        <div style="display:flex; flex-direction:column; gap: var(--space-8); margin-bottom: var(--space-20);" data-reveal>
+          <div style="display:flex; flex-direction:column; gap: var(--space-6);" class="method-head">
+            <style>.method-head{} @media(min-width:768px){.method-head{flex-direction:row; align-items:flex-end; justify-content:space-between;}}</style>
+            <div style="max-width:640px;">
+              <h2 class="display-section" style="margin-bottom: var(--space-6);">Institutional Methodology</h2>
+              <p class="body-lead" style="font-weight:300;">Our valuation framework follows international standards adapted for the Malaysian commercial landscape, ensuring credibility during buyer due diligence.</p>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr; border:1px solid rgba(190,176,159,0.3);" class="method-grid">
+          <style>.method-grid{} @media(min-width:768px){.method-grid{grid-template-columns:repeat(3,1fr);}}</style>
+
+          <div style="background:var(--surface-container-lowest); padding: var(--space-12); border-right:1px solid rgba(190,176,159,0.3); transition:background var(--transition-base);" onmouseenter="this.style.background='var(--surface-container-low)'" onmouseleave="this.style.background='var(--surface-container-lowest)'" data-reveal>
+            <span class="material-symbols-outlined" style="font-size:2.5rem; color:var(--accent); margin-bottom: var(--space-8); display:block;">payments</span>
+            <h4 style="font-family:var(--font-headline); font-size:var(--headline-sm); color:var(--on-surface); margin-bottom: var(--space-5); font-weight:400;">Normalised Cash Flow</h4>
+            <p style="font-size:var(--body-sm); color:var(--on-surface-variant); line-height:1.7; margin-bottom: var(--space-8);">An exhaustive analysis of adjusted EBITDA and SDE to determine the sustainable earnings power of the enterprise.</p>
+            <div style="padding-top: var(--space-8); border-left:1px solid rgba(197,160,89,0.4); padding-left: var(--space-5);">
+              <span class="label-overline" style="color:var(--accent); font-size:var(--label-xs);">Service &amp; IP Oriented</span>
+            </div>
+          </div>
+
+          <div style="background:var(--surface-container-lowest); padding: var(--space-12); border-right:1px solid rgba(190,176,159,0.3); transition:background var(--transition-base);" onmouseenter="this.style.background='var(--surface-container-low)'" onmouseleave="this.style.background='var(--surface-container-lowest)'" data-reveal>
+            <span class="material-symbols-outlined" style="font-size:2.5rem; color:var(--accent); margin-bottom: var(--space-8); display:block;">account_balance</span>
+            <h4 style="font-family:var(--font-headline); font-size:var(--headline-sm); color:var(--on-surface); margin-bottom: var(--space-5); font-weight:400;">Asset Valuation</h4>
+            <p style="font-size:var(--body-sm); color:var(--on-surface-variant); line-height:1.7; margin-bottom: var(--space-8);">Rigorous appraisal of physical capital, inventory liquidity, and real property at fair market replacement value.</p>
+            <div style="padding-top: var(--space-8); border-left:1px solid rgba(197,160,89,0.4); padding-left: var(--space-5);">
+              <span class="label-overline" style="color:var(--accent); font-size:var(--label-xs);">Asset-Heavy Portfolios</span>
+            </div>
+          </div>
+
+          <div style="background:var(--surface-container-lowest); padding: var(--space-12); transition:background var(--transition-base);" onmouseenter="this.style.background='var(--surface-container-low)'" onmouseleave="this.style.background='var(--surface-container-lowest)'" data-reveal>
+            <span class="material-symbols-outlined" style="font-size:2.5rem; color:var(--accent); margin-bottom: var(--space-8); display:block;">query_stats</span>
+            <h4 style="font-family:var(--font-headline); font-size:var(--headline-sm); color:var(--on-surface); margin-bottom: var(--space-5); font-weight:400;">Comps Analysis</h4>
+            <p style="font-size:var(--body-sm); color:var(--on-surface-variant); line-height:1.7; margin-bottom: var(--space-8);">Benchmarking against proprietary data of recent private equity and SME transactions within the SE Asian region.</p>
+            <div style="padding-top: var(--space-8); border-left:1px solid rgba(197,160,89,0.4); padding-left: var(--space-5);">
+              <span class="label-overline" style="color:var(--accent); font-size:var(--label-xs);">Regional Transaction Data</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- VALUE DRIVERS -->
+    <section style="background:var(--surface-container-low); padding: var(--space-32) 0;">
+      <div class="container">
+        <h2 class="display-section" style="text-align:center; font-style:italic; font-weight:400; margin-bottom: var(--space-20);" data-reveal>Strategic Value Drivers</h2>
+
+        <div style="display:grid; grid-template-columns:1fr; gap: var(--space-8);" class="drivers-grid">
+          <style>.drivers-grid{} @media(min-width:1024px){.drivers-grid{grid-template-columns:7fr 5fr;}}</style>
+
+          <!-- Premium Multipliers -->
+          <div style="background:var(--accent); padding: var(--space-16); color:var(--on-accent); position:relative; overflow:hidden;" data-reveal>
+            <div style="position:absolute; top:0; right:-5rem; opacity:0.08; pointer-events:none;"><span class="material-symbols-outlined" style="font-size:14rem;">trending_up</span></div>
+            <h3 style="font-family:var(--font-headline); font-size:var(--headline-lg); font-weight:400; margin-bottom: var(--space-12);">Premium Multipliers</h3>
+            <div style="display:flex; flex-direction:column; gap: var(--space-10);">
+              <div style="display:flex; align-items:flex-start; gap: var(--space-5);">
+                <span class="material-symbols-outlined" style="color:var(--primary); flex-shrink:0; margin-top:2px;">check_circle</span>
+                <div>
+                  <p style="font-size:var(--body-lg); font-weight:500; margin-bottom:0.25rem; color:#FFF;">Institutionalised Operations</p>
+                  <p style="font-size:var(--body-sm); font-weight:300; color:rgba(255,255,255,0.85);">Decoupled management structures that ensure continuity post-acquisition.</p>
+                </div>
+              </div>
+              <div style="display:flex; align-items:flex-start; gap: var(--space-5);">
+                <span class="material-symbols-outlined" style="color:var(--primary); flex-shrink:0; margin-top:2px;">check_circle</span>
+                <div>
+                  <p style="font-size:var(--body-lg); font-weight:500; margin-bottom:0.25rem; color:#FFF;">Contractual Revenue Security</p>
+                  <p style="font-size:var(--body-sm); font-weight:300; color:rgba(255,255,255,0.85);">Long-term, high-retention client agreements with defensible margins.</p>
+                </div>
+              </div>
+              <div style="display:flex; align-items:flex-start; gap: var(--space-5);">
+                <span class="material-symbols-outlined" style="color:var(--primary); flex-shrink:0; margin-top:2px;">check_circle</span>
+                <div>
+                  <p style="font-size:var(--body-lg); font-weight:500; margin-bottom:0.25rem; color:#FFF;">Transparent Financial Reporting</p>
+                  <p style="font-size:var(--body-sm); font-weight:300; color:rgba(255,255,255,0.85);">Audit-ready documentation that minimises friction during technical due diligence.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Risk Factors -->
+          <div style="background:var(--surface-container-lowest); border:1px solid rgba(190,176,159,0.4); padding: var(--space-16); display:flex; flex-direction:column; justify-content:space-between;" data-reveal>
+            <div>
+              <h3 style="font-family:var(--font-headline); font-size:var(--headline-md); color:var(--on-surface); font-weight:400; margin-bottom: var(--space-10);">Critical Risk Factors</h3>
+              <ul style="list-style:none; display:flex; flex-direction:column; gap: var(--space-5);">
+                <li style="display:flex; align-items:center; gap: var(--space-4); font-size:var(--body-sm); color:var(--on-surface-variant); font-weight:300;">
+                  <span class="material-symbols-outlined" style="color:var(--error); opacity:0.7; font-size:1.1rem; flex-shrink:0;">warning</span>
+                  Concentrated counterparty risk
+                </li>
+                <li style="display:flex; align-items:center; gap: var(--space-4); font-size:var(--body-sm); color:var(--on-surface-variant); font-weight:300;">
+                  <span class="material-symbols-outlined" style="color:var(--error); opacity:0.7; font-size:1.1rem; flex-shrink:0;">warning</span>
+                  Sub-standard accounting practices
+                </li>
+                <li style="display:flex; align-items:center; gap: var(--space-4); font-size:var(--body-sm); color:var(--on-surface-variant); font-weight:300;">
+                  <span class="material-symbols-outlined" style="color:var(--error); opacity:0.7; font-size:1.1rem; flex-shrink:0;">warning</span>
+                  Unresolved regulatory or tax liabilities
+                </li>
+                <li style="display:flex; align-items:center; gap: var(--space-4); font-size:var(--body-sm); color:var(--on-surface-variant); font-weight:300;">
+                  <span class="material-symbols-outlined" style="color:var(--error); opacity:0.7; font-size:1.1rem; flex-shrink:0;">warning</span>
+                  Key-man dependency risk
+                </li>
+              </ul>
+            </div>
+            <div style="margin-top: var(--space-10); padding: var(--space-8); border-left:2px solid var(--accent); background:var(--surface-container-low);">
+              <p style="font-size:var(--body-sm); color:var(--on-surface); line-height:1.7; font-style:italic; font-weight:300;">
+                "Strategic remediation of these risks 12–18 months prior to market entry typically results in a 1.5×–2.2× multiple expansion."
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section style="background:var(--surface); padding: var(--space-32) 0;">
+      <div class="container">
+        <div style="max-width:900px; margin-inline:auto; display:flex; flex-direction:column; gap: var(--space-20); align-items:center;" class="val-cta">
+          <style>.val-cta{} @media(min-width:768px){.val-cta{flex-direction:row;}}</style>
+          <div style="flex:1;" data-reveal>
+            <span class="label-overline" style="color:var(--accent); display:block; margin-bottom: var(--space-5);">Confidential Advisory</span>
+            <h2 style="font-family:var(--font-headline); font-size:clamp(2rem, 4vw, 3rem); color:var(--on-surface); font-weight:400; line-height:1.2; margin-bottom: var(--space-8);">Consult with our<br/>Senior Appraisers</h2>
+            <p class="body-lead" style="font-weight:300; margin-bottom: var(--space-10);">A valuation is more than a number; it is the culmination of your life's work. Our partners provide discrete, comprehensive appraisals that serve as the foundation for successful exits.</p>
+            <div style="display:flex; gap: var(--space-4); flex-wrap:wrap;">
+              <a href="register.html" class="btn btn-primary btn-lg">
+                <span class="material-symbols-outlined">calendar_month</span>
+                Request Consultation
+              </a>
+              <a href="listings.html" class="btn btn-secondary btn-lg">View Success Stories</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container">
+      <div style="display:grid; grid-template-columns:1fr; gap:var(--space-16);" class="footer-layout">
+        <style>.footer-layout{} @media(min-width:768px){.footer-layout{grid-template-columns:2fr repeat(4,1fr);}}</style>
+        <div><div class="footer-brand">Reliance Brokerage</div><p class="footer-tagline">Institutional Grade Brokerage serving the Malaysian SME and corporate landscape.</p><p class="footer-copy">© 2024 Reliance Brokerage Malaysia. All rights reserved.</p></div>
+        <div><div class="footer-col-title">Platform</div><ul class="footer-links"><li><a href="listings.html">Listings</a></li><li><a href="valuations.html">Valuations</a></li><li><a href="how-it-works.html">How It Works</a></li></ul></div>
+        <div><div class="footer-col-title">Company</div><ul class="footer-links"><li><a href="about.html">About</a></li></ul></div>
+        <div><div class="footer-col-title">Legal</div><ul class="footer-links"><li><a href="legal-hub.html">Legal Hub</a></li><li><a href="legal-hub.html#privacy">Privacy</a></li><li><a href="legal-hub.html#terms">Terms</a></li></ul></div>
+        <div><div class="footer-col-title">Access</div><ul class="footer-links"><li><a href="sign-in.html">Sign In</a></li><li><a href="register.html">Register</a></li></ul></div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/nav-component.js"></script>
+  <script src="assets/js/lang-switcher.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/event-handlers.js"></script>
+  <script src="assets/js/footer-component.js"></script>
+  <script src="assets/js/utils.js"></script>
+</body>
+</html>

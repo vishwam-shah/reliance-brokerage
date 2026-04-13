@@ -1,0 +1,270 @@
+{
+  "en": {
+    "nav": {
+      "listings": "Listings",
+      "how_it_works": "How It Works",
+      "valuations": "Valuations",
+      "about": "About",
+      "legal": "Legal",
+      "sign_in": "Sign In",
+      "list_business": "List a Business"
+    },
+    "hero": {
+      "eyebrow": "Institutional Grade Brokerage",
+      "title": "Malaysia's Premier<br/>Institutional <em>Brokerage</em>",
+      "description": "Architectural Stability for High-Value Transitions. We provide the structural integrity required for Malaysia's most significant SME divestments and acquisitions.",
+      "cta1": "Request Valuation",
+      "cta2": "View Listings"
+    },
+    "stat_monolith": {
+      "label": "Market Presence",
+      "value": "RM 4.2B+",
+      "description": "Total enterprise value facilitated across West and East Malaysia since 2010."
+    },
+    "kpis": {
+      "listings_label": "Verified Active Listings",
+      "listings_desc": "Pre-screened institutional opportunities across manufacturing, logistics, and technology sectors in the Klang Valley.",
+      "transitions_label": "Successful Business Transitions",
+      "transitions_desc": "High-value exits completed with absolute discretion. Our transition framework ensures operational continuity post-sale.",
+      "years_label": "Years of Excellence",
+      "years_desc": "A decade and a half of navigating complex market cycles with consistent, institutional-grade results.",
+      "completion_label": "Completion Rate",
+      "completion_desc": "In a market where only 20% of listed businesses sell, our precision methodology keeps clients in the elite majority."
+    },
+    "process": {
+      "title": "A Simple, Transparent Process",
+      "description": "Our proprietary five-step framework is designed for the Malaysian corporate landscape, ensuring clarity at every milestone.",
+      "explore": "Explore the Full Process",
+      "steps": {
+        "list": "List",
+        "list_desc": "Initial documentation and anonymous listing setup within our private network.",
+        "screen": "Screen",
+        "screen_desc": "Rigorous financial vetting of potential acquirers to ensure capital readiness.",
+        "introduce": "Introduce",
+        "introduce_desc": "Controlled meetings facilitated by our lead partners to establish synergy.",
+        "due_diligence": "Due Diligence",
+        "due_diligence_desc": "Comprehensive audit of assets, liabilities, and intellectual property.",
+        "complete": "Complete",
+        "complete_desc": "Legal execution and secure funds transfer through institutional escrow."
+      }
+    },
+    "values": {
+      "title": "The Reliance Standard",
+      "description": "We operate on the principle of \"Diam-Diam Berisi\" — quiet but substantial. Our reputation is built on the strength of our data and the discretion of our operations.",
+      "klang_valley": "Klang Valley Experts",
+      "klang_valley_desc": "Deep local intelligence across Malaysia's key economic hubs with real-time proprietary data.",
+      "discretion": "Ironclad Discretion",
+      "discretion_desc": "Your transaction details are guarded with institutional security protocols and legal shielding.",
+      "valuations": "Precision Valuations",
+      "valuations_desc": "Our valuation models go beyond EBITDA. We account for local supply chain dominance and Malaysian market volatility to deliver true institutional exit values.",
+      "matchmaking": "Strategic Matchmaking",
+      "matchmaking_desc": "We don't just find buyers; we find successors. Our network includes family offices, private equity, and institutional investors seeking regional growth."
+    },
+    "cta_final": {
+      "title": "Secure Your Business Legacy in Malaysia.",
+      "description": "Initiate a confidential consultation with our lead brokers today. No obligations, absolute privacy.",
+      "contact": "Contact a Lead Broker",
+      "browse": "Browse Listings"
+    },
+    "listings": {
+      "header_title": "Business Listings",
+      "header_description": "Pre-screened, high-value enterprises available for qualified acquirers. Every listing has undergone rigorous financial and operational vetting.",
+      "search_placeholder": "Search by name or sector…",
+      "all_sectors": "All Sectors",
+      "all_valuations": "All Valuations",
+      "count_listings": "listings",
+      "grid_view": "Grid view",
+      "list_view": "List view",
+      "sectors": {
+        "fnb": "F&B / Restaurant",
+        "manufacturing": "Manufacturing",
+        "technology": "Technology",
+        "retail": "Retail",
+        "logistics": "Logistics",
+        "healthcare": "Healthcare",
+        "services": "Professional Services"
+      },
+      "valuation_ranges": {
+        "under_500k": "Under RM 500K",
+        "500k_2m": "RM 500K – RM 2M",
+        "2m_10m": "RM 2M – RM 10M",
+        "above_10m": "Above RM 10M"
+      }
+    },
+    "auth": {
+      "sign_in_title": "Sign In",
+      "sign_in_description": "Access your Reliance Brokerage account",
+      "email": "Email Address",
+      "password": "Password",
+      "remember_me": "Remember me",
+      "forgot_password": "Forgot password?",
+      "sign_in_button": "Sign In",
+      "no_account": "Don't have an account?",
+      "register_here": "Register here",
+      "register_title": "Create Account",
+      "register_description": "Join Reliance Brokerage to list your business",
+      "name": "Full Name",
+      "company": "Company Name",
+      "confirm_password": "Confirm Password",
+      "terms_agree": "I agree to the Terms of Service and Privacy Policy",
+      "register_button": "Create Account",
+      "have_account": "Already have an account?",
+      "forgot_title": "Reset Password",
+      "forgot_description": "Enter your email to receive reset instructions",
+      "send_reset": "Send Reset Link",
+      "back_to_login": "Back to Sign In"
+    },
+    "footer": {
+      "tagline": "Institutional Grade Brokerage serving the Malaysian SME and corporate landscape with architectural stability and deep-rooted integrity.",
+      "copyright": "© Reliance Brokerage Malaysia. All rights reserved.",
+      "platform": "Platform",
+      "company": "Company",
+      "legal": "Legal",
+      "access": "Access",
+      "business_listings": "Business Listings",
+      "how_it_works": "How It Works",
+      "about_us": "About Us",
+      "our_team": "Our Team",
+      "legal_hub": "Legal Hub",
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Service",
+      "sign_in": "Sign In",
+      "register": "Register",
+      "broker_portal": "Broker Portal"
+    }
+  },
+  "zh": {
+    "nav": {
+      "listings": "房源",
+      "how_it_works": "运作流程",
+      "valuations": "估值",
+      "about": "关于我们",
+      "legal": "法律",
+      "sign_in": "登录",
+      "list_business": "上市业务"
+    },
+    "hero": {
+      "eyebrow": "机构级经纪业务",
+      "title": "马来西亚首屈一指的<br/>机构级<em>经纪公司</em>",
+      "description": "为高价值交易提供结构稳定性。我们为马来西亚最重要的中小企业出售和收购交易提供所需的结构完整性。",
+      "cta1": "请求估值",
+      "cta2": "查看房源"
+    },
+    "stat_monolith": {
+      "label": "市场地位",
+      "value": "40亿令吉+",
+      "description": "自2010年以来在马来西亚西部和东部促进的企业总价值。"
+    },
+    "kpis": {
+      "listings_label": "已验证的活跃房源",
+      "listings_desc": "雪兰莪地区制造业、物流和科技领域经过审查的机构级商机。",
+      "transitions_label": "成功的业务转移",
+      "transitions_desc": "以绝对保密的方式完成的高价值交易。我们的转移框架确保交易后的运营连续性。",
+      "years_label": "卓越年份",
+      "years_desc": "在过去十五年中，通过复杂的市场周期一直保持一致的机构级业绩。",
+      "completion_label": "完成率",
+      "completion_desc": "在只有20%的上市业务成交的市场中，我们的精准方法让客户进入精英行列。"
+    },
+    "process": {
+      "title": "简单透明的流程",
+      "description": "我们的专有五步框架是为马来西亚公司环境设计的，确保每个里程碑的清晰度。",
+      "explore": "探索完整流程",
+      "steps": {
+        "list": "上市",
+        "list_desc": "初始文件和在我们私人网络中设置匿名房源。",
+        "screen": "筛选",
+        "screen_desc": "对潜在收购方进行严格的财务审查以确保资本准备。",
+        "introduce": "介绍",
+        "introduce_desc": "由我们的主要合作伙伴促进的受控会议以建立协同作用。",
+        "due_diligence": "尽职调查",
+        "due_diligence_desc": "对资产、负债和知识产权进行全面审计。",
+        "complete": "完成",
+        "complete_desc": "通过机构托管进行法律执行和安全资金转移。"
+      }
+    },
+    "values": {
+      "title": "信任标准",
+      "description": "我们遵循\"深藏不露\"的原则——沉默但实质。我们的声誉建立在我们的数据强度和运营保密性之上。",
+      "klang_valley": "雪兰莪谷专家",
+      "klang_valley_desc": "对马来西亚关键经济中心的深入本地智能，具有实时专有数据。",
+      "discretion": "铁血保密",
+      "discretion_desc": "您的交易细节受到机构安全协议和法律保护。",
+      "valuations": "精准估值",
+      "valuations_desc": "我们的估值模型超越EBITDA。我们考虑了本地供应链优势和马来西亚市场波动性，以提供真正的机构出口价值。",
+      "matchmaking": "战略配对",
+      "matchmaking_desc": "我们不仅仅寻找买家；我们寻找继承人。我们的网络包括家族办公室、私募股权和寻求区域增长的机构投资者。"
+    },
+    "cta_final": {
+      "title": "在马来西亚保护您的业务遗产。",
+      "description": "今天与我们的主要经纪人进行机密咨询。无义务，绝对隐私。",
+      "contact": "联系主要经纪人",
+      "browse": "查看房源"
+    },
+    "listings": {
+      "header_title": "业务房源",
+      "header_description": "为合格收购方提供的经过预审的高价值企业。每个房源都经过严格的财务和运营审核。",
+      "search_placeholder": "按名称或行业搜索…",
+      "all_sectors": "所有行业",
+      "all_valuations": "所有估值",
+      "count_listings": "个房源",
+      "grid_view": "网格视图",
+      "list_view": "列表视图",
+      "sectors": {
+        "fnb": "食品饮料 / 餐厅",
+        "manufacturing": "制造业",
+        "technology": "技术",
+        "retail": "零售",
+        "logistics": "物流",
+        "healthcare": "医疗保健",
+        "services": "专业服务"
+      },
+      "valuation_ranges": {
+        "under_500k": "低于 50万令吉",
+        "500k_2m": "50万 - 200万令吉",
+        "2m_10m": "200万 - 1000万令吉",
+        "above_10m": "1000万令吉以上"
+      }
+    },
+    "auth": {
+      "sign_in_title": "登录",
+      "sign_in_description": "访问您的Reliance Brokerage账户",
+      "email": "电子邮件",
+      "password": "密码",
+      "remember_me": "记住我",
+      "forgot_password": "忘记密码？",
+      "sign_in_button": "登录",
+      "no_account": "没有账户？",
+      "register_here": "在此注册",
+      "register_title": "创建账户",
+      "register_description": "加入Reliance Brokerage以上市您的业务",
+      "name": "全名",
+      "company": "公司名称",
+      "confirm_password": "确认密码",
+      "terms_agree": "我同意服务条款和隐私政策",
+      "register_button": "创建账户",
+      "have_account": "已有账户？",
+      "forgot_title": "重置密码",
+      "forgot_description": "输入您的电子邮件以接收重置说明",
+      "send_reset": "发送重置链接",
+      "back_to_login": "返回登录"
+    },
+    "footer": {
+      "tagline": "机构级经纪业务，为马来西亚中小企业和企业环境服务，具有建筑稳定性和根深蒂固的诚信。",
+      "copyright": "©Reliance Brokerage Malaysia。版权所有。",
+      "platform": "平台",
+      "company": "公司",
+      "legal": "法律",
+      "access": "访问",
+      "business_listings": "业务房源",
+      "how_it_works": "运作流程",
+      "about_us": "关于我们",
+      "our_team": "我们的团队",
+      "legal_hub": "法律中心",
+      "privacy": "隐私政策",
+      "terms": "服务条款",
+      "sign_in": "登录",
+      "register": "注册",
+      "broker_portal": "经纪人门户"
+    }
+  }
+}
