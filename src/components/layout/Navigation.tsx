@@ -52,26 +52,26 @@ const Navigation = () => {
           <button
             onClick={toggleLanguage}
             aria-label="Toggle language"
-            className="px-3 py-2 min-h-11 min-w-11 flex items-center justify-center text-label-xs font-bold text-black uppercase tracking-widest transition-colors hover:text-black focus:outline-accent focus:outline-2 focus:outline-offset-2"
+            className="hidden sm:flex px-3 py-2 min-h-11 min-w-11 items-center justify-center text-label-xs font-bold text-black uppercase tracking-widest transition-colors hover:text-black focus:outline-accent focus:outline-2 focus:outline-offset-2"
             title="English / 中文"
           >
             <span>{currentLang === 'en' ? '中文' : 'English'}</span>
           </button>
-          <Button href="/sign-in" variant="ghost" size="sm">
+          <Button href="/sign-in" variant="ghost" size="sm" className="hidden md:inline-flex">
             {t('nav.sign_in')}
           </Button>
-          <Button href="/register" variant="primary" size="sm">
+          <Button href="/register" variant="primary" size="sm" className="hidden md:inline-flex">
             {t('nav.list_business')}
           </Button>
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-expanded={mobileMenuOpen}
             aria-label="Open navigation"
-            className="md:hidden p-1 bg-transparent border-none cursor-pointer"
+            className="md:hidden p-1 bg-transparent border-none cursor-pointer flex items-center justify-center"
           >
             <Icon
               icon={mobileMenuOpen ? 'mdi:close' : 'mdi:menu'}
-              className="text-on-surface"
+              className="text-black"
               style={{ width: '28px', height: '28px' }}
             />
           </button>
@@ -91,11 +91,21 @@ const Navigation = () => {
               {link.label}
             </Link>
           ))}
-          <div className="flex gap-3 mt-2">
-            <Button href="/sign-in" variant="ghost" size="sm">
+          <button
+            onClick={() => {
+              toggleLanguage();
+              setMobileMenuOpen(false);
+            }}
+            className="font-label font-semibold text-label-sm text-black uppercase tracking-widest hover:text-black text-left"
+            title="English / 中文"
+          >
+            {currentLang === 'en' ? '中文' : 'English'}
+          </button>
+          <div className="flex gap-3 mt-2 flex-col">
+            <Button href="/sign-in" variant="ghost" size="sm" onClick={() => setMobileMenuOpen(false)}>
               {t('nav.sign_in')}
             </Button>
-            <Button href="/register" variant="primary" size="sm">
+            <Button href="/register" variant="primary" size="sm" onClick={() => setMobileMenuOpen(false)}>
               {t('nav.list_business')}
             </Button>
           </div>

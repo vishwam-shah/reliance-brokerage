@@ -51,7 +51,7 @@ export default function ListingsPage() {
           {mockListings.map((listing) => (
             <div
               key={listing.id}
-              className="bg-surface-container-lowest p-8 border border-outline-variant hover:shadow-card transition-shadow"
+              className="bg-surface-container-lowest p-8 border border-outline-variant hover:shadow-card transition-shadow flex flex-col h-full"
             >
               <div className="mb-4">
                 <span className="inline-block px-3 py-1 bg-primary text-on-primary text-label-xs font-semibold uppercase tracking-wider mb-3">
@@ -63,7 +63,7 @@ export default function ListingsPage() {
                 <p className="text-body-sm text-on-surface-variant">{listing.location}</p>
               </div>
 
-              <div className="bg-surface-container py-4 px-4 mb-6 space-y-3">
+              <div className="bg-surface-container py-4 px-4 mb-6 space-y-3 flex-grow">
                 <div>
                   <p className="text-label-sm text-on-surface-variant font-semibold uppercase tracking-wider">
                     Enterprise Value

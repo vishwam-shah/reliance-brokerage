@@ -211,7 +211,7 @@
   }
 
   .nav-brand {
-    @apply font-headline font-bold text-headline-lg text-on-surface no-underline hover:text-primary transition-colors;
+    @apply font-headline font-bold text-headline-sm md:text-headline-lg text-black no-underline hover:text-accent transition-colors flex-shrink-0;
   }
 
   .nav-links {
@@ -229,7 +229,7 @@
   }
 
   .nav-actions {
-    @apply flex items-center gap-4;
+    @apply flex items-center gap-2 md:gap-4;
   }
 
   /* Utility classes */
