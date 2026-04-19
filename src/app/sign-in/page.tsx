@@ -21,8 +21,8 @@ export default function SignInPage() {
     e.preventDefault();
     const newErrors: Record<string, string> = {};
 
-    if (!email) newErrors.email = 'Email is required';
-    if (!password) newErrors.password = 'Password is required';
+    if (!email) newErrors.email = t('sign_in.error_email');
+    if (!password) newErrors.password = t('sign_in.error_password');
 
     setErrors(newErrors);
 
@@ -31,21 +31,18 @@ export default function SignInPage() {
       setSubmitStatus('idle');
 
       try {
-        // Simulate API call with delay
         await new Promise((resolve) => setTimeout(resolve, 1500));
 
-        // Mock validation - in production, call actual API
         if (email && password.length >= 6) {
           setSubmitStatus('success');
-          // In production: redirect to dashboard or store auth token
           console.log('Sign in successful:', { email });
         } else {
           setSubmitStatus('error');
-          setErrors({ submit: 'Invalid email or password' });
+          setErrors({ submit: t('sign_in.error_invalid') });
         }
       } catch (error) {
         setSubmitStatus('error');
-        setErrors({ submit: 'Connection error. Please try again.' });
+        setErrors({ submit: t('sign_in.error_connection') });
       } finally {
         setIsSubmitting(false);
       }
@@ -67,52 +64,34 @@ export default function SignInPage() {
         </div>
 
         <div className="relative z-10 max-w-480px text-center">
-          <Link href="/" className="inline-block mb-12">
+          <Link href="/" className="inline-flex items-center gap-3 mb-12">
+            <Image src="/logo.jpeg" alt="Reliance Brokerage" width={44} height={44} className="rounded-md" />
             <div className="font-headline text-headline-lg font-bold text-on-primary">
               Reliance Brokerage
             </div>
           </Link>
           <h1 className="font-headline text-4xl md:text-5xl text-on-primary font-light mb-8 leading-tight">
-            Institutional Access.
+            {t('sign_in.headline')}
             <br />
-            <em className="italic font-light">Absolute Privacy.</em>
+            <em className="italic font-light">{t('sign_in.headline_em')}</em>
           </h1>
           <p className="text-body-lg text-on-primary opacity-90 leading-relaxed mb-16">
-            Your portal to Malaysia's most exclusive business acquisition network. Complete
-            discretion, institutional-grade security.
+            {t('sign_in.panel_desc')}
           </p>
 
           <div className="flex flex-col gap-5">
-            <div className="flex items-center gap-4">
-              <Icon
-                icon="mdi:verified-user"
-                className="text-accent flex-shrink-0"
-                style={{ width: '48px', height: '48px' }}
-              />
-              <span className="font-label text-label-sm text-on-primary opacity-75 uppercase tracking-widest">
-                Bank-Grade Encryption
-              </span>
-            </div>
-            <div className="flex items-center gap-4">
-              <Icon
-                icon="mdi:eye-off"
-                className="text-accent flex-shrink-0"
-                style={{ width: '48px', height: '48px' }}
-              />
-              <span className="font-label text-label-sm text-on-primary opacity-75 uppercase tracking-widest">
-                Ironclad Confidentiality
-              </span>
-            </div>
-            <div className="flex items-center gap-4">
-              <Icon
-                icon="mdi:shield"
-                className="text-accent flex-shrink-0"
-                style={{ width: '48px', height: '48px' }}
-              />
-              <span className="font-label text-label-sm text-on-primary opacity-75 uppercase tracking-widest">
-                PDPA &amp; AML Compliant
-              </span>
-            </div>
+            {[
+              { icon: 'mdi:verified-user', key: 'badge1' },
+              { icon: 'mdi:eye-off', key: 'badge2' },
+              { icon: 'mdi:shield', key: 'badge3' },
+            ].map(({ icon, key }) => (
+              <div key={key} className="flex items-center gap-4">
+                <Icon icon={icon} className="text-accent flex-shrink-0" style={{ width: '48px', height: '48px' }} />
+                <span className="font-label text-label-sm text-on-primary opacity-75 uppercase tracking-widest">
+                  {t(`sign_in.${key}`)}
+                </span>
+              </div>
+            ))}
           </div>
         </div>
       </div>
@@ -129,12 +108,12 @@ export default function SignInPage() {
           </div>
 
           <div className="mb-10">
-            <span className="eyebrow">Institutional Portal</span>
+            <span className="eyebrow">{t('sign_in.eyebrow')}</span>
             <h2 className="font-headline text-display-sm text-on-surface mt-5 mb-3 font-bold">
-              Welcome Back
+              {t('sign_in.title')}
             </h2>
             <p className="text-body-sm text-on-surface-variant">
-              Sign in to your account to continue.
+              {t('sign_in.subtitle')}
             </p>
           </div>
 
@@ -151,12 +130,12 @@ export default function SignInPage() {
 
             <div className="form-group">
               <div className="flex justify-between items-baseline mb-2">
-                <label className="form-label">Password</label>
+                <label className="form-label">{t('common.password')}</label>
                 <Link
                   href="/forgot-password"
                   className="font-label text-label-xs text-on-surface-variant underline hover:text-on-surface"
                 >
-                  Forgot password?
+                  {t('sign_in.forgot_password')}
                 </Link>
               </div>
               <div className="relative">
@@ -188,24 +167,16 @@ export default function SignInPage() {
             </div>
 
             <label className="flex items-center gap-3 cursor-pointer">
-              <input
-                type="checkbox"
-                className="w-4 h-4 accent-primary"
-                defaultChecked
-              />
+              <input type="checkbox" className="w-4 h-4 accent-primary" defaultChecked />
               <span className="text-body-sm text-on-surface-variant">
-                Keep me signed in for 30 days
+                {t('sign_in.keep_signed_in')}
               </span>
             </label>
 
             {submitStatus === 'error' && errors.submit && (
               <div className="bg-error-container bg-opacity-10 border-l-4 border-error p-4 text-body-sm text-error rounded-none">
                 <div className="flex gap-3">
-                  <Icon
-                    icon="mdi:alert-circle"
-                    className="text-error flex-shrink-0"
-                    style={{ width: '20px', height: '20px' }}
-                  />
+                  <Icon icon="mdi:alert-circle" className="text-error flex-shrink-0" style={{ width: '20px', height: '20px' }} />
                   <span>{errors.submit}</span>
                 </div>
               </div>
@@ -220,15 +191,12 @@ export default function SignInPage() {
               {isSubmitting ? (
                 <span className="flex items-center justify-center gap-2">
                   <span className="animate-spin inline-block">⏳</span>
-                  Signing in...
+                  {t('sign_in.signing_in')}
                 </span>
               ) : submitStatus === 'success' ? (
                 <span className="flex items-center justify-center gap-2">
-                  <Icon
-                    icon="mdi:check-circle"
-                    style={{ width: '20px', height: '20px' }}
-                  />
-                  Success! Redirecting...
+                  <Icon icon="mdi:check-circle" style={{ width: '20px', height: '20px' }} />
+                  {t('sign_in.success')}
                 </span>
               ) : (
                 t('common.sign_in_button')
@@ -238,35 +206,25 @@ export default function SignInPage() {
             <div className="flex items-center gap-4">
               <div className="flex-1 h-px bg-black bg-opacity-20" />
               <span className="font-label text-label-xs text-on-surface-variant uppercase tracking-widest whitespace-nowrap">
-                or
+                {t('sign_in.or_divider')}
               </span>
               <div className="flex-1 h-px bg-black bg-opacity-20" />
             </div>
 
-            <Link
-              href="/register"
-              className="btn btn-secondary w-full text-center"
-            >
+            <Link href="/register" className="btn btn-secondary w-full text-center">
               {t('common.register_button')}
             </Link>
           </form>
 
           <p className="mt-8 text-label-xs text-on-surface-variant text-center leading-relaxed">
-            By signing in, you agree to the{' '}
-            <Link
-              href="/legal-hub#terms"
-              className="text-on-surface underline hover:text-primary"
-            >
-              Terms of Service
+            {t('sign_in.terms_prefix')}{' '}
+            <Link href="/legal-hub#terms" className="text-on-surface underline hover:text-primary">
+              {t('sign_in.terms_link')}
             </Link>{' '}
-            and{' '}
-            <Link
-              href="/legal-hub#privacy"
-              className="text-on-surface underline hover:text-primary"
-            >
-              Privacy Policy
-            </Link>
-            .
+            {t('sign_in.and')}{' '}
+            <Link href="/legal-hub#privacy" className="text-on-surface underline hover:text-primary">
+              {t('sign_in.privacy_link')}
+            </Link>.
           </p>
         </div>
       </div>
