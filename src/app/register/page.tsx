@@ -24,15 +24,15 @@ export default function RegisterPage() {
   const validateForm = (): boolean => {
     const newErrors: Record<string, string> = {};
 
-    if (!formData.firstName) newErrors.firstName = 'First name is required';
-    if (!formData.lastName) newErrors.lastName = 'Last name is required';
-    if (!formData.email) newErrors.email = 'Email is required';
-    if (!formData.phone) newErrors.phone = 'Phone is required';
-    if (!formData.password) newErrors.password = 'Password is required';
+    if (!formData.firstName) newErrors.firstName = t('register.error_first_name');
+    if (!formData.lastName) newErrors.lastName = t('register.error_last_name');
+    if (!formData.email) newErrors.email = t('register.error_email');
+    if (!formData.phone) newErrors.phone = t('register.error_phone');
+    if (!formData.password) newErrors.password = t('register.error_password');
     if (formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = 'Passwords do not match';
+      newErrors.confirmPassword = t('register.error_confirm_password');
     }
-    if (!formData.businessName) newErrors.businessName = 'Business name is required';
+    if (!formData.businessName) newErrors.businessName = t('register.error_business_name');
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -43,12 +43,10 @@ export default function RegisterPage() {
     if (validateForm()) {
       setIsSubmitting(true);
       try {
-        // Simulate API call
         await new Promise((resolve) => setTimeout(resolve, 1500));
         console.log('Register:', formData);
-        // In production: redirect to sign-in or dashboard
       } catch (error) {
-        setErrors({ submit: 'Registration failed. Please try again.' });
+        setErrors({ submit: t('register.error_submit') });
       } finally {
         setIsSubmitting(false);
       }
@@ -70,29 +68,28 @@ export default function RegisterPage() {
     <div className="min-h-screen bg-surface pt-20 pb-12">
       <div className="container max-w-640px mx-auto">
         <div className="mb-10">
-          <span className="eyebrow">Create Your Account</span>
+          <span className="eyebrow">{t('register.eyebrow')}</span>
           <h1 className="font-headline text-display-sm text-on-surface mt-5 mb-3 font-bold">
-            List Your Business
+            {t('register.title')}
           </h1>
           <p className="text-body-sm text-on-surface-variant">
-            Join Malaysia's premier business marketplace. Confidential, secure, and
-            institutional-grade.
+            {t('register.subtitle')}
           </p>
         </div>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-6 bg-surface-container-lowest p-8">
-          <div className="grid grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <FormInput
-              label="First Name"
-              placeholder="John"
+              label={t('register.first_name')}
+              placeholder={t('register.first_name_placeholder')}
               value={formData.firstName}
               onChange={(value) => handleChange('firstName', value)}
               error={errors.firstName}
               required
             />
             <FormInput
-              label="Last Name"
-              placeholder="Doe"
+              label={t('register.last_name')}
+              placeholder={t('register.last_name_placeholder')}
               value={formData.lastName}
               onChange={(value) => handleChange('lastName', value)}
               error={errors.lastName}
@@ -111,9 +108,9 @@ export default function RegisterPage() {
           />
 
           <FormInput
-            label="Phone Number"
+            label={t('register.phone')}
             type="tel"
-            placeholder="+60 12 345 6789"
+            placeholder={t('register.phone_placeholder')}
             value={formData.phone}
             onChange={(value) => handleChange('phone', value)}
             error={errors.phone}
@@ -121,8 +118,8 @@ export default function RegisterPage() {
           />
 
           <FormInput
-            label="Business Name"
-            placeholder="Your Company Ltd."
+            label={t('register.business_name')}
+            placeholder={t('register.business_name_placeholder')}
             value={formData.businessName}
             onChange={(value) => handleChange('businessName', value)}
             error={errors.businessName}
@@ -140,7 +137,7 @@ export default function RegisterPage() {
           />
 
           <FormInput
-            label="Confirm Password"
+            label={t('register.confirm_password')}
             type="password"
             placeholder="••••••••"
             value={formData.confirmPassword}
@@ -152,19 +149,19 @@ export default function RegisterPage() {
           <label className="flex items-start gap-3 cursor-pointer">
             <input type="checkbox" className="w-4 h-4 mt-1 accent-primary" required />
             <span className="text-body-sm text-on-surface-variant">
-              I agree to the{' '}
+              {t('register.agree_prefix')}{' '}
               <Link
                 href="/legal-hub#terms"
                 className="text-on-surface underline hover:text-primary"
               >
-                Terms of Service
+                {t('register.terms')}
               </Link>{' '}
-              and{' '}
+              {t('register.and')}{' '}
               <Link
                 href="/legal-hub#privacy"
                 className="text-on-surface underline hover:text-primary"
               >
-                Privacy Policy
+                {t('register.privacy')}
               </Link>
             </span>
           </label>
@@ -191,20 +188,20 @@ export default function RegisterPage() {
             {isSubmitting ? (
               <span className="flex items-center justify-center gap-2">
                 <span className="animate-spin inline-block">⏳</span>
-                Creating Account...
+                {t('register.creating_account')}
               </span>
             ) : (
-              'Create Account'
+              t('register.submit')
             )}
           </button>
 
           <p className="text-center text-body-sm text-on-surface-variant">
-            Already have an account?{' '}
+            {t('register.already_have')}{' '}
             <Link
               href="/sign-in"
               className="text-on-surface font-semibold underline hover:text-primary"
             >
-              Sign in
+              {t('register.sign_in_link')}
             </Link>
           </p>
         </form>

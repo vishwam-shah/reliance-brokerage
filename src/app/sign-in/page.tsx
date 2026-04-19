@@ -122,8 +122,9 @@ export default function SignInPage() {
         <div className="w-full max-w-440px">
           {/* Mobile Logo */}
           <div className="lg:hidden mb-10">
-            <Link href="/" className="nav-brand">
-              Reliance Brokerage
+            <Link href="/" className="nav-brand flex items-center gap-2">
+              <Image src="/logo.jpeg" alt="Reliance Brokerage" width={36} height={36} className="rounded-md" />
+              <span>Reliance Brokerage</span>
             </Link>
           </div>
 

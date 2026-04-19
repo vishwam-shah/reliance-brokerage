@@ -172,20 +172,20 @@
 
   /* Display typography */
   .display-hero {
-    @apply font-headline font-bold text-display-lg leading-tight text-on-surface;
+    @apply font-headline font-bold text-3xl sm:text-4xl md:text-5xl lg:text-display-lg leading-tight text-on-surface;
   }
 
   .body-lead {
-    @apply font-body text-body-lg text-on-surface-variant leading-relaxed;
+    @apply font-body text-body-md sm:text-body-lg text-on-surface-variant leading-relaxed;
   }
 
   /* Grid layouts */
   .hero-grid {
-    @apply grid grid-cols-1 gap-16 items-center lg:grid-cols-[7fr_5fr];
+    @apply grid grid-cols-1 gap-8 lg:gap-16 items-center lg:grid-cols-[7fr_5fr];
   }
 
   .process-grid {
-    @apply grid grid-cols-1 md:grid-cols-5 gap-6;
+    @apply grid grid-cols-2 lg:grid-cols-5 gap-4 lg:gap-6;
   }
 
   .kpi-grid {
@@ -193,7 +193,7 @@
   }
 
   .stat-card {
-    @apply bg-surface-container-lowest p-10 relative overflow-hidden transition-all duration-base border border-black border-opacity-10 hover:border-accent hover:bg-surface-container-low rounded-lg shadow-card hover:shadow-modal;
+    @apply bg-surface-container-lowest p-6 md:p-10 relative overflow-hidden transition-all duration-base border border-black border-opacity-10 hover:border-accent hover:bg-surface-container-low rounded-lg shadow-card hover:shadow-modal;
   }
 
   /* Reveal animation */
@@ -236,6 +236,25 @@
   .text-muted {
     @apply text-on-surface-variant;
   }
+}
+
+/* ── Responsive typography scale ──────────────────────────────────────────
+   Overrides Tailwind text-display-* and text-headline-* on small screens
+   so every page scales consistently without per-component changes.        */
+@media (max-width: 639px) {
+  .text-display-lg { font-size: 2rem    !important; line-height: 1.15 !important; }
+  .text-display-md { font-size: 1.75rem !important; line-height: 1.15 !important; }
+  .text-display-sm { font-size: 1.5rem  !important; line-height: 1.2  !important; }
+  .text-headline-lg { font-size: 1.375rem !important; }
+  .text-headline-md { font-size: 1.25rem  !important; }
+  .text-headline-sm { font-size: 1.125rem !important; }
+  .text-title-lg { font-size: 1.125rem !important; }
+}
+
+@media (min-width: 640px) and (max-width: 1023px) {
+  .text-display-lg { font-size: 2.75rem !important; line-height: 1.1 !important; }
+  .text-display-md { font-size: 2.25rem !important; line-height: 1.1 !important; }
+  .text-display-sm { font-size: 1.875rem !important; line-height: 1.1 !important; }
 }
 
 /* Smooth scrolling */

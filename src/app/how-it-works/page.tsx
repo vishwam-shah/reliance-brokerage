@@ -46,7 +46,7 @@ export default function HowItWorksPage() {
               >
                 <div className="flex flex-col justify-center">
                   <div className="inline-flex items-baseline gap-4 mb-6">
-                    <div className="w-20 h-20 bg-primary text-on-primary flex items-center justify-center font-headline text-5xl font-black flex-shrink-0">
+                    <div className="w-14 h-14 sm:w-20 sm:h-20 bg-primary text-on-primary flex items-center justify-center font-headline text-3xl sm:text-5xl font-black flex-shrink-0">
                       {step.number}
                     </div>
                     <h2 className="font-headline text-display-sm font-bold text-on-surface">

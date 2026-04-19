@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Icon } from '@iconify/react';
 import { useLanguage } from '@/hooks/useLanguage';
 import Button from '@/components/ui/Button';
@@ -35,8 +36,9 @@ const Navigation = () => {
   return (
     <nav className="nav-public" aria-label="Primary navigation">
       <div className="nav-inner">
-        <Link href="/" className="nav-brand">
-          Reliance Brokerage
+        <Link href="/" className="nav-brand flex items-center gap-2">
+          <Image src="/logo.jpeg" alt="Reliance Brokerage" width={36} height={36} className="rounded-md" />
+          <span>Reliance Brokerage</span>
         </Link>
 
         <ul className="nav-links" role="list">

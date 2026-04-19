@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { Icon } from '@iconify/react';
 import { useLanguage } from '@/hooks/useLanguage';
 
@@ -17,7 +18,10 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           {/* Company Info */}
           <div>
-            <h3 className="font-headline font-bold text-headline-sm mb-4">Reliance Brokerage</h3>
+            <div className="flex items-center gap-3 mb-4">
+              <Image src="/logo.jpeg" alt="Reliance Brokerage" width={40} height={40} className="rounded-md" />
+              <h3 className="font-headline font-bold text-headline-sm">Reliance Brokerage</h3>
+            </div>
             <p className="text-body-sm text-white opacity-75 mb-6">{t('footer.company_desc')}</p>
             <div className="flex gap-3">
               <a href={FACEBOOK_URL} target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="w-9 h-9 bg-[#1877F2] flex items-center justify-center hover:opacity-80 transition-opacity">

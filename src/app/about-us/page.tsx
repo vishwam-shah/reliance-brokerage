@@ -58,8 +58,8 @@ export default function AboutPage() {
           </p>
           <div className="space-y-8">
             {[1, 2, 3].map(i => (
-              <div key={i} className="flex gap-6 pb-8 border-b border-black border-opacity-10">
-                <div className="w-24 h-24 bg-surface-container-lowest flex-shrink-0" />
+              <div key={i} className="flex flex-col sm:flex-row gap-4 sm:gap-6 pb-8 border-b border-black border-opacity-10">
+                <div className="w-20 h-20 sm:w-24 sm:h-24 bg-surface-container-lowest flex-shrink-0" />
                 <div>
                   <h4 className="font-headline text-title-lg font-bold text-on-surface mb-1">
                     {t('about.team_member')} {i}

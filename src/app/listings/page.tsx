@@ -62,10 +62,10 @@ export default function ListingsPage() {
         </div>
 
         {/* Buyer / Seller Toggle */}
-        <div className="flex gap-2 mb-8 p-1 bg-surface-container-lowest border border-outline-variant rounded-lg w-fit">
+        <div className="flex gap-2 mb-8 p-1 bg-surface-container-lowest border border-outline-variant rounded-lg w-full sm:w-fit">
           {(['buyer', 'seller'] as const).map(type => (
             <button key={type} onClick={() => setUserType(type)}
-              className={`px-6 py-2 rounded-md font-label font-semibold text-label-sm uppercase tracking-widest transition-all ${userType === type ? 'bg-primary text-on-primary shadow-card' : 'text-on-surface-variant hover:text-on-surface'}`}>
+              className={`flex-1 sm:flex-none px-6 py-2 rounded-md font-label font-semibold text-label-sm uppercase tracking-widest transition-all ${userType === type ? 'bg-primary text-on-primary shadow-card' : 'text-on-surface-variant hover:text-on-surface'}`}>
               {type === 'buyer' ? t('listings.i_am_buyer') : t('listings.i_am_seller')}
             </button>
           ))}
@@ -88,9 +88,9 @@ export default function ListingsPage() {
         )}
 
         {/* Filters + Search */}
-        <div className="bg-surface-container-lowest border border-outline-variant p-5 mb-8 flex flex-wrap gap-4 items-end">
+        <div className="bg-surface-container-lowest border border-outline-variant p-5 mb-8 flex flex-col sm:flex-row sm:flex-wrap gap-4 sm:items-end">
           {/* Search */}
-          <div className="flex-1 min-w-[180px]">
+          <div className="w-full sm:flex-1 sm:min-w-[180px]">
             <label className="form-label mb-1">{t('listings.search_label')}</label>
             <div className="relative">
               <Icon icon="mdi:magnify" className="absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant" style={{ width: '18px', height: '18px' }} />
@@ -99,7 +99,7 @@ export default function ListingsPage() {
           </div>
 
           {/* Sector */}
-          <div className="min-w-[140px]">
+          <div className="w-full sm:w-auto sm:min-w-[140px]">
             <label className="form-label mb-1">{t('listings.sector_label')}</label>
             <select className="form-input" value={sector} onChange={e => { setSector(e.target.value); setPage(1); }}>
               {SECTORS.map(s => <option key={s}>{s}</option>)}
@@ -107,7 +107,7 @@ export default function ListingsPage() {
           </div>
 
           {/* Availability */}
-          <div className="min-w-[140px]">
+          <div className="w-full sm:w-auto sm:min-w-[140px]">
             <label className="form-label mb-1">{t('listings.availability_label')}</label>
             <select className="form-input" value={availability} onChange={e => { setAvailability(e.target.value as any); setPage(1); }}>
               <option value="all">{t('listings.avail_all')}</option>
@@ -117,7 +117,7 @@ export default function ListingsPage() {
           </div>
 
           {/* Sort */}
-          <div className="min-w-[160px]">
+          <div className="w-full sm:w-auto sm:min-w-[160px]">
             <label className="form-label mb-1">{t('listings.sort_label')}</label>
             <select className="form-input" value={sort} onChange={e => { setSort(e.target.value as any); setPage(1); }}>
               <option value="default">{t('listings.sort_default')}</option>
@@ -127,7 +127,7 @@ export default function ListingsPage() {
             </select>
           </div>
 
-          <button onClick={resetFilters} className="btn btn-ghost btn-sm self-end">
+          <button onClick={resetFilters} className="btn btn-ghost btn-sm w-full sm:w-auto sm:self-end">
             <Icon icon="mdi:filter-remove" style={{ width: '16px', height: '16px' }} className="mr-1" /> {t('listings.reset')}
           </button>
         </div>

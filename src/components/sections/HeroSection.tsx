@@ -15,7 +15,7 @@ const HeroSection = () => {
   const { translate: t } = useLanguage();
 
   return (
-    <section className="bg-surface py-24 md:py-32 min-h-screen flex items-center">
+    <section className="bg-surface py-16 md:py-24 lg:py-32 min-h-screen flex items-center">
       <div className="container">
         <div className="hero-grid">
           {/* Left: Copy */}
@@ -86,7 +86,7 @@ const HeroSection = () => {
 
             {/* Stat Monolith Overlay */}
             <motion.div
-              className="absolute bottom-0 -left-8 -right-8 md:bottom-0 md:-left-8 p-10 bg-primary text-on-primary max-w-280px shadow-modal"
+              className="absolute bottom-0 left-0 right-0 md:-left-8 md:right-auto p-6 md:p-10 bg-primary text-on-primary md:max-w-[280px] shadow-modal"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
