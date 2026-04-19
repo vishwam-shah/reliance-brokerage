@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Navigation from '@/components/layout/Navigation';
 import Footer from '@/components/layout/Footer';
+import FloatingWhatsApp from '@/components/ui/FloatingWhatsApp';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -50,6 +51,7 @@ export default function RootLayout({
           {children}
         </main>
         <Footer />
+        <FloatingWhatsApp />
       </body>
     </html>
   );

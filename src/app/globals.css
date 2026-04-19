@@ -215,11 +215,11 @@
   }
 
   .nav-links {
-    @apply hidden md:flex list-none gap-8 items-center;
+    @apply hidden lg:flex list-none gap-5 items-center;
   }
 
   .nav-links a {
-    @apply font-label font-semibold text-label-sm text-black uppercase tracking-widest hover:text-black transition-colors;
+    @apply font-label font-semibold text-label-xs text-black uppercase tracking-wider hover:text-black transition-colors whitespace-nowrap;
     outline-offset: 2px;
   }
 

@@ -19,7 +19,8 @@ const Navigation = () => {
     { label: t('nav.listings'), href: '/listings' },
     { label: t('nav.how_it_works'), href: '/how-it-works' },
     { label: t('nav.valuations'), href: '/valuations' },
-    { label: t('nav.about'), href: '/about' },
+    { label: t('nav.about'), href: '/about-us' },
+    { label: t('nav.contact'), href: '/contact-us' },
     { label: t('nav.legal'), href: '/legal-hub' },
   ];
 
@@ -52,22 +53,22 @@ const Navigation = () => {
           <button
             onClick={toggleLanguage}
             aria-label="Toggle language"
-            className="hidden sm:flex px-3 py-2 min-h-11 min-w-11 items-center justify-center text-label-xs font-bold text-black uppercase tracking-widest transition-colors hover:text-black focus:outline-accent focus:outline-2 focus:outline-offset-2"
+            className="hidden lg:flex px-3 py-2 min-h-11 min-w-11 items-center justify-center text-label-xs font-bold text-black uppercase tracking-widest transition-colors hover:text-black focus:outline-accent focus:outline-2 focus:outline-offset-2"
             title="English / 中文"
           >
             <span>{currentLang === 'en' ? '中文' : 'English'}</span>
           </button>
-          <Button href="/sign-in" variant="ghost" size="sm" className="hidden md:inline-flex">
+          <Button href="/sign-in" variant="ghost" size="sm" className="hidden lg:inline-flex">
             {t('nav.sign_in')}
           </Button>
-          <Button href="/register" variant="primary" size="sm" className="hidden md:inline-flex">
+          <Button href="/register" variant="primary" size="sm" className="hidden lg:inline-flex">
             {t('nav.list_business')}
           </Button>
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-expanded={mobileMenuOpen}
             aria-label="Open navigation"
-            className="md:hidden p-1 bg-transparent border-none cursor-pointer flex items-center justify-center"
+            className="lg:hidden p-1 bg-transparent border-none cursor-pointer flex items-center justify-center"
           >
             <Icon
               icon={mobileMenuOpen ? 'mdi:close' : 'mdi:menu'}
@@ -80,7 +81,7 @@ const Navigation = () => {
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="absolute top-20 left-0 right-0 bg-surface border-b border-black border-opacity-5 p-6 flex flex-col gap-4 md:hidden z-40">
+        <div className="absolute top-20 left-0 right-0 bg-surface border-b border-black border-opacity-5 p-6 flex flex-col gap-4 lg:hidden z-40">
           {navLinks.map((link) => (
             <Link
               key={link.href}
