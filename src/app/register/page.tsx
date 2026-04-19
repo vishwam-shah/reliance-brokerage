@@ -69,12 +69,6 @@ export default function RegisterPage() {
   return (
     <div className="min-h-screen bg-surface pt-20 pb-12">
       <div className="container max-w-640px mx-auto">
-        <div className="mb-12">
-          <Link href="/" className="nav-brand">
-            Reliance Brokerage
-          </Link>
-        </div>
-
         <div className="mb-10">
           <span className="eyebrow">Create Your Account</span>
           <h1 className="font-headline text-display-sm text-on-surface mt-5 mb-3 font-bold">
