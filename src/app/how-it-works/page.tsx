@@ -7,11 +7,11 @@ export default function HowItWorksPage() {
   const { translate: t } = useLanguage();
 
   const steps = [
-    { number: 1, title: t('process.steps.list'), description: t('process.steps.list_desc'), details: t('how_it_works.step1_details') as string[] },
-    { number: 2, title: t('process.steps.screen'), description: t('process.steps.screen_desc'), details: t('how_it_works.step2_details') as string[] },
-    { number: 3, title: t('process.steps.introduce'), description: t('process.steps.introduce_desc'), details: t('how_it_works.step3_details') as string[] },
-    { number: 4, title: t('process.steps.due_diligence'), description: t('process.steps.due_diligence_desc'), details: t('how_it_works.step4_details') as string[] },
-    { number: 5, title: t('process.steps.complete'), description: t('process.steps.complete_desc'), details: t('how_it_works.step5_details') as string[] },
+    { number: 1, title: t('process.steps.list'), description: t('process.steps.list_desc'), details: t('how_it_works.step1_details') as unknown as string[] },
+    { number: 2, title: t('process.steps.screen'), description: t('process.steps.screen_desc'), details: t('how_it_works.step2_details') as unknown as string[] },
+    { number: 3, title: t('process.steps.introduce'), description: t('process.steps.introduce_desc'), details: t('how_it_works.step3_details') as unknown as string[] },
+    { number: 4, title: t('process.steps.due_diligence'), description: t('process.steps.due_diligence_desc'), details: t('how_it_works.step4_details') as unknown as string[] },
+    { number: 5, title: t('process.steps.complete'), description: t('process.steps.complete_desc'), details: t('how_it_works.step5_details') as unknown as string[] },
   ];
 
   const timeline = [
