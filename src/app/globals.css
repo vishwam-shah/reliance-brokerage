@@ -147,6 +147,11 @@
     @apply min-h-screen flex flex-col;
   }
 
+  /* Dashboard/admin routes render their own chrome; drop the public-nav offset */
+  main.app-main {
+    @apply pt-0;
+  }
+
   /* Ensure footer is at bottom */
   body {
     @apply flex flex-col min-h-screen;

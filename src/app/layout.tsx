@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
-import Navigation from '@/components/layout/Navigation';
-import Footer from '@/components/layout/Footer';
-import FloatingWhatsApp from '@/components/ui/FloatingWhatsApp';
+import { Toaster } from 'sonner';
+import { SiteHeader, SiteFooter, SiteMain } from '@/components/layout/SiteChrome';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -46,12 +45,10 @@ export default function RootLayout({
         <a href="#main-content" className="skip-to-content">
           Skip to main content
         </a>
-        <Navigation />
-        <main id="main-content">
-          {children}
-        </main>
-        <Footer />
-        <FloatingWhatsApp />
+        <SiteHeader />
+        <SiteMain>{children}</SiteMain>
+        <SiteFooter />
+        <Toaster position="top-right" richColors closeButton />
       </body>
     </html>
   );

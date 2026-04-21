@@ -11,17 +11,17 @@ const KPISection = () => {
     {
       label: t('kpis.listings_label'),
       description: t('kpis.listings_desc'),
-      value: '287',
+      value: '215',
     },
     {
       label: t('kpis.transitions_label'),
       description: t('kpis.transitions_desc'),
-      value: '612',
+      value: '160',
     },
     {
       label: t('kpis.years_label'),
       description: t('kpis.years_desc'),
-      value: '15',
+      value: '3',
     },
     {
       label: t('kpis.completion_label'),

@@ -1,255 +1,322 @@
 'use client';
 
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { Icon } from '@iconify/react';
-
-const WHATSAPP_NUMBER = '60142642414';
+import { toast } from 'sonner';
+import * as Dialog from '@radix-ui/react-dialog';
+import DashboardShell from '@/components/dashboard/DashboardShell';
+import StatusBadge from '@/components/dashboard/StatusBadge';
+import { useSession } from '@/hooks/useSession';
 
 type Listing = {
-  id: number;
+  _id: string;
   title: string;
   sector: string;
   location: string;
   valuation: string;
   revenue: string;
-  rentPrice: string;
-  availableFor: ('buy' | 'rent')[];
-  status: 'active' | 'pending' | 'closed';
+  status: string;
+  availableFor: string[];
+  views: number;
+  createdAt: string;
+  rejectionReason?: string;
+};
+
+type Enquiry = {
+  _id: string;
+  name: string;
+  email: string;
+  phone: string;
+  type: string;
+  listingTitle: string;
+  message: string;
+  status: string;
+  notes?: string;
   createdAt: string;
 };
 
-const initialListings: Listing[] = [
-  { id: 1, title: 'Premium Manufacturing Facility', sector: 'Manufacturing', location: 'Klang Valley', valuation: 'RM 45M', revenue: 'RM 120M', rentPrice: 'RM 180K/mo', availableFor: ['buy', 'rent'], status: 'active', createdAt: '2024-01-10' },
-  { id: 2, title: 'Tech Logistics Hub', sector: 'Logistics', location: 'Shah Alam', valuation: 'RM 28M', revenue: 'RM 85M', rentPrice: 'RM 95K/mo', availableFor: ['buy', 'rent'], status: 'active', createdAt: '2024-01-15' },
-  { id: 3, title: 'Distribution Network', sector: 'Distribution', location: 'Petaling Jaya', valuation: 'RM 32M', revenue: 'RM 95M', rentPrice: '', availableFor: ['buy'], status: 'pending', createdAt: '2024-01-20' },
-];
+type User = {
+  _id: string;
+  name: string;
+  email: string;
+  role: string;
+  phone: string;
+  company: string;
+  createdAt: string;
+  lastLoginAt?: string;
+};
 
-const enquiries = [
-  { id: 1, name: 'Ahmad Rashid', type: 'Buy', listing: 'Premium Manufacturing Facility', date: '2024-01-22', status: 'new' },
-  { id: 2, name: 'Tan Wei Ming', type: 'Rent', listing: 'Tech Logistics Hub', date: '2024-01-21', status: 'contacted' },
-  { id: 3, name: 'Priya Nair', type: 'Sell', listing: 'New Listing', date: '2024-01-20', status: 'new' },
-];
+type Stats = {
+  listings: { total: number; active: number; pending: number; rejected: number };
+  enquiries: { total: number; new: number };
+  users: { total: number; sellers: number; buyers: number };
+};
 
-const emptyListing: Omit<Listing, 'id' | 'createdAt'> = {
-  title: '', sector: '', location: '', valuation: '', revenue: '', rentPrice: '', availableFor: ['buy'], status: 'pending',
+type AuditItem = {
+  _id: string;
+  action: string;
+  actorEmail: string;
+  actorRole: string;
+  targetType: string;
+  targetId: string;
+  ip: string;
+  meta: Record<string, unknown>;
+  createdAt: string;
 };
 
 export default function AdminPage() {
-  const [tab, setTab] = useState<'listings' | 'enquiries'>('listings');
-  const [listings, setListings] = useState<Listing[]>(initialListings);
-  const [showForm, setShowForm] = useState(false);
-  const [formData, setFormData] = useState<typeof emptyListing>(emptyListing);
-  const [editId, setEditId] = useState<number | null>(null);
-  const [authenticated, setAuthenticated] = useState(false);
-  const [adminPass, setAdminPass] = useState('');
-  const [authError, setAuthError] = useState('');
+  const router = useRouter();
+  const { user, loading } = useSession();
+  const [tab, setTab] = useState('overview');
 
-  const handleAuth = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (adminPass === 'reliance2024') {
-      setAuthenticated(true);
-    } else {
-      setAuthError('Invalid password');
+  const [stats, setStats] = useState<Stats | null>(null);
+  const [listings, setListings] = useState<Listing[]>([]);
+  const [enquiries, setEnquiries] = useState<Enquiry[]>([]);
+  const [users, setUsers] = useState<User[]>([]);
+  const [audit, setAudit] = useState<AuditItem[]>([]);
+  const [loadingData, setLoadingData] = useState(false);
+  const [listingFilter, setListingFilter] = useState<'all' | 'active' | 'pending_approval' | 'rejected'>('all');
+
+  const [rejecting, setRejecting] = useState<Listing | null>(null);
+  const [rejectReason, setRejectReason] = useState('');
+
+  const loadStats = useCallback(async () => {
+    const res = await fetch('/api/stats', { credentials: 'include', cache: 'no-store' });
+    if (res.ok) setStats(await res.json());
+  }, []);
+
+  const loadListings = useCallback(async () => {
+    setLoadingData(true);
+    try {
+      const statusParam = listingFilter === 'all' ? '' : `&status=${listingFilter}`;
+      const res = await fetch(`/api/listings?limit=100${statusParam}`, {
+        credentials: 'include',
+        cache: 'no-store',
+      });
+      const data = await res.json();
+      if (res.ok) setListings(data.items ?? []);
+    } finally {
+      setLoadingData(false);
     }
-  };
+  }, [listingFilter]);
 
-  const handleSave = () => {
-    if (editId !== null) {
-      setListings(prev => prev.map(l => l.id === editId ? { ...formData, id: editId, createdAt: l.createdAt } : l));
-    } else {
-      const newListing: Listing = { ...formData, id: Date.now(), createdAt: new Date().toISOString().split('T')[0] };
-      setListings(prev => [...prev, newListing]);
-      const msg = `New Listing Added:\n\nTitle: ${formData.title}\nSector: ${formData.sector}\nLocation: ${formData.location}\nValuation: ${formData.valuation}\nAvailable For: ${formData.availableFor.join(', ')}`;
-      window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
+  const loadEnquiries = useCallback(async () => {
+    setLoadingData(true);
+    try {
+      const res = await fetch('/api/enquiries?limit=100', { credentials: 'include', cache: 'no-store' });
+      const data = await res.json();
+      if (res.ok) setEnquiries(data.items ?? []);
+    } finally {
+      setLoadingData(false);
     }
-    setShowForm(false);
-    setEditId(null);
-    setFormData(emptyListing);
+  }, []);
+
+  const loadUsers = useCallback(async () => {
+    setLoadingData(true);
+    try {
+      const res = await fetch('/api/users?limit=100', { credentials: 'include', cache: 'no-store' });
+      const data = await res.json();
+      if (res.ok) setUsers(data.items ?? []);
+    } finally {
+      setLoadingData(false);
+    }
+  }, []);
+
+  const loadAudit = useCallback(async () => {
+    setLoadingData(true);
+    try {
+      const res = await fetch('/api/audit?limit=100', { credentials: 'include', cache: 'no-store' });
+      const data = await res.json();
+      if (res.ok) setAudit(data.items ?? []);
+    } finally {
+      setLoadingData(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!loading && !user) router.push('/sign-in?redirect=/admin');
+    if (!loading && user && user.role !== 'admin' && user.role !== 'superadmin') {
+      router.push('/dashboard');
+    }
+  }, [loading, user, router]);
+
+  useEffect(() => {
+    if (!user) return;
+    if (tab === 'overview') loadStats();
+    if (tab === 'listings' || tab === 'approvals') loadListings();
+    if (tab === 'enquiries') loadEnquiries();
+    if (tab === 'users') loadUsers();
+    if (tab === 'audit') loadAudit();
+  }, [user, tab, loadStats, loadListings, loadEnquiries, loadUsers, loadAudit]);
+
+  useEffect(() => {
+    if (tab === 'approvals') setListingFilter('pending_approval');
+  }, [tab]);
+
+  const approveListing = async (id: string) => {
+    const res = await fetch(`/api/listings/${id}/approve`, { method: 'POST', credentials: 'include' });
+    const data = await res.json();
+    if (!res.ok) {
+      toast.error(data?.error?.message ?? 'Approve failed');
+      return;
+    }
+    toast.success('Listing approved');
+    loadListings();
+    loadStats();
   };
 
-  const handleDelete = (id: number) => {
-    if (confirm('Delete this listing?')) setListings(prev => prev.filter(l => l.id !== id));
+  const rejectListing = async () => {
+    if (!rejecting) return;
+    const reason = rejectReason.trim();
+    if (reason.length < 3) {
+      toast.error('Reason must be at least 3 characters');
+      return;
+    }
+    const res = await fetch(`/api/listings/${rejecting._id}/reject`, {
+      method: 'POST',
+      credentials: 'include',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ reason }),
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      toast.error(data?.error?.message ?? 'Reject failed');
+      return;
+    }
+    toast.success('Listing rejected');
+    setRejecting(null);
+    setRejectReason('');
+    loadListings();
+    loadStats();
   };
 
-  const handleEdit = (listing: Listing) => {
-    setEditId(listing.id);
-    setFormData({ title: listing.title, sector: listing.sector, location: listing.location, valuation: listing.valuation, revenue: listing.revenue, rentPrice: listing.rentPrice, availableFor: listing.availableFor, status: listing.status });
-    setShowForm(true);
+  const updateEnquiry = async (id: string, status: string) => {
+    const res = await fetch(`/api/enquiries/${id}`, {
+      method: 'PATCH',
+      credentials: 'include',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ status }),
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      toast.error(data?.error?.message ?? 'Update failed');
+      return;
+    }
+    toast.success('Enquiry updated');
+    loadEnquiries();
   };
 
-  const forwardEnquiry = (enq: typeof enquiries[0]) => {
-    const msg = `Enquiry Follow-up:\n\nName: ${enq.name}\nInterest: ${enq.type}\nListing: ${enq.listing}\nDate: ${enq.date}`;
-    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
-  };
-
-  if (!authenticated) {
+  if (loading || !user) {
     return (
-      <div className="min-h-screen bg-surface flex items-center justify-center pt-20">
-        <div className="bg-surface-container-lowest p-12 w-full max-w-md border border-outline-variant">
-          <h1 className="font-headline text-headline-md font-bold text-on-surface mb-8 text-center">Admin Login</h1>
-          <form onSubmit={handleAuth} className="space-y-5">
-            <div className="form-group">
-              <label className="form-label">Password</label>
-              <input
-                type="password"
-                className="form-input"
-                placeholder="Enter admin password"
-                value={adminPass}
-                onChange={e => setAdminPass(e.target.value)}
-              />
-              {authError && <p className="text-error text-label-sm mt-1">{authError}</p>}
-            </div>
-            <button type="submit" className="btn btn-primary w-full">Enter Admin</button>
-          </form>
-        </div>
+      <div className="min-h-screen flex items-center justify-center bg-surface">
+        <Icon icon="mdi:loading" className="animate-spin text-primary" style={{ width: '32px', height: '32px' }} />
       </div>
     );
   }
 
+  const navItems = [
+    { label: 'Overview', icon: 'mdi:view-dashboard', value: 'overview' },
+    { label: 'Listings', icon: 'mdi:briefcase', value: 'listings' },
+    { label: 'Approvals', icon: 'mdi:check-decagram', value: 'approvals' },
+    { label: 'Enquiries', icon: 'mdi:email', value: 'enquiries' },
+    { label: 'Users', icon: 'mdi:account-group', value: 'users' },
+    { label: 'Audit Log', icon: 'mdi:history', value: 'audit' },
+  ];
+
   return (
-    <div className="min-h-screen bg-surface pt-24 pb-20">
-      <div className="container">
-        <div className="flex items-center justify-between mb-10">
-          <div>
-            <h1 className="font-headline text-display-sm font-bold text-on-surface">Admin Panel</h1>
-            <p className="text-body-sm text-on-surface-variant mt-1">Manage listings and enquiries</p>
-          </div>
-          <button onClick={() => setAuthenticated(false)} className="btn btn-ghost btn-sm">
-            <Icon icon="mdi:logout" style={{ width: '16px', height: '16px' }} className="mr-2" />
-            Logout
-          </button>
+    <DashboardShell
+      user={user}
+      title="Admin Panel"
+      items={navItems}
+      activeValue={tab}
+      onSelect={setTab}
+    >
+      {tab === 'overview' && (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {!stats ? (
+            <div className="col-span-full text-center py-16 text-on-surface-variant">Loading…</div>
+          ) : (
+            <>
+              <StatCard icon="mdi:briefcase" label="Active Listings" value={stats.listings.active} secondary={`${stats.listings.total} total`} />
+              <StatCard icon="mdi:clock" label="Pending Approvals" value={stats.listings.pending} accent />
+              <StatCard icon="mdi:close-octagon" label="Rejected" value={stats.listings.rejected} />
+              <StatCard icon="mdi:email" label="New Enquiries" value={stats.enquiries.new} secondary={`${stats.enquiries.total} total`} accent />
+              <StatCard icon="mdi:account-group" label="Users" value={stats.users.total} secondary={`${stats.users.sellers} sellers · ${stats.users.buyers} buyers`} />
+              <StatCard icon="mdi:storefront" label="Sellers" value={stats.users.sellers} />
+            </>
+          )}
         </div>
+      )}
 
-        {/* Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
-          {[
-            { label: 'Total Listings', value: listings.length, icon: 'mdi:storefront' },
-            { label: 'Active', value: listings.filter(l => l.status === 'active').length, icon: 'mdi:check-circle' },
-            { label: 'Pending', value: listings.filter(l => l.status === 'pending').length, icon: 'mdi:clock' },
-            { label: 'Enquiries', value: enquiries.length, icon: 'mdi:message' },
-          ].map(stat => (
-            <div key={stat.label} className="bg-surface-container-lowest p-6 border border-outline-variant">
-              <Icon icon={stat.icon} className="text-accent mb-3" style={{ width: '28px', height: '28px' }} />
-              <p className="font-headline text-2xl font-bold text-on-surface">{stat.value}</p>
-              <p className="text-label-sm text-on-surface-variant uppercase tracking-widest">{stat.label}</p>
-            </div>
-          ))}
-        </div>
-
-        {/* Tabs */}
-        <div className="flex gap-1 mb-8 border-b border-outline-variant">
-          {(['listings', 'enquiries'] as const).map(t => (
-            <button
-              key={t}
-              onClick={() => setTab(t)}
-              className={`px-6 py-3 font-label font-semibold text-label-sm uppercase tracking-widest transition-colors border-b-2 -mb-px ${tab === t ? 'border-accent text-on-surface' : 'border-transparent text-on-surface-variant'}`}
-            >
-              {t === 'listings' ? 'Listings' : 'Enquiries'}
-            </button>
-          ))}
-        </div>
-
-        {tab === 'listings' && (
-          <div>
+      {(tab === 'listings' || tab === 'approvals') && (
+        <div>
+          {tab === 'listings' && (
             <div className="flex justify-end mb-6">
-              <button onClick={() => { setShowForm(true); setEditId(null); setFormData(emptyListing); }} className="btn btn-primary">
-                <Icon icon="mdi:plus" style={{ width: '18px', height: '18px' }} className="mr-2" />
-                Add Listing
-              </button>
+              <select
+                className="form-input w-auto"
+                value={listingFilter}
+                onChange={(e) => setListingFilter(e.target.value as typeof listingFilter)}
+              >
+                <option value="all">All statuses</option>
+                <option value="active">Active</option>
+                <option value="pending_approval">Pending</option>
+                <option value="rejected">Rejected</option>
+              </select>
             </div>
+          )}
 
-            {showForm && (
-              <div className="bg-surface-container-lowest border border-outline-variant p-8 mb-8">
-                <h3 className="font-headline text-title-lg font-bold text-on-surface mb-6">{editId ? 'Edit Listing' : 'New Listing'}</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                  {[
-                    { key: 'title', label: 'Title', placeholder: 'Business name' },
-                    { key: 'sector', label: 'Sector', placeholder: 'e.g. Manufacturing' },
-                    { key: 'location', label: 'Location', placeholder: 'e.g. Klang Valley' },
-                    { key: 'valuation', label: 'Valuation', placeholder: 'e.g. RM 10M' },
-                    { key: 'revenue', label: 'Annual Revenue', placeholder: 'e.g. RM 30M' },
-                    { key: 'rentPrice', label: 'Rent Price (optional)', placeholder: 'e.g. RM 50K/mo' },
-                  ].map(field => (
-                    <div key={field.key} className="form-group">
-                      <label className="form-label">{field.label}</label>
-                      <input
-                        type="text"
-                        className="form-input"
-                        placeholder={field.placeholder}
-                        value={(formData as any)[field.key]}
-                        onChange={e => setFormData(prev => ({ ...prev, [field.key]: e.target.value }))}
-                      />
-                    </div>
-                  ))}
-                  <div className="form-group">
-                    <label className="form-label">Available For</label>
-                    <div className="flex gap-4 mt-2">
-                      {(['buy', 'rent'] as const).map(opt => (
-                        <label key={opt} className="flex items-center gap-2 cursor-pointer">
-                          <input
-                            type="checkbox"
-                            checked={formData.availableFor.includes(opt)}
-                            onChange={e => setFormData(prev => ({ ...prev, availableFor: e.target.checked ? [...prev.availableFor, opt] : prev.availableFor.filter(v => v !== opt) }))}
-                          />
-                          <span className="text-body-sm capitalize">{opt}</span>
-                        </label>
-                      ))}
-                    </div>
-                  </div>
-                  <div className="form-group">
-                    <label className="form-label">Status</label>
-                    <select className="form-input" value={formData.status} onChange={e => setFormData(prev => ({ ...prev, status: e.target.value as Listing['status'] }))}>
-                      <option value="active">Active</option>
-                      <option value="pending">Pending</option>
-                      <option value="closed">Closed</option>
-                    </select>
-                  </div>
-                </div>
-                <div className="flex gap-3 mt-6">
-                  <button onClick={handleSave} className="btn btn-primary">Save Listing</button>
-                  <button onClick={() => setShowForm(false)} className="btn btn-ghost">Cancel</button>
-                </div>
-              </div>
-            )}
-
-            <div className="overflow-x-auto">
-              <table className="w-full text-left border-collapse">
-                <thead>
-                  <tr className="bg-surface-container">
-                    <th className="p-4 font-label text-label-sm text-on-surface-variant uppercase tracking-widest">Title</th>
-                    <th className="p-4 font-label text-label-sm text-on-surface-variant uppercase tracking-widest hidden md:table-cell">Sector</th>
-                    <th className="p-4 font-label text-label-sm text-on-surface-variant uppercase tracking-widest hidden md:table-cell">Valuation</th>
-                    <th className="p-4 font-label text-label-sm text-on-surface-variant uppercase tracking-widest">Available</th>
-                    <th className="p-4 font-label text-label-sm text-on-surface-variant uppercase tracking-widest">Status</th>
-                    <th className="p-4 font-label text-label-sm text-on-surface-variant uppercase tracking-widest">Actions</th>
+          {loadingData ? (
+            <div className="text-center py-16 text-on-surface-variant">Loading…</div>
+          ) : listings.length === 0 ? (
+            <div className="bg-surface p-12 text-center border border-outline-variant">
+              <p className="text-body-sm text-on-surface-variant">No listings found.</p>
+            </div>
+          ) : (
+            <div className="bg-surface border border-outline-variant overflow-x-auto">
+              <table className="w-full text-body-sm">
+                <thead className="bg-surface-container text-label-xs uppercase text-on-surface-variant">
+                  <tr>
+                    <th className="text-left p-3">Title</th>
+                    <th className="text-left p-3">Sector</th>
+                    <th className="text-left p-3">Status</th>
+                    <th className="text-left p-3">Avail.</th>
+                    <th className="text-left p-3">Created</th>
+                    <th className="text-right p-3">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {listings.map(listing => (
-                    <tr key={listing.id} className="border-t border-outline-variant hover:bg-surface-container-low">
-                      <td className="p-4 font-body text-body-sm text-on-surface font-semibold">{listing.title}</td>
-                      <td className="p-4 font-body text-body-sm text-on-surface-variant hidden md:table-cell">{listing.sector}</td>
-                      <td className="p-4 font-body text-body-sm text-on-surface-variant hidden md:table-cell">{listing.valuation}</td>
-                      <td className="p-4">
-                        <div className="flex gap-1 flex-wrap">
-                          {listing.availableFor.map(a => (
-                            <span key={a} className="px-2 py-0.5 bg-surface-container text-label-xs uppercase tracking-wider text-on-surface-variant">{a}</span>
-                          ))}
-                        </div>
+                  {listings.map((l) => (
+                    <tr key={l._id} className="border-t border-outline-variant align-top">
+                      <td className="p-3">
+                        <div className="font-semibold text-on-surface">{l.title}</div>
+                        <div className="text-label-xs text-on-surface-variant">{l.location}</div>
+                        {l.rejectionReason && (
+                          <div className="text-label-xs text-error mt-1">Rejected: {l.rejectionReason}</div>
+                        )}
                       </td>
-                      <td className="p-4">
-                        <span className={`px-2 py-1 text-label-xs font-bold uppercase tracking-wider ${listing.status === 'active' ? 'bg-success text-white' : listing.status === 'pending' ? 'bg-warning text-white' : 'bg-surface-container text-on-surface-variant'}`}>
-                          {listing.status}
-                        </span>
+                      <td className="p-3 text-on-surface-variant">{l.sector}</td>
+                      <td className="p-3">
+                        <StatusBadge status={l.status} />
                       </td>
-                      <td className="p-4">
-                        <div className="flex gap-2">
-                          <button onClick={() => handleEdit(listing)} className="p-2 text-on-surface-variant hover:text-accent transition-colors">
-                            <Icon icon="mdi:pencil" style={{ width: '18px', height: '18px' }} />
-                          </button>
-                          <button onClick={() => handleDelete(listing.id)} className="p-2 text-on-surface-variant hover:text-error transition-colors">
-                            <Icon icon="mdi:delete" style={{ width: '18px', height: '18px' }} />
-                          </button>
+                      <td className="p-3 text-label-xs">{l.availableFor.join(', ')}</td>
+                      <td className="p-3 text-label-xs text-on-surface-variant">
+                        {new Date(l.createdAt).toLocaleDateString()}
+                      </td>
+                      <td className="p-3 text-right">
+                        <div className="inline-flex gap-2 flex-wrap justify-end">
+                          {l.status !== 'active' && (
+                            <button onClick={() => approveListing(l._id)} className="btn btn-ghost btn-sm text-green-700">
+                              <Icon icon="mdi:check" style={{ width: '16px', height: '16px' }} className="mr-1" />
+                              Approve
+                            </button>
+                          )}
+                          {l.status !== 'rejected' && (
+                            <button onClick={() => setRejecting(l)} className="btn btn-ghost btn-sm text-error">
+                              <Icon icon="mdi:close" style={{ width: '16px', height: '16px' }} className="mr-1" />
+                              Reject
+                            </button>
+                          )}
                         </div>
                       </td>
                     </tr>
@@ -257,51 +324,203 @@ export default function AdminPage() {
                 </tbody>
               </table>
             </div>
-          </div>
-        )}
+          )}
 
-        {tab === 'enquiries' && (
-          <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse">
-              <thead>
-                <tr className="bg-surface-container">
-                  <th className="p-4 font-label text-label-sm text-on-surface-variant uppercase tracking-widest">Name</th>
-                  <th className="p-4 font-label text-label-sm text-on-surface-variant uppercase tracking-widest">Type</th>
-                  <th className="p-4 font-label text-label-sm text-on-surface-variant uppercase tracking-widest hidden md:table-cell">Listing</th>
-                  <th className="p-4 font-label text-label-sm text-on-surface-variant uppercase tracking-widest">Date</th>
-                  <th className="p-4 font-label text-label-sm text-on-surface-variant uppercase tracking-widest">Status</th>
-                  <th className="p-4 font-label text-label-sm text-on-surface-variant uppercase tracking-widest">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {enquiries.map(enq => (
-                  <tr key={enq.id} className="border-t border-outline-variant hover:bg-surface-container-low">
-                    <td className="p-4 font-body text-body-sm text-on-surface font-semibold">{enq.name}</td>
-                    <td className="p-4">
-                      <span className={`px-2 py-1 text-label-xs font-bold uppercase ${enq.type === 'Buy' ? 'bg-primary text-on-primary' : enq.type === 'Rent' ? 'bg-accent text-on-accent' : 'bg-secondary text-on-secondary'}`}>
-                        {enq.type}
-                      </span>
-                    </td>
-                    <td className="p-4 text-body-sm text-on-surface-variant hidden md:table-cell">{enq.listing}</td>
-                    <td className="p-4 text-body-sm text-on-surface-variant">{enq.date}</td>
-                    <td className="p-4">
-                      <span className={`px-2 py-1 text-label-xs font-bold uppercase ${enq.status === 'new' ? 'bg-error text-on-error' : 'bg-surface-container text-on-surface-variant'}`}>
-                        {enq.status}
-                      </span>
-                    </td>
-                    <td className="p-4">
-                      <button onClick={() => forwardEnquiry(enq)} className="flex items-center gap-2 text-label-xs font-bold text-[#25D366] uppercase tracking-widest hover:opacity-80">
-                        <Icon icon="mdi:whatsapp" style={{ width: '16px', height: '16px' }} />
-                        Forward
-                      </button>
-                    </td>
+          <Dialog.Root open={!!rejecting} onOpenChange={(o) => !o && setRejecting(null)}>
+            <Dialog.Portal>
+              <Dialog.Overlay className="fixed inset-0 bg-black bg-opacity-50 z-40" />
+              <Dialog.Content className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-surface p-6 max-w-md w-full z-50 shadow-card">
+                <Dialog.Title className="font-headline text-title-lg font-bold text-on-surface mb-2">
+                  Reject listing
+                </Dialog.Title>
+                <Dialog.Description className="text-body-sm text-on-surface-variant mb-4">
+                  Provide a reason. The seller will see this message.
+                </Dialog.Description>
+                <textarea
+                  className="form-input"
+                  rows={3}
+                  value={rejectReason}
+                  onChange={(e) => setRejectReason(e.target.value)}
+                  placeholder="e.g. Insufficient financial documentation"
+                />
+                <div className="flex justify-end gap-2 mt-4">
+                  <Dialog.Close className="btn btn-ghost">Cancel</Dialog.Close>
+                  <button onClick={rejectListing} className="btn btn-primary bg-error">
+                    Reject listing
+                  </button>
+                </div>
+              </Dialog.Content>
+            </Dialog.Portal>
+          </Dialog.Root>
+        </div>
+      )}
+
+      {tab === 'enquiries' && (
+        <div>
+          {loadingData ? (
+            <div className="text-center py-16 text-on-surface-variant">Loading…</div>
+          ) : enquiries.length === 0 ? (
+            <div className="bg-surface p-12 text-center border border-outline-variant">
+              <p className="text-body-sm text-on-surface-variant">No enquiries yet.</p>
+            </div>
+          ) : (
+            <div className="bg-surface border border-outline-variant overflow-x-auto">
+              <table className="w-full text-body-sm">
+                <thead className="bg-surface-container text-label-xs uppercase text-on-surface-variant">
+                  <tr>
+                    <th className="text-left p-3">Contact</th>
+                    <th className="text-left p-3">Type</th>
+                    <th className="text-left p-3">Listing</th>
+                    <th className="text-left p-3">Status</th>
+                    <th className="text-left p-3">Date</th>
+                    <th className="text-right p-3">Actions</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
+                </thead>
+                <tbody>
+                  {enquiries.map((e) => (
+                    <tr key={e._id} className="border-t border-outline-variant align-top">
+                      <td className="p-3">
+                        <div className="font-semibold text-on-surface">{e.name}</div>
+                        <div className="text-label-xs text-on-surface-variant">{e.email}</div>
+                        <div className="text-label-xs text-on-surface-variant">{e.phone}</div>
+                      </td>
+                      <td className="p-3 font-semibold">{e.type}</td>
+                      <td className="p-3 text-on-surface-variant">{e.listingTitle || '—'}</td>
+                      <td className="p-3">
+                        <StatusBadge status={e.status} />
+                      </td>
+                      <td className="p-3 text-label-xs text-on-surface-variant">
+                        {new Date(e.createdAt).toLocaleDateString()}
+                      </td>
+                      <td className="p-3 text-right">
+                        <select
+                          className="form-input text-label-xs w-auto"
+                          value={e.status}
+                          onChange={(ev) => updateEnquiry(e._id, ev.target.value)}
+                        >
+                          <option value="new">New</option>
+                          <option value="contacted">Contacted</option>
+                          <option value="closed">Closed</option>
+                        </select>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
+      )}
+
+      {tab === 'users' && (
+        <div>
+          {loadingData ? (
+            <div className="text-center py-16 text-on-surface-variant">Loading…</div>
+          ) : (
+            <div className="bg-surface border border-outline-variant overflow-x-auto">
+              <table className="w-full text-body-sm">
+                <thead className="bg-surface-container text-label-xs uppercase text-on-surface-variant">
+                  <tr>
+                    <th className="text-left p-3">Name</th>
+                    <th className="text-left p-3">Email</th>
+                    <th className="text-left p-3">Role</th>
+                    <th className="text-left p-3">Joined</th>
+                    <th className="text-left p-3">Last login</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {users.map((u) => (
+                    <tr key={u._id} className="border-t border-outline-variant">
+                      <td className="p-3 font-semibold">{u.name}</td>
+                      <td className="p-3 text-on-surface-variant">{u.email}</td>
+                      <td className="p-3 capitalize">
+                        <span className="px-2 py-0.5 bg-surface-container text-label-xs font-semibold">
+                          {u.role}
+                        </span>
+                      </td>
+                      <td className="p-3 text-label-xs text-on-surface-variant">
+                        {new Date(u.createdAt).toLocaleDateString()}
+                      </td>
+                      <td className="p-3 text-label-xs text-on-surface-variant">
+                        {u.lastLoginAt ? new Date(u.lastLoginAt).toLocaleDateString() : '—'}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
+      )}
+
+      {tab === 'audit' && (
+        <div>
+          {loadingData ? (
+            <div className="text-center py-16 text-on-surface-variant">Loading…</div>
+          ) : audit.length === 0 ? (
+            <div className="bg-surface p-12 text-center border border-outline-variant">
+              <p className="text-body-sm text-on-surface-variant">No audit events yet.</p>
+            </div>
+          ) : (
+            <div className="bg-surface border border-outline-variant overflow-x-auto">
+              <table className="w-full text-body-sm">
+                <thead className="bg-surface-container text-label-xs uppercase text-on-surface-variant">
+                  <tr>
+                    <th className="text-left p-3">Action</th>
+                    <th className="text-left p-3">Actor</th>
+                    <th className="text-left p-3">Target</th>
+                    <th className="text-left p-3">IP</th>
+                    <th className="text-left p-3">When</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {audit.map((a) => (
+                    <tr key={a._id} className="border-t border-outline-variant">
+                      <td className="p-3 font-mono text-label-xs">{a.action}</td>
+                      <td className="p-3">
+                        <div>{a.actorEmail || '—'}</div>
+                        <div className="text-label-xs text-on-surface-variant capitalize">{a.actorRole}</div>
+                      </td>
+                      <td className="p-3 text-label-xs">
+                        {a.targetType} {a.targetId ? `#${a.targetId.slice(-6)}` : ''}
+                      </td>
+                      <td className="p-3 text-label-xs font-mono">{a.ip}</td>
+                      <td className="p-3 text-label-xs text-on-surface-variant">
+                        {new Date(a.createdAt).toLocaleString()}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
+      )}
+    </DashboardShell>
+  );
+}
+
+function StatCard({
+  icon,
+  label,
+  value,
+  secondary,
+  accent,
+}: {
+  icon: string;
+  label: string;
+  value: number;
+  secondary?: string;
+  accent?: boolean;
+}) {
+  return (
+    <div className={`bg-surface border p-6 ${accent ? 'border-accent' : 'border-outline-variant'}`}>
+      <div className="flex items-center justify-between mb-3">
+        <Icon icon={icon} className={accent ? 'text-accent' : 'text-primary'} style={{ width: '28px', height: '28px' }} />
+        <span className="text-label-xs uppercase tracking-widest text-on-surface-variant">{label}</span>
       </div>
+      <div className="font-headline text-4xl font-bold text-on-surface">{value.toLocaleString()}</div>
+      {secondary && <div className="text-label-xs text-on-surface-variant mt-1">{secondary}</div>}
     </div>
   );
 }
