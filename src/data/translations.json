@@ -19,8 +19,8 @@
     },
     "stat_monolith": {
       "label": "Market Presence",
-      "value": "RM 4.2B+",
-      "description": "Total enterprise value facilitated across West and East Malaysia since 2010."
+      "value": "3 Years",
+      "description": "Total enterprise value facilitated across West and East Malaysia over the last 3 years."
     },
     "kpis": {
       "listings_label": "Verified Active Listings",
@@ -90,7 +90,7 @@
     "about": {
       "eyebrow": "Our Story",
       "title": "Three Years of Institutional Excellence",
-      "description1": "Since 2010, Reliance Brokerage has been Malaysia's quiet architect of high-value business transitions. We don't compete on noise; we compete on results.",
+      "description1": "Since 2023, Reliance Brokerage has been Malaysia's quiet architect of high-value business transitions. We don't compete on noise; we compete on results.",
       "description2": "Our reputation is built on three pillars: Deep local intelligence, Ironclad discretion, and Institutional-grade execution.",
       "how_we_operate": "How We Operate",
       "pillar1_title": "Local Mastery",
@@ -340,8 +340,8 @@
     },
     "stat_monolith": {
       "label": "市场地位",
-      "value": "40亿令吉+",
-      "description": "自2010年以来在马来西亚西部和东部促进的企业总价值。"
+      "value": "3年",
+      "description": "过去3年在马来西亚西部和东部促进的企业总价值。"
     },
     "kpis": {
       "listings_label": "已验证的活跃房源",
@@ -411,7 +411,7 @@
     "about": {
       "eyebrow": "我们的故事",
       "title": "三年机构卓越",
-      "description1": "自2010年以来，信赖经纪一直是马来西亚高价值业务过渡的幕后推手。我们不以声势竞争，我们以业绩竞争。",
+      "description1": "自2023年以来，信赖经纪一直是马来西亚高价值业务过渡的幕后推手。我们不以声势竞争，我们以业绩竞争。",
       "description2": "我们的声誉建立在三大支柱上：深入的本地智能、铁血的保密性和机构级的执行力。",
       "how_we_operate": "我们如何运营",
       "pillar1_title": "本地精通",

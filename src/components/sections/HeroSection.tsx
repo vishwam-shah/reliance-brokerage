@@ -86,19 +86,19 @@ const HeroSection = () => {
 
             {/* Stat Monolith Overlay */}
             <motion.div
-              className="absolute bottom-0 left-0 right-0 md:-left-8 md:right-auto p-6 md:p-10 bg-primary text-on-primary md:max-w-[280px] shadow-modal"
+              className="absolute bottom-0 left-0 right-0 md:-left-8 md:right-auto p-6 md:p-10 bg-surface-container-lowest/95 text-on-surface md:max-w-[280px] shadow-modal border border-black/10 backdrop-blur-sm"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.3, duration: 0.6, ease: 'easeOut' }}
             >
-              <p className="label-overline opacity-75 mb-2">
+              <p className="label-overline text-on-surface-variant mb-2">
                 {t('stat_monolith.label')}
               </p>
-              <h3 className="font-headline text-5xl font-black text-on-primary mb-3">
+              <h3 className="font-headline text-5xl font-black text-on-surface mb-3">
                 {t('stat_monolith.value')}
               </h3>
-              <p className="text-body-sm font-light text-on-primary opacity-75">
+              <p className="text-body-sm font-light text-on-surface-variant">
                 {t('stat_monolith.description')}
               </p>
             </motion.div>

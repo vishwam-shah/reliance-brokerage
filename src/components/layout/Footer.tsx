@@ -7,7 +7,7 @@ import { useLanguage } from '@/hooks/useLanguage';
 
 const WHATSAPP_NUMBER = '60142642414';
 const FACEBOOK_URL = 'https://www.facebook.com/share/1AzzSAjE4m/';
-const EMAIL = 'contactus@reliancebrokerage.my';
+const EMAIL = 'contact@reliance-brokerage.com';
 
 const Footer = () => {
   const { translate: t } = useLanguage();
@@ -72,7 +72,7 @@ const Footer = () => {
 
         <div className="border-t border-white border-opacity-20 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-body-sm text-white opacity-60">
-            © 2010–{new Date().getFullYear()} Reliance Brokerage. {t('footer.copyright')}
+            © 2023–{new Date().getFullYear()} Reliance Brokerage. {t('footer.copyright')}
           </p>
           <a href={FACEBOOK_URL} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-label-xs text-white opacity-60 hover:opacity-100 transition-opacity uppercase tracking-widest">
             <Icon icon="mdi:facebook" style={{ width: '14px', height: '14px' }} />

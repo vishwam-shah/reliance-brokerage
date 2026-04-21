@@ -5,7 +5,7 @@ import { Icon } from '@iconify/react';
 import { useLanguage } from '@/hooks/useLanguage';
 
 const WHATSAPP_NUMBER = '60142642414';
-const EMAIL = 'contactus@reliancebrokerage.my';
+const EMAIL = 'contactus@reliance-brokerage.com';
 const FACEBOOK_URL = 'https://www.facebook.com/share/1AzzSAjE4m/';
 
 export default function ContactPage() {

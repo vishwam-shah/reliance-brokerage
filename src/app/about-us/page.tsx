@@ -76,7 +76,7 @@ export default function AboutPage() {
       <section className="py-20 bg-primary text-on-primary">
         <div className="container text-center">
           <h2 className="font-headline text-display-md font-bold mb-6">{t('about.cta_title')}</h2>
-          <p className="text-body-lg opacity-90 mb-8 max-w-2xl mx-auto">{t('about.cta_desc')}</p>
+          <p className="text-body-lg text-on-primary opacity-90 mb-8 max-w-2xl mx-auto">{t('about.cta_desc')}</p>
           <Button href="/contact-us" variant="primary" size="lg" className="!bg-on-primary !text-primary hover:!bg-surface-container-low">
             {t('about.cta_button')}
           </Button>

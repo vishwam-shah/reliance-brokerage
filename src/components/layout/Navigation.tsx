@@ -52,7 +52,7 @@ const Navigation = () => {
       <div className="nav-inner">
         <Link href="/" className="nav-brand flex items-center gap-2">
           <Image src="/logo.jpeg" alt="Reliance Brokerage" width={36} height={36} className="rounded-md" />
-          <span>Reliance Brokerage</span>
+          <span className="hidden sm:inline text-label-lg md:text-title-md">Reliance Brokerage</span>
         </Link>
 
         <ul className="nav-links" role="list">
@@ -125,12 +125,12 @@ const Navigation = () => {
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-expanded={mobileMenuOpen}
             aria-label="Open navigation"
-            className="lg:hidden p-1 bg-transparent border-none cursor-pointer flex items-center justify-center"
+            className="lg:hidden h-11 w-11 rounded-lg border border-outline-variant bg-surface-container-lowest cursor-pointer flex items-center justify-center transition-colors hover:bg-surface-container"
           >
             <Icon
               icon={mobileMenuOpen ? 'mdi:close' : 'mdi:menu'}
               className="text-black"
-              style={{ width: '28px', height: '28px' }}
+              style={{ width: '24px', height: '24px' }}
             />
           </button>
         </div>
@@ -142,7 +142,7 @@ const Navigation = () => {
             <Link
               key={link.href}
               href={link.href}
-              className="font-label font-semibold text-label-sm text-black uppercase tracking-widest hover:text-black"
+              className="font-label font-semibold text-label-md text-black uppercase tracking-widest px-2.5 py-1.5 rounded-lg transition-all duration-base hover:bg-surface-container-high hover:text-on-surface hover:-translate-y-px"
               onClick={() => setMobileMenuOpen(false)}
             >
               {link.label}
@@ -153,7 +153,7 @@ const Navigation = () => {
               toggleLanguage();
               setMobileMenuOpen(false);
             }}
-            className="font-label font-semibold text-label-sm text-black uppercase tracking-widest hover:text-black text-left"
+            className="font-label font-semibold text-label-md text-black uppercase tracking-widest px-2.5 py-1.5 rounded-lg transition-all duration-base hover:bg-surface-container-high hover:text-on-surface hover:-translate-y-px text-left"
           >
             {currentLang === 'en' ? '中文' : 'English'}
           </button>

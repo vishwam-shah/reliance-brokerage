@@ -68,12 +68,6 @@ export default function SignInClient() {
           />
         </div>
         <div className="relative z-10 max-w-480px text-center">
-          <Link href="/" className="inline-flex items-center gap-3 mb-12">
-            <Image src="/logo.jpeg" alt="Reliance Brokerage" width={44} height={44} className="rounded-md" />
-            <div className="font-headline text-headline-lg font-bold text-on-primary">
-              Reliance Brokerage
-            </div>
-          </Link>
           <h1 className="font-headline text-4xl md:text-5xl text-on-primary font-light mb-8 leading-tight">
             {t('sign_in.headline')}
             <br />
@@ -101,13 +95,6 @@ export default function SignInClient() {
 
       <div className="flex items-center justify-center p-8 md:p-16 bg-surface">
         <div className="w-full max-w-440px">
-          <div className="lg:hidden mb-10">
-            <Link href="/" className="nav-brand flex items-center gap-2">
-              <Image src="/logo.jpeg" alt="Reliance Brokerage" width={36} height={36} className="rounded-md" />
-              <span>Reliance Brokerage</span>
-            </Link>
-          </div>
-
           <div className="mb-10">
             <span className="eyebrow">{t('sign_in.eyebrow')}</span>
             <h2 className="font-headline text-display-sm text-on-surface mt-5 mb-3 font-bold">

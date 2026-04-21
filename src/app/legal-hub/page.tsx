@@ -69,8 +69,8 @@ export default function LegalHubPage() {
               <h2 className="font-headline text-title-lg font-bold text-on-surface mb-4">{t('legal.privacy_5_title')}</h2>
               <p className="text-body-md text-on-surface-variant leading-relaxed">
                 {t('legal.privacy_5_body')}{' '}
-                <a href="mailto:privacy@reliancebrokerage.my" className="text-on-surface font-semibold hover:text-primary underline">
-                  privacy@reliancebrokerage.my
+                <a href="mailto:privacy@reliance-brokerage.com" className="text-on-surface font-semibold hover:text-primary underline">
+                  privacy@reliance-brokerage.com
                 </a>.
               </p>
             </div>

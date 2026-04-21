@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   description: 'Reliance Brokerage — Malaysia\'s premier institutional brokerage for high-value business transitions, expert SME valuations, and confidential acquisitions.',
   openGraph: {
     title: 'Reliance Brokerage | Institutional Grade Business Brokerage Malaysia',
-    description: 'Architectural stability for high-value business transitions. Serving Malaysia\'s most significant SME divestments and acquisitions since 2010.',
+    description: 'Architectural stability for high-value business transitions. Serving Malaysia\'s most significant SME divestments and acquisitions since 2023.',
     type: 'website',
     images: [
       {
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Reliance Brokerage | Institutional Grade Business Brokerage Malaysia',
-    description: 'Architectural stability for high-value business transitions. Serving Malaysia\'s most significant SME divestments and acquisitions since 2010.',
+    description: 'Architectural stability for high-value business transitions. Serving Malaysia\'s most significant SME divestments and acquisitions since 2023.',
     images: ['https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&q=80'],
   },
 };

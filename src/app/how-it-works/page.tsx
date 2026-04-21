@@ -1,17 +1,19 @@
 'use client';
 
 import { Icon } from '@iconify/react';
+import translations from '@/data/translations.json';
 import { useLanguage } from '@/hooks/useLanguage';
 
 export default function HowItWorksPage() {
-  const { translate: t } = useLanguage();
+  const { currentLang, translate: t } = useLanguage();
+  const locale = translations[currentLang];
 
   const steps = [
-    { number: 1, title: t('process.steps.list'), description: t('process.steps.list_desc'), details: t('how_it_works.step1_details') as unknown as string[] },
-    { number: 2, title: t('process.steps.screen'), description: t('process.steps.screen_desc'), details: t('how_it_works.step2_details') as unknown as string[] },
-    { number: 3, title: t('process.steps.introduce'), description: t('process.steps.introduce_desc'), details: t('how_it_works.step3_details') as unknown as string[] },
-    { number: 4, title: t('process.steps.due_diligence'), description: t('process.steps.due_diligence_desc'), details: t('how_it_works.step4_details') as unknown as string[] },
-    { number: 5, title: t('process.steps.complete'), description: t('process.steps.complete_desc'), details: t('how_it_works.step5_details') as unknown as string[] },
+    { number: 1, title: t('process.steps.list'), description: t('process.steps.list_desc'), details: locale.how_it_works.step1_details },
+    { number: 2, title: t('process.steps.screen'), description: t('process.steps.screen_desc'), details: locale.how_it_works.step2_details },
+    { number: 3, title: t('process.steps.introduce'), description: t('process.steps.introduce_desc'), details: locale.how_it_works.step3_details },
+    { number: 4, title: t('process.steps.due_diligence'), description: t('process.steps.due_diligence_desc'), details: locale.how_it_works.step4_details },
+    { number: 5, title: t('process.steps.complete'), description: t('process.steps.complete_desc'), details: locale.how_it_works.step5_details },
   ];
 
   const timeline = [
@@ -62,7 +64,7 @@ export default function HowItWorksPage() {
                     {t('how_it_works.what_happens')}
                   </h4>
                   <ul className="space-y-4">
-                    {Array.isArray(step.details) && step.details.map((detail, i) => (
+                    {step.details.map((detail, i) => (
                       <li key={i} className="flex gap-3">
                         <Icon icon="mdi:check-circle" className="text-accent flex-shrink-0" style={{ width: '20px', height: '20px' }} />
                         <span className="text-body-sm text-on-surface-variant leading-relaxed">{detail}</span>
