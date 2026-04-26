@@ -21,7 +21,7 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="min-h-screen bg-surface pt-24 pb-20">
+    <div className="min-h-screen bg-surface py-12 sm:py-16">
       <div className="container max-w-4xl">
         <div className="mb-16">
           <span className="eyebrow">{t('contact.eyebrow')}</span>

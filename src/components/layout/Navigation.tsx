@@ -17,18 +17,56 @@ const Navigation = () => {
   const router = useRouter();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     setIsLoaded(true);
   }, []);
 
+  // Hide on scroll-down, show on scroll-up
+  useEffect(() => {
+    let lastY = window.scrollY;
+    let ticking = false;
+
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+
+      requestAnimationFrame(() => {
+        const y = window.scrollY;
+        const delta = y - lastY;
+
+        setScrolled(y > 8);
+
+        // Always show near top
+        if (y < 80) {
+          setHidden(false);
+        } else if (delta > 6) {
+          // Scrolling down — hide
+          setHidden(true);
+          setMobileMenuOpen(false);
+        } else if (delta < -6) {
+          // Scrolling up — show
+          setHidden(false);
+        }
+
+        lastY = y;
+        ticking = false;
+      });
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
   const navLinks = [
     { label: t('nav.listings'), href: '/listings' },
+    { label: 'Sell My Business', href: '/sell-your-business' },
     { label: t('nav.how_it_works'), href: '/how-it-works' },
     { label: t('nav.valuations'), href: '/valuations' },
     { label: t('nav.about'), href: '/about-us' },
     { label: t('nav.contact'), href: '/contact-us' },
-    { label: t('nav.legal'), href: '/legal-hub' },
   ];
 
   const toggleLanguage = () => switchLanguage(currentLang === 'en' ? 'zh' : 'en');
@@ -48,7 +86,12 @@ const Navigation = () => {
   const initials = user?.name.split(' ').map((p) => p[0]).filter(Boolean).slice(0, 2).join('').toUpperCase() || '?';
 
   return (
-    <nav className="nav-public" aria-label="Primary navigation">
+    <nav
+      className={`nav-public transition-transform duration-300 ease-out ${
+        hidden ? '-translate-y-full' : 'translate-y-0'
+      } ${scrolled ? 'shadow-card' : ''}`}
+      aria-label="Primary navigation"
+    >
       <div className="nav-inner">
         <Link href="/" className="nav-brand flex items-center gap-2">
           <Image src="/logo.jpeg" alt="Reliance Brokerage" width={36} height={36} className="rounded-md" />
@@ -87,24 +130,25 @@ const Navigation = () => {
               <DropdownMenu.Portal>
                 <DropdownMenu.Content
                   align="end"
-                  sideOffset={6}
-                  className="bg-surface border border-outline-variant shadow-card py-2 min-w-[200px] z-50"
+                  sideOffset={10}
+                  className="glass rounded-2xl p-2 min-w-[220px] z-50"
                 >
-                  <div className="px-4 py-2 border-b border-outline-variant">
-                    <div className="text-body-sm font-semibold">{user.name}</div>
-                    <div className="text-label-xs text-on-surface-variant capitalize">{user.role}</div>
+                  <div className="px-3 py-2.5 mb-1">
+                    <div className="text-body-sm font-semibold text-on-surface">{user.name}</div>
+                    <div className="text-label-xs text-on-surface-variant capitalize mt-0.5">{user.role} account</div>
                   </div>
+                  <div className="h-px bg-outline-variant/40 my-1" />
                   <DropdownMenu.Item asChild>
-                    <Link href={dashboardHref} className="block px-4 py-2 text-body-sm hover:bg-surface-container outline-none cursor-pointer">
-                      <Icon icon="mdi:view-dashboard" className="inline mr-2" style={{ width: '16px', height: '16px' }} />
+                    <Link href={dashboardHref} className="flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-body-sm text-on-surface hover:bg-white/60 outline-none cursor-pointer transition-colors">
+                      <Icon icon="mdi:view-dashboard" style={{ width: '16px', height: '16px' }} />
                       Dashboard
                     </Link>
                   </DropdownMenu.Item>
                   <DropdownMenu.Item
                     onSelect={handleLogout}
-                    className="px-4 py-2 text-body-sm text-error hover:bg-error hover:bg-opacity-10 outline-none cursor-pointer"
+                    className="flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-body-sm text-error hover:bg-red-50 outline-none cursor-pointer transition-colors"
                   >
-                    <Icon icon="mdi:logout" className="inline mr-2" style={{ width: '16px', height: '16px' }} />
+                    <Icon icon="mdi:logout" style={{ width: '16px', height: '16px' }} />
                     Sign out
                   </DropdownMenu.Item>
                 </DropdownMenu.Content>
@@ -137,7 +181,7 @@ const Navigation = () => {
       </div>
 
       {mobileMenuOpen && (
-        <div className="absolute top-20 left-0 right-0 bg-surface border-b border-black border-opacity-5 p-6 flex flex-col gap-4 lg:hidden z-40">
+        <div className="absolute top-20 left-0 right-0 glass p-6 flex flex-col gap-4 lg:hidden z-40 shadow-modal">
           {navLinks.map((link) => (
             <Link
               key={link.href}

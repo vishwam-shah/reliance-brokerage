@@ -6,60 +6,60 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // Surfaces
-        surface: '#FFF8F3',
-        'surface-bright': '#FFF8F3',
+        // Surfaces — soft off-white, neutral cool tones
+        surface: '#FAFAF7',
+        'surface-bright': '#FFFFFF',
         'surface-container-lowest': '#FFFFFF',
-        'surface-container-low': '#FDF2E7',
-        'surface-container': '#F9ECDF',
-        'surface-container-high': '#F4E6D6',
-        'surface-container-highest': '#F0E0CE',
-        'surface-dim': '#E9D7C3',
-        'surface-variant': '#F0E0CE',
+        'surface-container-low': '#F5F5F1',
+        'surface-container': '#F1F1ED',
+        'surface-container-high': '#EAEAE6',
+        'surface-container-highest': '#E2E2DE',
+        'surface-dim': '#D4D4D0',
+        'surface-variant': '#EAEAE6',
 
-        // Primary
-        primary: '#000000',
-        'primary-dim': '#000000',
+        // Primary — deep slate (more refined than pure black)
+        primary: '#0F172A',
+        'primary-dim': '#1E293B',
         'on-primary': '#FFFFFF',
-        'primary-container': '#E8E1DE',
-        'on-primary-container': '#55514F',
+        'primary-container': '#E2E8F0',
+        'on-primary-container': '#334155',
 
-        // Secondary
-        secondary: '#695D52',
-        'secondary-dim': '#5D5147',
-        'on-secondary': '#FFF7F4',
-        'secondary-container': '#F1DFD2',
-        'on-secondary-container': '#5B5045',
+        // Secondary — warm sand for subtle contrast
+        secondary: '#475569',
+        'secondary-dim': '#334155',
+        'on-secondary': '#FFFFFF',
+        'secondary-container': '#F1F5F9',
+        'on-secondary-container': '#334155',
 
         // Tertiary
-        tertiary: '#695D56',
-        'on-tertiary': '#FFF7F4',
-        'tertiary-container': '#FFEDE4',
+        tertiary: '#64748B',
+        'on-tertiary': '#FFFFFF',
+        'tertiary-container': '#F1F5F9',
 
-        // Accent
-        accent: '#C5A059',
-        'accent-dim': '#B08C42',
+        // Accent — refined gold (desaturated, mature)
+        accent: '#B8893E',
+        'accent-dim': '#9C7330',
         'on-accent': '#FFFFFF',
 
         // Black & White
-        black: '#1a1a1a',
+        black: '#0F172A',
         white: '#FFFFFF',
 
-        // Text
-        'on-surface': '#2F2C2A',
-        'on-surface-variant': '#49413B',
-        'on-background': '#2F2C2A',
+        // Text — true neutral grays
+        'on-surface': '#0F172A',
+        'on-surface-variant': '#64748B',
+        'on-background': '#0F172A',
 
-        // Borders
-        outline: '#7A6E62',
-        'outline-variant': '#B0A395',
+        // Borders — subtle cool gray
+        outline: '#94A3B8',
+        'outline-variant': '#E2E8F0',
 
-        // Status
-        error: '#9E422C',
-        'error-container': '#FE8B70',
-        'on-error': '#FFF7F6',
-        success: '#2D6A4F',
-        warning: '#C07A00',
+        // Status — modern, vibrant
+        error: '#DC2626',
+        'error-container': '#FEE2E2',
+        'on-error': '#FFFFFF',
+        success: '#059669',
+        warning: '#D97706',
       },
       fontFamily: {
         headline: ['Sora', 'system-ui', 'sans-serif'],
@@ -120,9 +120,10 @@ module.exports = {
         full: '9999px',
       },
       boxShadow: {
-        ambient: '0 20px 40px rgba(58, 49, 37, 0.06)',
-        modal: '0 20px 40px rgba(47, 44, 42, 0.12)',
-        card: '0 4px 16px rgba(47, 44, 42, 0.06)',
+        ambient: '0 20px 40px rgba(15, 23, 42, 0.04)',
+        modal: '0 20px 50px rgba(15, 23, 42, 0.10), 0 8px 16px rgba(15, 23, 42, 0.04)',
+        card: '0 1px 3px rgba(15, 23, 42, 0.04), 0 1px 2px rgba(15, 23, 42, 0.03)',
+        elevated: '0 4px 12px rgba(15, 23, 42, 0.06), 0 2px 4px rgba(15, 23, 42, 0.04)',
       },
       transitionDuration: {
         fast: '150ms',

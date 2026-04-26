@@ -62,20 +62,16 @@
     @apply top-0;
   }
 
-  /* Button variants - Modern rounded styling */
+  /* Button variants */
   .btn {
-    @apply inline-flex items-center justify-center px-6 py-3 font-label font-semibold text-label-md uppercase tracking-widest transition-all duration-base no-underline rounded-lg;
-    min-height: 44px;
-    min-width: 44px;
+    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 font-label font-semibold text-sm transition-all duration-150 no-underline rounded-xl;
+    min-height: 42px;
+    min-width: 42px;
     outline-offset: 2px;
   }
 
-  .btn:hover {
-    @apply -translate-y-0.5;
-  }
-
-  .btn:focus {
-    outline: 2px solid var(--tw-colors-accent);
+  .btn:focus-visible {
+    outline: 2px solid theme('colors.accent');
     outline-offset: 2px;
   }
 
@@ -84,31 +80,24 @@
   }
 
   .btn-primary {
-    @apply bg-primary text-on-primary hover:bg-primary-dim hover:text-on-primary shadow-card hover:shadow-modal;
+    @apply bg-primary text-on-primary hover:bg-primary/90 shadow-sm hover:shadow-card;
   }
 
   .btn-secondary {
-    @apply bg-secondary text-on-secondary hover:bg-secondary-dim hover:text-on-secondary shadow-card hover:shadow-modal;
+    @apply bg-accent text-white hover:bg-accent/90 shadow-sm hover:shadow-card;
   }
 
   .btn-ghost {
-    @apply bg-transparent text-on-surface hover:bg-surface-container-high hover:text-on-surface hover:border-accent border border-outline-variant;
+    @apply bg-white text-on-surface hover:bg-surface-container border border-outline-variant;
   }
 
   .btn-sm {
-    @apply px-4 py-2 text-label-xs;
-    min-height: 40px;
-  }
-
-  @media (max-width: 768px) {
-    .btn-sm {
-      @apply w-full py-3;
-      min-height: 44px;
-    }
+    @apply px-3 py-1.5 text-xs rounded-lg;
+    min-height: 34px;
   }
 
   .btn-lg {
-    @apply px-8 py-4 text-label-md;
+    @apply px-7 py-3.5 text-base rounded-2xl;
   }
 
   /* Form elements */
@@ -121,15 +110,14 @@
   }
 
   .form-input {
-    @apply w-full px-4 py-3 font-body text-body-sm bg-surface-container-lowest border-2 border-outline-variant text-on-surface placeholder:text-on-surface-variant placeholder:opacity-50 transition-colors duration-base rounded-md;
+    @apply w-full px-4 py-3 font-body text-body-sm bg-white border border-outline-variant text-on-surface placeholder:text-on-surface-variant placeholder:opacity-60 transition-all duration-150 rounded-xl;
     min-height: 44px;
-    outline-offset: 2px;
+    outline-offset: 0;
   }
 
   .form-input:focus {
-    outline: 2px solid var(--tw-colors-accent);
-    outline-offset: 2px;
-    @apply border-accent;
+    outline: none;
+    @apply border-accent ring-2 ring-accent/20;
   }
 
   .form-input[aria-invalid="true"] {
@@ -202,7 +190,7 @@
   }
 
   .stat-card {
-    @apply bg-surface-container-lowest p-6 md:p-10 relative overflow-hidden transition-all duration-base border border-black border-opacity-10 hover:border-accent hover:bg-surface-container-low rounded-lg shadow-card hover:shadow-modal;
+    @apply bg-white p-6 md:p-10 relative overflow-hidden transition-all duration-200 border border-outline-variant hover:border-accent rounded-2xl shadow-card hover:shadow-modal;
   }
 
   /* Reveal animation */
@@ -210,9 +198,30 @@
     @apply opacity-100;
   }
 
-  /* Navigation */
+  /* Navigation — frosted glass */
   .nav-public {
-    @apply fixed top-0 left-0 right-0 bg-surface border-b border-black border-opacity-5 z-nav;
+    @apply fixed top-0 left-0 right-0 z-nav;
+    background-color: rgba(250, 250, 247, 0.65);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    border-bottom: 1px solid rgba(226, 232, 240, 0.5);
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.6) inset;
+  }
+
+  /* Glass surface utility — drop into any card/panel */
+  .glass {
+    background-color: rgba(255, 255, 255, 0.55);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    box-shadow: 0 8px 32px rgba(15, 23, 42, 0.06);
+  }
+
+  .glass-dark {
+    background-color: rgba(15, 23, 42, 0.55);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
   }
 
   .nav-inner {
@@ -275,10 +284,40 @@ html {
   scroll-behavior: smooth;
 }
 
+/* ── Google Translate widget cleanup ─────────────────────────────────── */
+/* Hide the top banner Google injects — it pushes content down by ~40px */
+.skiptranslate,
+iframe.goog-te-banner-frame,
+.goog-te-banner-frame {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* Cancel the inline top:40px Google sets on <body> when banner mounts */
+body {
+  top: 0 !important;
+  position: static !important;
+}
+
+/* Hide the floating "Original text" tooltip on hover */
+.goog-tooltip,
+.goog-tooltip:hover,
+.goog-text-highlight {
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  display: none !important;
+}
+
+/* Hide the invisible mount node */
+#google-translate-element {
+  display: none !important;
+}
+
 /* Text selection */
 ::selection {
-  background-color: var(--tw-colors-primary);
-  color: var(--tw-colors-on-primary);
+  background-color: #B8893E;
+  color: #FFFFFF;
 }
 
 /* Animation utilities */

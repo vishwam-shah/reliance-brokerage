@@ -8,7 +8,7 @@ export default function ValuationsPage() {
   const { translate: t } = useLanguage();
 
   return (
-    <div className="min-h-screen bg-surface pt-24 pb-20">
+    <div className="min-h-screen bg-surface py-12 sm:py-16">
       <div className="container max-w-3xl">
         <div className="mb-12">
           <span className="eyebrow">{t('valuations.eyebrow')}</span>

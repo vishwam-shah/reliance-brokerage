@@ -3,36 +3,26 @@
 import { useState, useEffect, useCallback } from 'react';
 import type { Language, Translations } from '@/types';
 import translations from '@/data/translations.json';
+import { setLanguage as setGoogleLanguage, getCurrentLanguage as getGoogleLanguage } from '@/lib/translate';
 
 export const useLanguage = () => {
   const [currentLang, setCurrentLang] = useState<Language>('en');
   const [isLoaded, setIsLoaded] = useState(false);
 
-  // Initialize language from localStorage
+  // Initialize: prefer Google Translate cookie state, fall back to localStorage
   useEffect(() => {
-    const savedLang = (localStorage.getItem('lang') as Language) || 'en';
+    const googleLang = getGoogleLanguage();
+    const savedLang = (localStorage.getItem('rb_lang') as Language) || (localStorage.getItem('lang') as Language) || googleLang || 'en';
     setCurrentLang(savedLang);
-    document.documentElement.lang = savedLang;
+    document.documentElement.lang = savedLang === 'zh' ? 'zh-CN' : 'en';
     setIsLoaded(true);
-
-    // Listen for language changes on other tabs
-    const handleStorageChange = (e: StorageEvent) => {
-      if (e.key === 'lang') {
-        const newLang = (e.newValue as Language) || 'en';
-        setCurrentLang(newLang);
-        document.documentElement.lang = newLang;
-      }
-    };
-
-    window.addEventListener('storage', handleStorageChange);
-    return () => window.removeEventListener('storage', handleStorageChange);
   }, []);
 
+  // Switching language: drives Google Translate via cookie + reload
   const switchLanguage = useCallback((lang: Language) => {
-    setCurrentLang(lang);
     localStorage.setItem('lang', lang);
-    document.documentElement.lang = lang;
-    window.dispatchEvent(new StorageEvent('storage', { key: 'lang', newValue: lang }));
+    setGoogleLanguage(lang);
+    // setGoogleLanguage triggers window.location.reload()
   }, []);
 
   const translate = useCallback(

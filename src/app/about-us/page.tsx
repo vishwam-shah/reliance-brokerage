@@ -8,7 +8,7 @@ export default function AboutPage() {
 
   return (
     <div className="bg-surface">
-      <section className="pt-24 pb-12">
+      <section className="py-12 sm:py-16">
         <div className="container">
           <div className="max-w-3xl">
             <span className="eyebrow">{t('about.eyebrow')}</span>

@@ -13,7 +13,9 @@ const Footer = () => {
   const { translate: t } = useLanguage();
 
   return (
-    <footer className="bg-black text-white py-12 md:py-16">
+    <footer className="relative bg-[#0A0F1C] text-white py-12 md:py-16 mt-auto">
+      {/* Top accent line */}
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-accent/60 to-transparent" />
       <div className="container">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           {/* Company Info */}
@@ -38,6 +40,7 @@ const Footer = () => {
             <h4 className="font-label font-bold text-label-lg mb-4 uppercase tracking-wider">{t('footer.nav_heading')}</h4>
             <ul className="space-y-2 text-body-sm">
               <li><Link href="/listings" className="text-white opacity-75 hover:opacity-100 transition-opacity">{t('nav.listings')}</Link></li>
+              <li><Link href="/sell-your-business" className="text-white opacity-75 hover:opacity-100 transition-opacity">Sell My Business</Link></li>
               <li><Link href="/how-it-works" className="text-white opacity-75 hover:opacity-100 transition-opacity">{t('nav.how_it_works')}</Link></li>
               <li><Link href="/valuations" className="text-white opacity-75 hover:opacity-100 transition-opacity">{t('nav.valuations')}</Link></li>
               <li><Link href="/about-us" className="text-white opacity-75 hover:opacity-100 transition-opacity">{t('nav.about')}</Link></li>

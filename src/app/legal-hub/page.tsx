@@ -6,7 +6,7 @@ export default function LegalHubPage() {
   const { translate: t } = useLanguage();
 
   return (
-    <div className="bg-surface min-h-screen pt-24 pb-20">
+    <div className="bg-surface min-h-screen py-12 sm:py-16">
       <div className="container max-w-3xl">
         <div className="mb-16 flex gap-4 border-b border-black border-opacity-10 pb-6 sticky top-24 bg-surface z-10">
           <a href="#terms" className="font-label font-semibold text-label-md text-on-surface-variant hover:text-on-surface">{t('legal.terms_nav')}</a>
@@ -37,6 +37,10 @@ export default function LegalHubPage() {
             <div>
               <h2 className="font-headline text-title-lg font-bold text-on-surface mb-4">{t('legal.terms_4_title')}</h2>
               <p className="text-body-md text-on-surface-variant leading-relaxed">{t('legal.terms_4_body')}</p>
+            </div>
+            <div className="bg-accent bg-opacity-10 border-l-4 border-accent p-6 rounded-r-lg">
+              <h2 className="font-headline text-title-lg font-bold text-on-surface mb-4">{t('legal.terms_5_title')}</h2>
+              <p className="text-body-md text-on-surface leading-relaxed">{t('legal.terms_5_body')}</p>
             </div>
           </div>
         </section>

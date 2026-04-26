@@ -26,7 +26,7 @@ export default function ForgotPasswordPage() {
   };
 
   return (
-    <div className="min-h-screen bg-surface pt-24 pb-12 flex items-center justify-center">
+    <div className="min-h-screen bg-surface py-12 flex items-center justify-center">
       <div className="container max-w-520px">
         <div className="mb-12">
           <Link href="/" className="nav-brand">

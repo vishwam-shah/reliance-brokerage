@@ -15,7 +15,7 @@ const HeroSection = () => {
   const { translate: t } = useLanguage();
 
   return (
-    <section className="bg-surface py-16 md:py-24 lg:py-32 min-h-screen flex items-center">
+    <section className="bg-surface pb-16 md:pb-24 lg:pb-32 pt-8 md:pt-12 lg:pt-16 min-h-[calc(100vh-5rem)] flex items-center">
       <div className="container">
         <div className="hero-grid">
           {/* Left: Copy */}

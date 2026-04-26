@@ -36,7 +36,7 @@ export const GET = withErrorHandler(async (req: NextRequest) => {
     ];
   }
 
-  const sort: Record<string, 1 | -1> = { createdAt: -1 };
+  const sort: Record<string, 1 | -1> = { featured: -1, createdAt: -1 };
   if (query.sort === 'valuation_asc') Object.assign(sort, { valuationNum: 1 });
   if (query.sort === 'valuation_desc') Object.assign(sort, { valuationNum: -1 });
   if (query.sort === 'revenue_desc') Object.assign(sort, { revenueNum: -1 });

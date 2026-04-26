@@ -103,7 +103,7 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen bg-surface pt-20 pb-12">
+    <div className="min-h-screen bg-surface py-12">
       <div className="container max-w-640px mx-auto">
         <div className="mb-10">
           <span className="eyebrow">{t('register.eyebrow')}</span>

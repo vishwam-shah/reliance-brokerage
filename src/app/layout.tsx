@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Toaster } from 'sonner';
 import { SiteHeader, SiteFooter, SiteMain } from '@/components/layout/SiteChrome';
+import GoogleTranslate from '@/components/layout/GoogleTranslate';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -49,6 +50,7 @@ export default function RootLayout({
         <SiteMain>{children}</SiteMain>
         <SiteFooter />
         <Toaster position="top-right" richColors closeButton />
+        <GoogleTranslate />
       </body>
     </html>
   );

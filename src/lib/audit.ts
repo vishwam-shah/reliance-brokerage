@@ -15,7 +15,8 @@ export type AuditAction =
   | 'enquiry.create'
   | 'enquiry.update'
   | 'user.update'
-  | 'user.delete';
+  | 'user.delete'
+  | 'user.role_switch';
 
 export async function logAudit(params: {
   action: AuditAction;

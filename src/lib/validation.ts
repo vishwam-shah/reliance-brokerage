@@ -51,6 +51,7 @@ export const listingSchema = z.object({
   revenueNum: z.number().nonnegative().default(0),
   rentPrice: z.string().trim().max(50).optional().default(''),
   availableFor: z.array(z.enum(['buy', 'rent'])).min(1).default(['buy']),
+  images: z.array(z.string().max(2_500_000)).max(8).optional().default([]),
 });
 export type ListingInput = z.infer<typeof listingSchema>;
 

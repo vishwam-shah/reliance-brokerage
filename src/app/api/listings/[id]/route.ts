@@ -14,13 +14,15 @@ function ensureValidId(id: string) {
 
 export const GET = withErrorHandler(async (req: NextRequest, ctx) => {
   const { id } = await ctx.params;
-  ensureValidId(id);
 
   await connectDB();
   const auth = requireAuth(req);
   const isAdmin = auth && isAdminRole(auth.role);
 
-  const listing = await Listing.findById(id).lean();
+  const listing = mongoose.isValidObjectId(id)
+    ? await Listing.findById(id).lean()
+    : await Listing.findOne({ slug: id }).lean();
+
   if (!listing) throw ApiErrors.notFound('Listing not found');
 
   const isOwner = auth && String(listing.createdBy) === auth.sub;
@@ -29,7 +31,7 @@ export const GET = withErrorHandler(async (req: NextRequest, ctx) => {
   }
 
   if (!isAdmin && !isOwner) {
-    await Listing.updateOne({ _id: id }, { $inc: { views: 1 } });
+    await Listing.updateOne({ _id: listing._id }, { $inc: { views: 1 } });
   }
 
   return json({ listing });
