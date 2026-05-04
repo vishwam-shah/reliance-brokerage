@@ -2,14 +2,13 @@ import jwt from 'jsonwebtoken';
 import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 
-const JWT_SECRET = process.env.JWT_SECRET;
-if (!JWT_SECRET) {
-  if (process.env.NODE_ENV === 'production') {
-    throw new Error('JWT_SECRET must be defined in production');
+function getJwtSecret(): string {
+  const secret = process.env.JWT_SECRET;
+  if (!secret) {
+    throw new Error('JWT_SECRET must be defined in environment variables');
   }
-  console.warn('[auth] JWT_SECRET not set — using insecure fallback for dev only');
+  return secret;
 }
-const SECRET = JWT_SECRET || 'dev-only-insecure-fallback-do-not-use-in-prod';
 
 export const SESSION_COOKIE = 'rb_session';
 export const SESSION_MAX_AGE_SEC = 60 * 60 * 24 * 7;
@@ -24,12 +23,12 @@ export type JWTPayload = {
 };
 
 export function signToken(payload: JWTPayload): string {
-  return jwt.sign(payload, SECRET, { expiresIn: SESSION_MAX_AGE_SEC });
+  return jwt.sign(payload, getJwtSecret(), { expiresIn: SESSION_MAX_AGE_SEC });
 }
 
 export function verifyToken(token: string): JWTPayload | null {
   try {
-    const decoded = jwt.verify(token, SECRET);
+    const decoded = jwt.verify(token, getJwtSecret());
     if (typeof decoded === 'string') return null;
     const { sub, email, role, name } = decoded as JWTPayload;
     if (!sub || !email || !role) return null;

@@ -40,6 +40,22 @@ npm run build       # Build for production
 npm start           # Start production server
 ```
 
+## 🔐 Environment Variables
+
+Create local env file from the template:
+
+```bash
+cp .env.local.example .env.local
+```
+
+Required variables:
+
+- `MONGODB_URI` (used in development/test)
+- `MONGODB_URI_PRODUCTION` (used in production)
+- `JWT_SECRET` (required in all environments)
+- `SEED_SECRET` (required only if you use seed endpoint)
+- `NEXT_PUBLIC_APP_URL`
+
 ---
 
 ## 🎨 Design System
