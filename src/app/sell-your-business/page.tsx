@@ -114,7 +114,6 @@ export default function SellYourBusinessPage() {
                 {[
                   { value: 'RM 0', label: 'Upfront fee' },
                   { value: '10%', label: 'On successful close' },
-                  { value: '~5 weeks', label: 'Average to close' },
                   { value: '24h', label: 'Listing review' },
                 ].map((s) => (
                   <div key={s.label}>

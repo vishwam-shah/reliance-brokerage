@@ -5,6 +5,7 @@ import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Icon } from '@iconify/react';
 import EnquiryForm from '@/components/public/EnquiryForm';
+import { formatListingRmAmount } from '@/lib/utils';
 
 const WHATSAPP_NUMBER = '60142642414';
 
@@ -89,6 +90,9 @@ export default function ListingDetailPage() {
 
   const enquiryTypes: ('Buy' | 'Rent')[] = listing.availableFor
     .map((a) => (a === 'buy' ? 'Buy' : 'Rent') as 'Buy' | 'Rent');
+
+  const valuationDisplay = formatListingRmAmount(listing.valuationNum, listing.valuation);
+  const revenueDisplay = formatListingRmAmount(listing.revenueNum, listing.revenue);
 
   return (
     <div className="min-h-screen bg-surface py-12 sm:py-16">
@@ -177,20 +181,20 @@ export default function ListingDetailPage() {
 
             {/* Financial highlights */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-8">
-              {listing.valuation && (
+              {valuationDisplay && (
                 <div className="bg-white border border-outline-variant rounded-2xl p-5">
                   <p className="text-label-xs text-on-surface-variant font-semibold uppercase tracking-wider mb-2">
                     Asking Price
                   </p>
-                  <p className="font-headline font-bold text-on-surface text-headline-sm">{listing.valuation}</p>
+                  <p className="font-headline font-bold text-on-surface text-headline-sm">{valuationDisplay}</p>
                 </div>
               )}
-              {listing.revenue && (
+              {revenueDisplay && (
                 <div className="bg-white border border-outline-variant rounded-2xl p-5">
                   <p className="text-label-xs text-on-surface-variant font-semibold uppercase tracking-wider mb-2">
                     Annual Revenue
                   </p>
-                  <p className="font-headline font-bold text-on-surface text-headline-sm">{listing.revenue}</p>
+                  <p className="font-headline font-bold text-on-surface text-headline-sm">{revenueDisplay}</p>
                 </div>
               )}
               {listing.rentPrice && (

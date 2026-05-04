@@ -48,17 +48,12 @@ const EMPTY: Values = {
   images: [],
 };
 
-function formatRMLabel(millions: number): string {
-  if (!millions || millions <= 0) return '';
-  if (millions >= 1000) {
-    const b = millions / 1000;
-    return `RM ${Number.isInteger(b) ? b : b.toFixed(2)}B`;
-  }
-  if (millions >= 1) {
-    return `RM ${Number.isInteger(millions) ? millions : millions.toFixed(2)}M`;
-  }
-  const k = millions * 1000;
-  return `RM ${Number.isInteger(k) ? k : k.toFixed(0)}K`;
+function formatRMLabel(amount: number): string {
+  if (!amount || amount <= 0) return '';
+  return `RM ${amount.toLocaleString('en-MY', {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 2,
+  })}`;
 }
 
 export default function ListingForm({
@@ -253,7 +248,7 @@ export default function ListingForm({
                 <p className="text-label-xs text-on-surface-variant mt-1">
                   {values.valuationNum > 0
                     ? <span className="text-accent font-semibold">{formatRMLabel(values.valuationNum)}</span>
-                    : 'Enter amount in millions (e.g. 1.5 = RM 1.5M)'}
+                    : 'Enter full amount (e.g. 1500000 = RM 1,500,000)'}
                 </p>
               </div>
               <div>
@@ -275,7 +270,7 @@ export default function ListingForm({
                 <p className="text-label-xs text-on-surface-variant mt-1">
                   {values.revenueNum > 0
                     ? <span className="text-accent font-semibold">{formatRMLabel(values.revenueNum)}</span>
-                    : 'Enter amount in millions'}
+                    : 'Enter full amount'}
                 </p>
               </div>
             </div>

@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Icon } from '@iconify/react';
 import { useLanguage } from '@/hooks/useLanguage';
 import { useSession } from '@/hooks/useSession';
+import { formatListingRmAmount } from '@/lib/utils';
 
 const PAGE_SIZE = 9;
 
@@ -315,7 +316,11 @@ export default function ListingsPage() {
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
-            {listings.map((listing) => (
+            {listings.map((listing) => {
+              const valuationDisplay = formatListingRmAmount(listing.valuationNum, listing.valuation);
+              const revenueDisplay = formatListingRmAmount(listing.revenueNum, listing.revenue);
+
+              return (
               <Link
                 href={`/listings/${listing.slug || listing._id}`}
                 key={listing._id}
@@ -370,16 +375,16 @@ export default function ListingsPage() {
 
                   {/* Financials */}
                   <div className="space-y-2 mb-4">
-                    {listing.valuation && (
+                    {valuationDisplay && (
                       <div className="flex justify-between items-center text-body-sm">
                         <span className="text-on-surface-variant">Asking Price</span>
-                        <span className="font-headline font-bold text-on-surface">{listing.valuation}</span>
+                        <span className="font-headline font-bold text-on-surface">{valuationDisplay}</span>
                       </div>
                     )}
-                    {listing.revenue && (
+                    {revenueDisplay && (
                       <div className="flex justify-between items-center text-body-sm">
                         <span className="text-on-surface-variant">Revenue</span>
-                        <span className="font-semibold text-on-surface">{listing.revenue}</span>
+                        <span className="font-semibold text-on-surface">{revenueDisplay}</span>
                       </div>
                     )}
                     {listing.rentPrice && (
@@ -403,7 +408,8 @@ export default function ListingsPage() {
                   </div>
                 </div>
               </Link>
-            ))}
+              );
+            })}
           </div>
         )}
 

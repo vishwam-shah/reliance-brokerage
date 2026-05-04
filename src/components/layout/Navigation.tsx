@@ -181,7 +181,7 @@ const Navigation = () => {
       </div>
 
       {mobileMenuOpen && (
-        <div className="absolute top-20 left-0 right-0 glass p-6 flex flex-col gap-4 lg:hidden z-40 shadow-modal">
+        <div className="absolute top-20 left-0 right-0 bg-surface-container-lowest border border-outline-variant p-6 flex flex-col gap-4 lg:hidden z-40 shadow-modal">
           {navLinks.map((link) => (
             <Link
               key={link.href}

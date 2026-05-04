@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Icon } from '@iconify/react';
 import { motion } from 'framer-motion';
+import { formatListingRmAmount } from '@/lib/utils';
 
 type Listing = {
   _id: string;
@@ -12,6 +13,7 @@ type Listing = {
   sector: string;
   location: string;
   valuation: string;
+  valuationNum: number;
   rentPrice: string;
   availableFor: ('buy' | 'rent')[];
   images?: string[];
@@ -82,7 +84,10 @@ export default function LatestListingsSection() {
             transition={{ duration: 0.5 }}
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6"
           >
-            {listings.map((listing) => (
+            {listings.map((listing) => {
+              const valuationDisplay = formatListingRmAmount(listing.valuationNum, listing.valuation);
+
+              return (
               <Link
                 key={listing._id}
                 href={`/listings/${listing.slug || listing._id}`}
@@ -139,10 +144,10 @@ export default function LatestListingsSection() {
                   <div className="mt-auto pt-4 border-t border-outline-variant flex items-end justify-between gap-2">
                     <div>
                       <p className="text-label-xs text-on-surface-variant">
-                        {listing.valuation ? 'Asking Price' : listing.rentPrice ? 'Monthly Rent' : ''}
+                        {valuationDisplay ? 'Asking Price' : listing.rentPrice ? 'Monthly Rent' : ''}
                       </p>
                       <p className="font-headline font-bold text-on-surface text-title-md">
-                        {listing.valuation || listing.rentPrice || '—'}
+                        {valuationDisplay || listing.rentPrice || '—'}
                       </p>
                     </div>
                     <Icon
@@ -153,7 +158,8 @@ export default function LatestListingsSection() {
                   </div>
                 </div>
               </Link>
-            ))}
+              );
+            })}
           </motion.div>
         )}
 
