@@ -44,6 +44,6 @@ export function useSession() {
 }
 
 export function redirectForRole(role: SessionUser['role']): string {
-  if (role === 'admin' || role === 'superadmin') return '/admin';
+  if (role === 'admin' || role === 'superadmin') return '/admin/dashboard';
   return '/dashboard';
 }

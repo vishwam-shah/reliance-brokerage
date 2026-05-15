@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import * as Dialog from '@radix-ui/react-dialog';
 import * as Checkbox from '@radix-ui/react-checkbox';
 import { CIcon } from '@coreui/icons-react';
@@ -72,6 +72,13 @@ export default function ListingForm({
   const [values, setValues] = useState<Values>({ ...EMPTY, ...initial });
   const [submitting, setSubmitting] = useState(false);
   const [uploading, setUploading] = useState(false);
+
+  // Reset form when initial prop changes or dialog opens
+  useEffect(() => {
+    if (open) {
+      setValues({ ...EMPTY, ...initial });
+    }
+  }, [open, initial]);
 
   const handleImageUpload = async (files: FileList | null) => {
     if (!files || files.length === 0) return;
@@ -174,6 +181,9 @@ export default function ListingForm({
               <CIcon icon={cilX} style={{ width: '16px', height: '16px' }} />
             </Dialog.Close>
           </div>
+          <Dialog.Description className="text-sm text-on-surface-variant mb-4 hidden">
+            {listingId ? 'Edit your business listing details' : 'Create a new business listing'}
+          </Dialog.Description>
 
           <form onSubmit={submit} className="space-y-4">
             <div>

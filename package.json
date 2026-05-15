@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "copy:data": "node scripts/copy-mongo-data.mjs"
   },
   "dependencies": {
     "@coreui/icons": "^3.1.0",
@@ -31,6 +32,7 @@
     "next": "^16.0.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "sharp": "^0.34.5",
     "sonner": "^2.0.7",
     "tailwind-merge": "^3.5.0",
     "zod": "^4.3.6"

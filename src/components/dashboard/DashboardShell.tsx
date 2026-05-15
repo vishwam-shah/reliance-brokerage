@@ -82,7 +82,7 @@ export default function DashboardShell({
         <aside
           className={cn(
             'fixed inset-y-0 left-0 z-40 flex flex-col',
-            'bg-slate-900 text-white',
+            'bg-white border-r border-slate-200',
             'transition-all duration-200 ease-out',
             'w-64',                              // always 256px wide (mobile full)
             sidebarW,                            // collapse on desktop
@@ -92,16 +92,16 @@ export default function DashboardShell({
         >
           {/* Logo */}
           <div className={cn(
-            'h-16 flex items-center shrink-0 border-b border-white/[0.06]',
+            'h-16 flex items-center shrink-0 border-b border-slate-200',
             collapsed ? 'justify-center px-4' : 'px-5 gap-3',
           )}>
-            <div className="w-8 h-8 rounded-xl bg-accent flex items-center justify-center shrink-0">
+            <div className="w-8 h-8 rounded-xl bg-blue-600 flex items-center justify-center shrink-0">
               <span className="font-headline font-bold text-white text-sm leading-none">R</span>
             </div>
             {(!collapsed || !mounted) && (
               <div className="min-w-0 overflow-hidden">
-                <p className="font-headline font-bold text-white text-sm leading-none truncate">Reliance</p>
-                <p className="text-white/40 text-[11px] leading-none mt-0.5">Brokerage</p>
+                <p className="font-headline font-bold text-slate-900 text-sm leading-none truncate">Reliance</p>
+                <p className="text-slate-500 text-[11px] leading-none mt-0.5">Brokerage</p>
               </div>
             )}
           </div>
@@ -122,8 +122,8 @@ export default function DashboardShell({
                           'w-full flex items-center justify-center h-10 rounded-xl',
                           'transition-all duration-150',
                           active
-                            ? 'bg-accent/[0.18] text-accent'
-                            : 'text-white/45 hover:text-white hover:bg-white/[0.07]',
+                            ? 'bg-blue-100 text-blue-600'
+                            : 'text-slate-500 hover:text-slate-700 hover:bg-slate-100',
                         )}
                       >
                         <CIcon icon={item.icon} style={{ width: 18, height: 18, flexShrink: 0 }} />
@@ -133,10 +133,10 @@ export default function DashboardShell({
                       <Tooltip.Content
                         side="right"
                         sideOffset={10}
-                        className="bg-slate-800 text-white px-3 py-1.5 rounded-lg text-xs font-medium shadow-lg z-50"
+                        className="bg-slate-900 text-white px-3 py-1.5 rounded-lg text-xs font-medium shadow-lg z-50"
                       >
                         {item.label}
-                        <Tooltip.Arrow className="fill-slate-800" />
+                        <Tooltip.Arrow className="fill-slate-900" />
                       </Tooltip.Content>
                     </Tooltip.Portal>
                   </Tooltip.Root>
@@ -152,14 +152,14 @@ export default function DashboardShell({
                     'w-full flex items-center gap-3 px-3 h-10 rounded-xl text-left',
                     'transition-all duration-150 text-sm font-medium',
                     active
-                      ? 'bg-accent/[0.18] text-accent'
-                      : 'text-white/45 hover:text-white hover:bg-white/[0.07]',
+                      ? 'bg-blue-100 text-blue-600'
+                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100',
                   )}
                 >
                   <CIcon icon={item.icon} style={{ width: 18, height: 18, flexShrink: 0 }} />
                   <span className="truncate flex-1">{item.label}</span>
                   {active && (
-                    <span className="w-1.5 h-1.5 rounded-full bg-accent shrink-0" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-blue-600 shrink-0" />
                   )}
                 </button>
               );
@@ -173,7 +173,7 @@ export default function DashboardShell({
               onClick={toggleCollapsed}
               className={cn(
                 'hidden lg:flex w-full items-center gap-3 px-3 h-9 rounded-xl',
-                'text-white/30 hover:text-white/60 hover:bg-white/[0.06]',
+                'text-slate-400 hover:text-slate-700 hover:bg-slate-100',
                 'transition-all duration-150 text-xs',
                 collapsed ? 'justify-center' : '',
               )}
@@ -191,20 +191,20 @@ export default function DashboardShell({
                 <button
                   className={cn(
                     'w-full flex items-center gap-3 px-3 h-11 rounded-xl',
-                    'hover:bg-white/[0.07] transition-all duration-150 text-left',
+                    'hover:bg-slate-100 transition-all duration-150 text-left',
                     collapsed ? 'justify-center' : '',
                   )}
                 >
-                  <Avatar.Root className="w-7 h-7 rounded-full overflow-hidden shrink-0 bg-accent/20 flex items-center justify-center">
-                    <Avatar.Fallback className="text-accent font-bold text-[11px]">{initials}</Avatar.Fallback>
+                  <Avatar.Root className="w-7 h-7 rounded-full overflow-hidden shrink-0 bg-blue-100 flex items-center justify-center">
+                    <Avatar.Fallback className="text-blue-600 font-bold text-[11px]">{initials}</Avatar.Fallback>
                   </Avatar.Root>
                   {(!collapsed || !mounted) && (
                     <>
                       <div className="min-w-0 flex-1">
-                        <p className="text-white text-xs font-semibold truncate leading-none">{user.name}</p>
-                        <p className="text-white/40 text-[11px] capitalize leading-none mt-0.5">{user.role}</p>
+                        <p className="text-slate-900 text-xs font-semibold truncate leading-none">{user.name}</p>
+                        <p className="text-slate-500 text-[11px] capitalize leading-none mt-0.5">{user.role}</p>
                       </div>
-                      <CIcon icon={cilChevronBottom} style={{ width: 13, height: 13 }} className="text-white/25 shrink-0" />
+                      <CIcon icon={cilChevronBottom} style={{ width: 13, height: 13 }} className="text-slate-400 shrink-0" />
                     </>
                   )}
                 </button>
@@ -221,8 +221,8 @@ export default function DashboardShell({
                   )}
                 >
                   <div className="px-3 py-2.5 mb-1">
-                    <p className="text-sm font-semibold text-on-surface leading-none">{user.name}</p>
-                    <p className="text-xs text-on-surface-variant capitalize mt-0.5">{user.role} account</p>
+                    <p className="text-sm font-semibold text-slate-900 leading-none">{user.name}</p>
+                    <p className="text-xs text-slate-600 capitalize mt-0.5">{user.role} account</p>
                   </div>
                   <DropdownMenu.Separator className="h-px bg-outline-variant/30 my-1" />
                   <DropdownMenu.Item
@@ -262,8 +262,8 @@ export default function DashboardShell({
             </div>
 
             {/* Avatar (topbar) */}
-            <Avatar.Root className="w-8 h-8 rounded-full overflow-hidden bg-accent/15 flex items-center justify-center">
-              <Avatar.Fallback className="text-accent font-bold text-xs">{initials}</Avatar.Fallback>
+            <Avatar.Root className="w-8 h-8 rounded-full overflow-hidden bg-blue-100 flex items-center justify-center">
+              <Avatar.Fallback className="text-blue-600 font-bold text-xs">{initials}</Avatar.Fallback>
             </Avatar.Root>
           </header>
 

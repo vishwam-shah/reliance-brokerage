@@ -34,6 +34,7 @@ export const GET = withErrorHandler(async (req: NextRequest) => {
       .sort({ createdAt: -1 })
       .skip((page - 1) * limit)
       .limit(limit)
+      .allowDiskUse(true)
       .lean(),
     Enquiry.countDocuments(filter),
   ]);

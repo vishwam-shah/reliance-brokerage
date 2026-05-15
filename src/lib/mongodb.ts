@@ -14,12 +14,17 @@ function getRuntimeMode(): RuntimeMode {
 }
 
 function getMongoUri(mode: RuntimeMode): string {
-  const isProduction = mode === 'production';
-  const envKey = isProduction ? 'MONGODB_URI_PRODUCTION' : 'MONGODB_URI';
-  const uri = process.env[envKey];
+  const uri =
+    mode === 'production'
+      ? process.env.MONGODB_URI_PRODUCTION ?? process.env.MONGODB_URL_PRODUCTION ?? process.env.MONGODB_URI
+      : process.env.MONGODB_URI;
 
   if (!uri) {
-    throw new Error(`${envKey} is not defined for NODE_ENV=${mode}`);
+    const expectedKey =
+      mode === 'production'
+        ? 'MONGODB_URI_PRODUCTION, MONGODB_URL_PRODUCTION, or MONGODB_URI'
+        : 'MONGODB_URI';
+    throw new Error(`${expectedKey} is not defined for NODE_ENV=${mode}`);
   }
 
   return uri;

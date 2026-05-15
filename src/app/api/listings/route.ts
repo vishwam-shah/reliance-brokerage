@@ -8,6 +8,10 @@ import { rateLimit, getClientIp } from '@/lib/rateLimit';
 import { logAudit } from '@/lib/audit';
 
 export const GET = withErrorHandler(async (req: NextRequest) => {
+  const ip = getClientIp(req);
+  const rl = rateLimit(`listing:read:${ip}`, 100, 60 * 1000);
+  if (!rl.allowed) throw ApiErrors.tooMany('Too many requests', rl.retryAfterSec);
+
   await connectDB();
 
   const url = new URL(req.url);
@@ -43,8 +47,18 @@ export const GET = withErrorHandler(async (req: NextRequest) => {
   if (query.sort === 'newest') Object.assign(sort, { createdAt: -1 });
 
   const skip = (query.page - 1) * query.limit;
+  
+  // For public listings (not user's own), exclude images to avoid huge response payloads
+  const excludeImages = !query.mine && !isAdmin;
+  
   const [items, total] = await Promise.all([
-    Listing.find(filter).sort(sort).skip(skip).limit(query.limit).lean(),
+    Listing.find(filter)
+      .sort(sort)
+      .skip(skip)
+      .limit(query.limit)
+      .allowDiskUse(true)
+      .select(excludeImages ? '-images' : undefined)
+      .lean(),
     Listing.countDocuments(filter),
   ]);
 

@@ -5,10 +5,15 @@ import Enquiry from '@/models/Enquiry';
 import User from '@/models/User';
 import { withErrorHandler, ApiErrors, json } from '@/lib/apiHandler';
 import { requireRole } from '@/lib/auth';
+import { rateLimit, getClientIp } from '@/lib/rateLimit';
 
 export const GET = withErrorHandler(async (req: NextRequest) => {
   const auth = requireRole(req, ['admin', 'superadmin']);
   if (!auth) throw ApiErrors.forbidden();
+
+  const ip = getClientIp(req);
+  const rl = rateLimit(`stats:read:${ip}`, 60, 60 * 1000);
+  if (!rl.allowed) throw ApiErrors.tooMany('Too many requests', rl.retryAfterSec);
 
   await connectDB();
 

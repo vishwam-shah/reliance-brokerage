@@ -24,6 +24,8 @@ import * as Dialog from '@radix-ui/react-dialog';
 import DashboardShell from '@/components/dashboard/DashboardShell';
 import StatusBadge from '@/components/dashboard/StatusBadge';
 import ListingForm from '@/components/dashboard/ListingForm';
+import Pagination from '@/components/ui/Pagination';
+import { TableLoading, StatsLoading } from '@/components/ui/LoadingState';
 import { StatCard } from '@/components/ui/StatCard';
 import { Card } from '@/components/ui/Card';
 import { useSession } from '@/hooks/useSession';
@@ -108,6 +110,23 @@ export default function AdminPage() {
   const [loadingData, setLoadingData] = useState(false);
   const [listingFilter, setListingFilter] = useState<'all' | 'active' | 'pending_approval' | 'rejected'>('all');
 
+  // Pagination state
+  const [listingPage, setListingPage] = useState(1);
+  const [listingLimit, setListingLimit] = useState(20);
+  const [listingTotal, setListingTotal] = useState(0);
+
+  const [enquiryPage, setEnquiryPage] = useState(1);
+  const [enquiryLimit, setEnquiryLimit] = useState(20);
+  const [enquiryTotal, setEnquiryTotal] = useState(0);
+
+  const [userPage, setUserPage] = useState(1);
+  const [userLimit, setUserLimit] = useState(20);
+  const [userTotal, setUserTotal] = useState(0);
+
+  const [auditPage, setAuditPage] = useState(1);
+  const [auditLimit, setAuditLimit] = useState(20);
+  const [auditTotal, setAuditTotal] = useState(0);
+
   const [rejecting, setRejecting] = useState<Listing | null>(null);
   const [rejectReason, setRejectReason] = useState('');
   const [editingUser, setEditingUser] = useState<User | null>(null);
@@ -127,49 +146,61 @@ export default function AdminPage() {
     setLoadingData(true);
     try {
       const statusParam = listingFilter === 'all' ? '' : `&status=${listingFilter}`;
-      const res = await fetch(`/api/listings?limit=100${statusParam}`, {
+      const res = await fetch(`/api/listings?page=${listingPage}&limit=${listingLimit}${statusParam}`, {
         credentials: 'include',
         cache: 'no-store',
       });
       const data = await res.json();
-      if (res.ok) setListings(data.items ?? []);
+      if (res.ok) {
+        setListings(data.items ?? []);
+        setListingTotal(data.total ?? 0);
+      }
     } finally {
       setLoadingData(false);
     }
-  }, [listingFilter]);
+  }, [listingPage, listingLimit, listingFilter]);
 
   const loadEnquiries = useCallback(async () => {
     setLoadingData(true);
     try {
-      const res = await fetch('/api/enquiries?limit=100', { credentials: 'include', cache: 'no-store' });
+      const res = await fetch(`/api/enquiries?page=${enquiryPage}&limit=${enquiryLimit}`, { credentials: 'include', cache: 'no-store' });
       const data = await res.json();
-      if (res.ok) setEnquiries(data.items ?? []);
+      if (res.ok) {
+        setEnquiries(data.items ?? []);
+        setEnquiryTotal(data.total ?? 0);
+      }
     } finally {
       setLoadingData(false);
     }
-  }, []);
+  }, [enquiryPage, enquiryLimit]);
 
   const loadUsers = useCallback(async () => {
     setLoadingData(true);
     try {
-      const res = await fetch('/api/users?limit=100', { credentials: 'include', cache: 'no-store' });
+      const res = await fetch(`/api/users?page=${userPage}&limit=${userLimit}`, { credentials: 'include', cache: 'no-store' });
       const data = await res.json();
-      if (res.ok) setUsers(data.items ?? []);
+      if (res.ok) {
+        setUsers(data.items ?? []);
+        setUserTotal(data.total ?? 0);
+      }
     } finally {
       setLoadingData(false);
     }
-  }, []);
+  }, [userPage, userLimit]);
 
   const loadAudit = useCallback(async () => {
     setLoadingData(true);
     try {
-      const res = await fetch('/api/audit?limit=100', { credentials: 'include', cache: 'no-store' });
+      const res = await fetch(`/api/audit?page=${auditPage}&limit=${auditLimit}`, { credentials: 'include', cache: 'no-store' });
       const data = await res.json();
-      if (res.ok) setAudit(data.items ?? []);
+      if (res.ok) {
+        setAudit(data.items ?? []);
+        setAuditTotal(data.total ?? 0);
+      }
     } finally {
       setLoadingData(false);
     }
-  }, []);
+  }, [auditPage, auditLimit]);
 
   useEffect(() => {
     if (!loading && !user) router.push('/sign-in?redirect=/admin');
@@ -188,8 +219,18 @@ export default function AdminPage() {
   }, [user, tab, loadStats, loadListings, loadEnquiries, loadUsers, loadAudit]);
 
   useEffect(() => {
-    if (tab === 'approvals') setListingFilter('pending_approval');
+    if (tab === 'approvals') {
+      setListingFilter('pending_approval');
+      setListingPage(1);
+    } else if (tab === 'listings') {
+      setListingFilter('all');
+      setListingPage(1);
+    }
   }, [tab]);
+
+  useEffect(() => {
+    setListingPage(1);
+  }, [listingFilter]);
 
   const approveListing = async (id: string) => {
     const res = await fetch(`/api/listings/${id}/approve`, { method: 'POST', credentials: 'include' });
@@ -487,6 +528,13 @@ export default function AdminPage() {
                   </tbody>
                 </table>
               </div>
+              <Pagination
+                page={listingPage}
+                limit={listingLimit}
+                total={listingTotal}
+                onPageChange={setListingPage}
+                onLimitChange={setListingLimit}
+              />
             </Card>
           )}
 
@@ -627,6 +675,13 @@ export default function AdminPage() {
                   </tbody>
                 </table>
               </div>
+              <Pagination
+                page={enquiryPage}
+                limit={enquiryLimit}
+                total={enquiryTotal}
+                onPageChange={setEnquiryPage}
+                onLimitChange={setEnquiryLimit}
+              />
             </Card>
           )}
         </div>
@@ -702,6 +757,13 @@ export default function AdminPage() {
                   </tbody>
                 </table>
               </div>
+              <Pagination
+                page={userPage}
+                limit={userLimit}
+                total={userTotal}
+                onPageChange={setUserPage}
+                onLimitChange={setUserLimit}
+              />
             </Card>
           )}
 
@@ -816,6 +878,13 @@ export default function AdminPage() {
                   </tbody>
                 </table>
               </div>
+              <Pagination
+                page={auditPage}
+                limit={auditLimit}
+                total={auditTotal}
+                onPageChange={setAuditPage}
+                onLimitChange={setAuditLimit}
+              />
             </Card>
           )}
         </div>

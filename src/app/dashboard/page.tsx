@@ -20,6 +20,7 @@ import * as AlertDialog from '@radix-ui/react-alert-dialog';
 import DashboardShell from '@/components/dashboard/DashboardShell';
 import ListingForm from '@/components/dashboard/ListingForm';
 import StatusBadge from '@/components/dashboard/StatusBadge';
+import Pagination from '@/components/ui/Pagination';
 import { Card, CardHeader, CardTitle, CardContent, CardDescription } from '@/components/ui/Card';
 import { useSession } from '@/hooks/useSession';
 import { cn } from '@/lib/utils';
@@ -68,30 +69,45 @@ export default function UserDashboard() {
   const [switchingRole, setSwitchingRole] = useState(false);
   const [confirmRoleSwitch, setConfirmRoleSwitch] = useState(false);
 
+  // Pagination state
+  const [listingPage, setListingPage] = useState(1);
+  const [listingLimit, setListingLimit] = useState(20);
+  const [listingTotal, setListingTotal] = useState(0);
+
+  const [enquiryPage, setEnquiryPage] = useState(1);
+  const [enquiryLimit, setEnquiryLimit] = useState(20);
+  const [enquiryTotal, setEnquiryTotal] = useState(0);
+
   const loadListings = useCallback(async () => {
     setLoadingData(true);
     try {
-      const res = await fetch('/api/listings?mine=true&status=all&limit=50', {
+      const res = await fetch(`/api/listings?mine=true&status=all&page=${listingPage}&limit=${listingLimit}`, {
         credentials: 'include',
         cache: 'no-store',
       });
       const data = await res.json();
-      if (res.ok) setListings(data.items ?? []);
+      if (res.ok) {
+        setListings(data.items ?? []);
+        setListingTotal(data.total ?? 0);
+      }
     } finally {
       setLoadingData(false);
     }
-  }, []);
+  }, [listingPage, listingLimit]);
 
   const loadEnquiries = useCallback(async () => {
     setLoadingData(true);
     try {
-      const res = await fetch('/api/enquiries?mine=true', { credentials: 'include', cache: 'no-store' });
+      const res = await fetch(`/api/enquiries?mine=true&page=${enquiryPage}&limit=${enquiryLimit}`, { credentials: 'include', cache: 'no-store' });
       const data = await res.json();
-      if (res.ok) setEnquiries(data.items ?? []);
+      if (res.ok) {
+        setEnquiries(data.items ?? []);
+        setEnquiryTotal(data.total ?? 0);
+      }
     } finally {
       setLoadingData(false);
     }
-  }, []);
+  }, [enquiryPage, enquiryLimit]);
 
   useEffect(() => {
     if (!loading && !user) router.push('/sign-in?redirect=/dashboard');
@@ -288,6 +304,13 @@ export default function UserDashboard() {
                   </tbody>
                 </table>
               </div>
+              <Pagination
+                page={listingPage}
+                limit={listingLimit}
+                total={listingTotal}
+                onPageChange={setListingPage}
+                onLimitChange={setListingLimit}
+              />
             </Card>
           )}
 
@@ -357,28 +380,39 @@ export default function UserDashboard() {
               </CardContent>
             </Card>
           ) : (
-            enquiries.map((e) => (
-              <Card key={e._id}>
-                <CardContent className="py-4">
-                  <div className="flex items-start justify-between gap-4">
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 mb-1">
-                        <p className="font-semibold text-on-surface text-sm">{e.name}</p>
-                        <StatusBadge status={e.status} />
+            <>
+              <div className="space-y-3">
+                {enquiries.map((e) => (
+                  <Card key={e._id}>
+                    <CardContent className="py-4">
+                      <div className="flex items-start justify-between gap-4">
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2 mb-1">
+                            <p className="font-semibold text-on-surface text-sm">{e.name}</p>
+                            <StatusBadge status={e.status} />
+                          </div>
+                          <p className="text-xs text-on-surface-variant">{e.email} · {e.phone}</p>
+                          <p className="text-xs text-on-surface-variant mt-1">
+                            <span className="font-medium text-on-surface">{e.type}</span> · {e.listingTitle}
+                          </p>
+                          {e.message && <p className="text-sm text-on-surface mt-2 line-clamp-2">{e.message}</p>}
+                        </div>
+                        <p className="text-xs text-on-surface-variant shrink-0">
+                          {new Date(e.createdAt).toLocaleDateString()}
+                        </p>
                       </div>
-                      <p className="text-xs text-on-surface-variant">{e.email} · {e.phone}</p>
-                      <p className="text-xs text-on-surface-variant mt-1">
-                        <span className="font-medium text-on-surface">{e.type}</span> · {e.listingTitle}
-                      </p>
-                      {e.message && <p className="text-sm text-on-surface mt-2 line-clamp-2">{e.message}</p>}
-                    </div>
-                    <p className="text-xs text-on-surface-variant shrink-0">
-                      {new Date(e.createdAt).toLocaleDateString()}
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
-            ))
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+              <Pagination
+                page={enquiryPage}
+                limit={enquiryLimit}
+                total={enquiryTotal}
+                onPageChange={setEnquiryPage}
+                onLimitChange={setEnquiryLimit}
+              />
+            </>
           )}
         </div>
       )}

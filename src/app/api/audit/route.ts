@@ -3,10 +3,15 @@ import { connectDB } from '@/lib/mongodb';
 import AuditLog from '@/models/AuditLog';
 import { withErrorHandler, ApiErrors, json } from '@/lib/apiHandler';
 import { requireRole } from '@/lib/auth';
+import { rateLimit, getClientIp } from '@/lib/rateLimit';
 
 export const GET = withErrorHandler(async (req: NextRequest) => {
   const auth = requireRole(req, ['admin', 'superadmin']);
   if (!auth) throw ApiErrors.forbidden();
+
+  const ip = getClientIp(req);
+  const rl = rateLimit(`audit:read:${ip}`, 30, 60 * 1000);
+  if (!rl.allowed) throw ApiErrors.tooMany('Too many requests', rl.retryAfterSec);
 
   await connectDB();
   const url = new URL(req.url);
@@ -22,6 +27,7 @@ export const GET = withErrorHandler(async (req: NextRequest) => {
       .sort({ createdAt: -1 })
       .skip((page - 1) * limit)
       .limit(limit)
+      .allowDiskUse(true)
       .lean(),
     AuditLog.countDocuments(filter),
   ]);
