@@ -6,6 +6,7 @@ import type { FormInputProps } from '@/types';
 
 const FormInput = ({
   label,
+  name,
   type = 'text',
   placeholder,
   required = false,
@@ -14,6 +15,8 @@ const FormInput = ({
   error,
   disabled = false,
   className = '',
+  autoComplete,
+  inputMode,
 }: FormInputProps) => {
   const [isFocused, setIsFocused] = useState(false);
   const labelId = label?.toLowerCase().replace(/\s+/g, '-') || '';
@@ -33,6 +36,7 @@ const FormInput = ({
       <div className="relative">
         <input
           id={labelId}
+          name={name ?? labelId}
           type={type}
           className={`form-input ${className}`}
           placeholder={placeholder}
@@ -44,6 +48,8 @@ const FormInput = ({
           onBlur={() => setIsFocused(false)}
           aria-invalid={!!error}
           aria-describedby={error ? errorId : undefined}
+          autoComplete={autoComplete}
+          inputMode={inputMode}
         />
         {error && (
           <Icon

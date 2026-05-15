@@ -66,7 +66,7 @@ export default function ListingsPage() {
     setLoadingData(true);
     try {
       const statusParam = listingFilter === 'all' ? '' : `&status=${listingFilter}`;
-      const res = await fetch(`/api/listings?page=${listingPage}&limit=${listingLimit}${statusParam}`, {
+      const res = await fetch(`/api/listings?page=${listingPage}&limit=${listingLimit}${statusParam}&sort=newest`, {
         credentials: 'include',
         cache: 'no-store',
       });

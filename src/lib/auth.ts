@@ -11,7 +11,8 @@ function getJwtSecret(): string {
 }
 
 export const SESSION_COOKIE = 'rb_session';
-export const SESSION_MAX_AGE_SEC = 60 * 60 * 24 * 7;
+export const SESSION_REMEMBER_ME_MAX_AGE_SEC = 60 * 60 * 24 * 30;
+export const SESSION_DEFAULT_MAX_AGE_SEC = 60 * 60 * 12;
 
 export type UserRole = 'buyer' | 'seller' | 'admin' | 'superadmin';
 
@@ -22,8 +23,10 @@ export type JWTPayload = {
   name: string;
 };
 
-export function signToken(payload: JWTPayload): string {
-  return jwt.sign(payload, getJwtSecret(), { expiresIn: SESSION_MAX_AGE_SEC });
+export function signToken(payload: JWTPayload, rememberMe = true): string {
+  return jwt.sign(payload, getJwtSecret(), {
+    expiresIn: rememberMe ? SESSION_REMEMBER_ME_MAX_AGE_SEC : SESSION_DEFAULT_MAX_AGE_SEC,
+  });
 }
 
 export function verifyToken(token: string): JWTPayload | null {
@@ -62,7 +65,7 @@ export function isAdminRole(role: UserRole): boolean {
   return role === 'admin' || role === 'superadmin';
 }
 
-export function setSessionCookie(res: NextResponse, token: string) {
+export function setSessionCookie(res: NextResponse, token: string, rememberMe = true) {
   res.cookies.set({
     name: SESSION_COOKIE,
     value: token,
@@ -70,7 +73,7 @@ export function setSessionCookie(res: NextResponse, token: string) {
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'lax',
     path: '/',
-    maxAge: SESSION_MAX_AGE_SEC,
+    ...(rememberMe ? { maxAge: SESSION_REMEMBER_ME_MAX_AGE_SEC } : {}),
   });
 }
 

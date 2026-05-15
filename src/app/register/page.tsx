@@ -152,69 +152,83 @@ export default function RegisterPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <FormInput
               label={t('register.first_name')}
+              name="given-name"
               placeholder={t('register.first_name_placeholder')}
               value={formData.firstName}
               onChange={(v) => handleChange('firstName', v)}
               error={errors.firstName}
               required
+              autoComplete="given-name"
             />
             <FormInput
               label={t('register.last_name')}
+              name="family-name"
               placeholder={t('register.last_name_placeholder')}
               value={formData.lastName}
               onChange={(v) => handleChange('lastName', v)}
               error={errors.lastName}
               required
+              autoComplete="family-name"
             />
           </div>
 
           <FormInput
             label={t('common.email')}
+            name="email"
             type="email"
             placeholder="you@company.com"
             value={formData.email}
             onChange={(v) => handleChange('email', v)}
             error={errors.email}
             required
+            autoComplete="username"
           />
 
           <FormInput
             label={t('register.phone')}
+            name="phone"
             type="tel"
             placeholder={t('register.phone_placeholder')}
             value={formData.phone}
             onChange={(v) => handleChange('phone', v)}
             error={errors.phone}
             required
+            autoComplete="tel"
           />
 
           <FormInput
             label={role === 'seller' ? t('register.business_name') : 'Company (optional)'}
+            name="organization"
             placeholder={t('register.business_name_placeholder')}
             value={formData.businessName}
             onChange={(v) => handleChange('businessName', v)}
             error={errors.businessName}
             required={role === 'seller'}
+            autoComplete="organization"
           />
 
           <FormInput
             label={t('common.password')}
+            name="new-password"
             type="password"
             placeholder="••••••••"
             value={formData.password}
             onChange={(v) => handleChange('password', v)}
             error={errors.password}
             required
+            autoComplete="new-password"
           />
 
           <FormInput
             label={t('register.confirm_password')}
+            name="new-password-confirm"
             type="password"
             placeholder="••••••••"
             value={formData.confirmPassword}
             onChange={(v) => handleChange('confirmPassword', v)}
             error={errors.confirmPassword}
             required
+            autoComplete="new-password"
           />
 
           <label className="flex items-start gap-3 cursor-pointer">

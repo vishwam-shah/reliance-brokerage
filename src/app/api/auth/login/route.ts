@@ -77,7 +77,7 @@ export const POST = withErrorHandler(async (req: NextRequest) => {
     email: user.email,
     role: user.role,
     name: user.name,
-  });
+  }, input.rememberMe);
 
   await logAudit({
     action: 'auth.login',
@@ -94,6 +94,6 @@ export const POST = withErrorHandler(async (req: NextRequest) => {
       role: user.role,
     },
   });
-  setSessionCookie(res as NextResponse, token);
+  setSessionCookie(res as NextResponse, token, input.rememberMe);
   return res;
 });

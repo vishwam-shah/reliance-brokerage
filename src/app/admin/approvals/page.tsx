@@ -59,7 +59,7 @@ export default function ApprovalsPage() {
   const loadListings = useCallback(async () => {
     setLoadingData(true);
     try {
-      const res = await fetch(`/api/listings?page=${listingPage}&limit=${listingLimit}&status=pending_approval`, {
+      const res = await fetch(`/api/listings?page=${listingPage}&limit=${listingLimit}&status=pending_approval&sort=newest`, {
         credentials: 'include',
         cache: 'no-store',
       });

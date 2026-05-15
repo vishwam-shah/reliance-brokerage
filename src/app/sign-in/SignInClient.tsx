@@ -16,6 +16,7 @@ export default function SignInClient() {
   const search = useSearchParams();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [rememberMe, setRememberMe] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -34,7 +35,7 @@ export default function SignInClient() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ email, password, rememberMe }),
       });
       const data = await res.json();
       if (!res.ok) {
@@ -108,12 +109,14 @@ export default function SignInClient() {
           <form onSubmit={handleSubmit} className="flex flex-col gap-6" noValidate>
             <FormInput
               label={t('common.email')}
+              name="email"
               type="email"
               placeholder="you@company.com"
               value={email}
               onChange={setEmail}
               error={errors.email}
               required
+              autoComplete="username"
             />
 
             <div className="form-group">
@@ -128,6 +131,7 @@ export default function SignInClient() {
               </div>
               <div className="relative">
                 <input
+                  name="password"
                   type={showPassword ? 'text' : 'password'}
                   className="form-input pr-12"
                   placeholder="••••••••"
@@ -154,6 +158,18 @@ export default function SignInClient() {
                 <span className="text-error text-label-sm mt-1">{errors.password}</span>
               )}
             </div>
+
+            <label className="flex items-center gap-3 cursor-pointer -mt-2">
+              <input
+                type="checkbox"
+                className="w-4 h-4 accent-primary"
+                checked={rememberMe}
+                onChange={(e) => setRememberMe(e.target.checked)}
+              />
+              <span className="text-sm text-on-surface-variant">
+                Remember me on this device
+              </span>
+            </label>
 
             {errors.submit && (
               <div className="bg-error-container bg-opacity-10 border-l-4 border-error p-4 text-body-sm text-error rounded-none">

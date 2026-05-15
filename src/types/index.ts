@@ -24,6 +24,7 @@ export interface ButtonProps {
 
 export interface FormInputProps {
   label?: string;
+  name?: string;
   type?: string;
   placeholder?: string;
   required?: boolean;
@@ -32,4 +33,6 @@ export interface FormInputProps {
   error?: string;
   disabled?: boolean;
   className?: string;
+  autoComplete?: string;
+  inputMode?: React.HTMLAttributes<HTMLInputElement>['inputMode'];
 }

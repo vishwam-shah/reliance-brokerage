@@ -35,7 +35,7 @@ export const POST = withErrorHandler(async (req: NextRequest) => {
     email: user.email,
     role: user.role,
     name: user.name,
-  });
+  }, true);
 
   await logAudit({
     action: 'auth.register',
@@ -55,6 +55,6 @@ export const POST = withErrorHandler(async (req: NextRequest) => {
     },
     { status: 201 }
   );
-  setSessionCookie(res as NextResponse, token);
+  setSessionCookie(res as NextResponse, token, true);
   return res;
 });
