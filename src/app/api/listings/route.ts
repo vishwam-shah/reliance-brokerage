@@ -50,15 +50,18 @@ export const GET = withErrorHandler(async (req: NextRequest) => {
   
   // For public listings (not user's own), exclude images to avoid huge response payloads
   const excludeImages = !query.mine && !isAdmin;
+  const listingsQuery = Listing.find(filter)
+    .sort(sort)
+    .skip(skip)
+    .limit(query.limit)
+    .allowDiskUse(true);
+
+  if (excludeImages) {
+    listingsQuery.select('-images');
+  }
   
   const [items, total] = await Promise.all([
-    Listing.find(filter)
-      .sort(sort)
-      .skip(skip)
-      .limit(query.limit)
-      .allowDiskUse(true)
-      .select(excludeImages ? '-images' : undefined)
-      .lean(),
+    listingsQuery.lean(),
     Listing.countDocuments(filter),
   ]);
 
