@@ -21,7 +21,7 @@ export default function SignInClient() {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const newErrors: Record<string, string> = {};
     if (!email) newErrors.email = t('sign_in.error_email');

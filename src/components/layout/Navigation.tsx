@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { Icon } from '@iconify/react';
 import { toast } from 'sonner';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
@@ -15,6 +15,7 @@ const Navigation = () => {
   const { currentLang, switchLanguage, translate: t } = useLanguage();
   const { user, loading, logout } = useSession();
   const router = useRouter();
+  const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const [hidden, setHidden] = useState(false);
@@ -83,7 +84,9 @@ const Navigation = () => {
   }
 
   const dashboardHref = user ? redirectForRole(user.role) : '/dashboard';
-  const initials = user?.name.split(' ').map((p) => p[0]).filter(Boolean).slice(0, 2).join('').toUpperCase() || '?';
+  const initials = user?.name?.trim()
+    ? user.name.split(' ').map((p) => p[0]).filter(Boolean).slice(0, 2).join('').toUpperCase()
+    : '?';
 
   return (
     <nav
@@ -99,13 +102,20 @@ const Navigation = () => {
         </Link>
 
         <ul className="nav-links" role="list">
-          {navLinks.map((link) => (
-            <li key={link.href}>
-              <Link href={link.href} className="hover:text-on-surface">
-                {link.label}
-              </Link>
-            </li>
-          ))}
+          {navLinks.map((link) => {
+            const isActive = pathname === link.href || (link.href !== '/' && pathname.startsWith(link.href));
+            return (
+              <li key={link.href}>
+                <Link
+                  href={link.href}
+                  className="hover:text-on-surface"
+                  aria-current={isActive ? 'page' : undefined}
+                >
+                  {link.label}
+                </Link>
+              </li>
+            );
+          })}
         </ul>
 
         <div className="nav-actions">

@@ -1,6 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
+import { toast } from 'sonner';
 import Pagination from '@/components/ui/Pagination';
 import { Card } from '@/components/ui/Card';
 import { cn } from '@/lib/utils';
@@ -56,7 +57,8 @@ export default function EnquiriesPage() {
       body: JSON.stringify({ status }),
     });
     const data = await res.json();
-    if (!res.ok) return;
+    if (!res.ok) { toast.error(data?.error?.message ?? 'Update failed'); return; }
+    toast.success('Enquiry updated');
     loadEnquiries();
   };
 

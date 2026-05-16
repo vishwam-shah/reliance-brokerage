@@ -61,9 +61,9 @@ const Footer = () => {
           <div>
             <h4 className="font-label font-bold text-label-lg mb-4 uppercase tracking-wider">{t('footer.contact_heading')}</h4>
             <div className="space-y-3">
-              <a href={`mailto:${EMAIL}`} className="flex items-center gap-2 text-body-sm text-white opacity-75 hover:opacity-100 transition-opacity">
-                <Icon icon="mdi:email" style={{ width: '16px', height: '16px' }} />
-                {EMAIL}
+              <a href={`mailto:${EMAIL}`} className="flex items-start gap-2 text-body-sm text-white opacity-75 hover:opacity-100 transition-opacity">
+                <Icon icon="mdi:email" style={{ width: '16px', height: '16px', flexShrink: 0, marginTop: 2 }} />
+                <span className="break-all">{EMAIL}</span>
               </a>
               <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-body-sm text-white opacity-75 hover:opacity-100 transition-opacity">
                 <Icon icon="mdi:whatsapp" style={{ width: '16px', height: '16px' }} />

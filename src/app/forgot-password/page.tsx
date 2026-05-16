@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { Icon } from '@iconify/react';
-import Button from '@/components/ui/Button';
 import FormInput from '@/components/ui/FormInput';
 
 export default function ForgotPasswordPage() {
@@ -11,7 +10,7 @@ export default function ForgotPasswordPage() {
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError('');
 
@@ -20,8 +19,12 @@ export default function ForgotPasswordPage() {
       return;
     }
 
-    // Handle password reset logic here
-    console.log('Reset password for:', email);
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setError('Please enter a valid email address');
+      return;
+    }
+
     setSubmitted(true);
   };
 

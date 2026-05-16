@@ -37,28 +37,24 @@ export const GET = withErrorHandler(async (req: NextRequest) => {
     filter.$or = [
       { title: { $regex: query.search, $options: 'i' } },
       { location: { $regex: query.search, $options: 'i' } },
+      { sector: { $regex: query.search, $options: 'i' } },
     ];
   }
 
-  const sort: Record<string, 1 | -1> = { createdAt: -1 };
-  if (query.sort === 'valuation_asc') Object.assign(sort, { valuationNum: 1 });
-  if (query.sort === 'valuation_desc') Object.assign(sort, { valuationNum: -1 });
-  if (query.sort === 'revenue_desc') Object.assign(sort, { revenueNum: -1 });
-  if (query.sort === 'newest') Object.assign(sort, { createdAt: -1 });
+  const sort: Record<string, 1 | -1> = {};
+  if (query.sort === 'valuation_asc') { sort.valuationNum = 1; sort.createdAt = -1; }
+  else if (query.sort === 'valuation_desc') { sort.valuationNum = -1; sort.createdAt = -1; }
+  else if (query.sort === 'revenue_desc') { sort.revenueNum = -1; sort.createdAt = -1; }
+  else if (query.sort === 'newest') { sort.createdAt = -1; }
+  else { sort.featured = -1; sort.createdAt = -1; } // default: featured first
 
   const skip = (query.page - 1) * query.limit;
   
-  // For public listings (not user's own), exclude images to avoid huge response payloads
-  const excludeImages = !query.mine && !isAdmin;
   const listingsQuery = Listing.find(filter)
     .sort(sort)
     .skip(skip)
     .limit(query.limit)
     .allowDiskUse(true);
-
-  if (excludeImages) {
-    listingsQuery.select('-images');
-  }
   
   const [items, total] = await Promise.all([
     listingsQuery.lean(),

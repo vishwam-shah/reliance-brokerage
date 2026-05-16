@@ -218,16 +218,7 @@ export default function AdminPage() {
     if (tab === 'audit') loadAudit();
   }, [user, tab, loadStats, loadListings, loadEnquiries, loadUsers, loadAudit]);
 
-  useEffect(() => {
-    if (tab === 'approvals') {
-      setListingFilter('pending_approval');
-      setListingPage(1);
-    } else if (tab === 'listings') {
-      setListingFilter('all');
-      setListingPage(1);
-    }
-  }, [tab]);
-
+  // Reset page when filter changes (but not on initial tab switch — tab effect handles that)
   useEffect(() => {
     setListingPage(1);
   }, [listingFilter]);
@@ -363,8 +354,19 @@ export default function AdminPage() {
     { label: 'Audit Log', icon: cilHistory, value: 'audit' },
   ];
 
+  const handleTabSelect = (value: string) => {
+    if (value === 'approvals') {
+      setListingFilter('pending_approval');
+      setListingPage(1);
+    } else if (value === 'listings') {
+      setListingFilter('all');
+      setListingPage(1);
+    }
+    setTab(value);
+  };
+
   return (
-    <DashboardShell user={user} title="Admin Panel" items={navItems} activeValue={tab} onSelect={setTab}>
+    <DashboardShell user={user} title="Admin Panel" items={navItems} activeValue={tab} onSelect={handleTabSelect}>
 
       {/* ── Overview ── */}
       {tab === 'overview' && (

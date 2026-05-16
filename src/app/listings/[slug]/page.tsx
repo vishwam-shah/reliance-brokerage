@@ -175,7 +175,7 @@ export default function ListingDetailPage() {
                 {listing.location}
                 <span className="mx-2 text-outline-variant">·</span>
                 <Icon icon="mdi:eye-outline" style={{ width: 16, height: 16 }} />
-                {listing.views.toLocaleString()} views
+                {(listing.views ?? 0).toLocaleString()} views
               </p>
             </div>
 

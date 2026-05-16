@@ -54,13 +54,9 @@ export default function DashboardShell({
     });
   };
 
-  const initials = user.name
-    .split(' ')
-    .filter(Boolean)
-    .map(w => w[0])
-    .slice(0, 2)
-    .join('')
-    .toUpperCase();
+  const initials = user.name?.trim()
+    ? user.name.split(' ').filter(Boolean).map(w => w[0]).slice(0, 2).join('').toUpperCase()
+    : '?';
 
   const sidebarW = collapsed ? 'lg:w-[72px]' : 'lg:w-64';
   const contentPad = collapsed ? 'lg:pl-[72px]' : 'lg:pl-64';

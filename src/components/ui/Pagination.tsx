@@ -19,12 +19,17 @@ export default function Pagination({
   onPageChange,
   onLimitChange,
 }: PaginationProps) {
-  const totalPages = Math.ceil(total / limit);
-  const start = (page - 1) * limit + 1;
+  const totalPages = total > 0 ? Math.ceil(total / limit) : 1;
+  const start = total === 0 ? 0 : (page - 1) * limit + 1;
   const end = Math.min(page * limit, total);
 
   const canPrev = page > 1;
   const canNext = page < totalPages;
+
+  const handlePageChange = (nextPage: number) => {
+    onPageChange(nextPage);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   return (
     <div className="flex items-center justify-between px-5 py-4 border-t border-outline-variant/20 bg-surface">
@@ -36,7 +41,7 @@ export default function Pagination({
               value={limit}
               onChange={(e) => {
                 onLimitChange(Number(e.target.value));
-                onPageChange(1);
+                handlePageChange(1);
               }}
               className="px-3 py-1 border border-outline-variant rounded-lg text-sm bg-surface hover:border-outline transition-colors"
             >
@@ -54,7 +59,7 @@ export default function Pagination({
 
       <div className="flex items-center gap-2">
         <button
-          onClick={() => onPageChange(page - 1)}
+          onClick={() => handlePageChange(page - 1)}
           disabled={!canPrev}
           className={cn(
             'inline-flex items-center justify-center h-9 w-9 rounded-lg border border-outline-variant transition-colors',
@@ -74,7 +79,7 @@ export default function Pagination({
             return (
               <button
                 key={pageNum}
-                onClick={() => onPageChange(pageNum)}
+                onClick={() => handlePageChange(pageNum)}
                 className={cn(
                   'h-9 w-9 rounded-lg text-sm font-medium transition-colors',
                   isActive
@@ -89,7 +94,7 @@ export default function Pagination({
         </div>
 
         <button
-          onClick={() => onPageChange(page + 1)}
+          onClick={() => handlePageChange(page + 1)}
           disabled={!canNext}
           className={cn(
             'inline-flex items-center justify-center h-9 w-9 rounded-lg border border-outline-variant transition-colors',

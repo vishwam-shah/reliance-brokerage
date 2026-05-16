@@ -89,7 +89,11 @@ export default function UserDashboard() {
       if (res.ok) {
         setListings(data.items ?? []);
         setListingTotal(data.total ?? 0);
+      } else {
+        toast.error(data?.error?.message ?? 'Failed to load listings');
       }
+    } catch {
+      toast.error('Network error — could not load listings');
     } finally {
       setLoadingData(false);
     }
@@ -103,7 +107,11 @@ export default function UserDashboard() {
       if (res.ok) {
         setEnquiries(data.items ?? []);
         setEnquiryTotal(data.total ?? 0);
+      } else {
+        toast.error(data?.error?.message ?? 'Failed to load enquiries');
       }
+    } catch {
+      toast.error('Network error — could not load enquiries');
     } finally {
       setLoadingData(false);
     }

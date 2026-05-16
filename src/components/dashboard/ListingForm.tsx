@@ -80,6 +80,8 @@ export default function ListingForm({
     }
   }, [open, initial]);
 
+  const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2 MB
+
   const handleImageUpload = async (files: FileList | null) => {
     if (!files || files.length === 0) return;
     const remaining = MAX_IMAGES - values.images.length;
@@ -88,6 +90,11 @@ export default function ListingForm({
       return;
     }
     const list = Array.from(files).slice(0, remaining);
+    const oversized = list.filter((f) => f.size > MAX_FILE_SIZE);
+    if (oversized.length > 0) {
+      toast.error(`${oversized.map((f) => f.name).join(', ')} exceed${oversized.length === 1 ? 's' : ''} the 2 MB limit`);
+      return;
+    }
     setUploading(true);
     try {
       const uploaded: string[] = [];
@@ -132,7 +139,7 @@ export default function ListingForm({
     });
   };
 
-  const submit = async (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!values.title.trim() || !values.sector.trim() || !values.location.trim()) {
       toast.error('Title, sector and location are required');
@@ -186,6 +193,7 @@ export default function ListingForm({
           </Dialog.Description>
 
           <form onSubmit={submit} className="space-y-4">
+            <fieldset disabled={submitting} className="contents">
             <div>
               <label className="form-label">Business Title*</label>
               <input
@@ -379,6 +387,7 @@ export default function ListingForm({
                 {submitting ? 'Saving…' : listingId ? 'Save Changes' : 'Submit Listing'}
               </button>
             </div>
+            </fieldset>
           </form>
         </Dialog.Content>
       </Dialog.Portal>

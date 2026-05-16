@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import { Icon } from '@iconify/react';
 import { useLanguage } from '@/hooks/useLanguage';
@@ -44,6 +44,7 @@ const SECTOR_OPTIONS = [
 export default function ListingsPage() {
   const { translate: t } = useLanguage();
   const { user } = useSession();
+  const listingsTopRef = useRef<HTMLDivElement | null>(null);
   const [sector, setSector] = useState('All');
   const [availability, setAvailability] = useState<'all' | 'buy' | 'rent'>('all');
   const [sort, setSort] = useState<'default' | 'valuation_asc' | 'valuation_desc' | 'revenue_desc'>('default');
@@ -104,6 +105,11 @@ export default function ListingsPage() {
     setSearchInput('');
     setSearch('');
     setPage(1);
+  };
+
+  const handlePageChange = (nextPage: number) => {
+    setPage(nextPage);
+    listingsTopRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
   const isSeller = user?.role === 'seller';
@@ -175,7 +181,7 @@ export default function ListingsPage() {
         )}
 
         {/* ── Filter bar ── */}
-        <div className="mt-8">
+        <div ref={listingsTopRef} className="mt-8">
           {/* Mobile filter toggle */}
           <div className="sm:hidden flex items-center justify-between mb-4">
             <p className="text-body-sm text-on-surface-variant">
@@ -417,7 +423,7 @@ export default function ListingsPage() {
         {totalPages > 1 && !loading && (
           <div className="mt-12 flex items-center justify-center gap-2">
             <button
-              onClick={() => setPage((p) => Math.max(1, p - 1))}
+              onClick={() => handlePageChange(Math.max(1, page - 1))}
               disabled={page === 1}
               className="h-10 w-10 rounded-xl flex items-center justify-center bg-white border border-outline-variant text-on-surface hover:border-accent disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
               aria-label="Previous page"
@@ -434,7 +440,7 @@ export default function ListingsPage() {
                       <span className="px-1 text-on-surface-variant">…</span>
                     )}
                     <button
-                      onClick={() => setPage(p)}
+                      onClick={() => handlePageChange(p)}
                       className={`h-10 min-w-[40px] px-3 rounded-xl font-label font-semibold text-sm transition-colors ${
                         page === p
                           ? 'bg-on-surface text-white shadow-card'
@@ -448,7 +454,7 @@ export default function ListingsPage() {
             </div>
 
             <button
-              onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+              onClick={() => handlePageChange(Math.min(totalPages, page + 1))}
               disabled={page === totalPages}
               className="h-10 w-10 rounded-xl flex items-center justify-center bg-white border border-outline-variant text-on-surface hover:border-accent disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
               aria-label="Next page"

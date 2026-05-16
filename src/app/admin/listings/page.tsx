@@ -81,6 +81,10 @@ export default function ListingsPage() {
   }, [listingPage, listingLimit, listingFilter]);
 
   useEffect(() => {
+    setListingPage(1);
+  }, [listingFilter]);
+
+  useEffect(() => {
     loadListings();
   }, [listingPage, listingLimit, listingFilter, loadListings]);
 
