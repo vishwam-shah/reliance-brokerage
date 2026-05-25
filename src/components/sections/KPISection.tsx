@@ -1,17 +1,28 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useLanguage } from '@/hooks/useLanguage';
 import { staggerContainerVariants, staggerItemVariants } from '@/lib/animations';
 
 const KPISection = () => {
   const { translate: t } = useLanguage();
+  const [listingCount, setListingCount] = useState<string>('215');
+
+  useEffect(() => {
+    fetch('/api/public/listing-count')
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.count != null) setListingCount(String(data.count));
+      })
+      .catch(() => {});
+  }, []);
 
   const stats = [
     {
       label: t('kpis.listings_label'),
       description: t('kpis.listings_desc'),
-      value: '215',
+      value: listingCount,
     },
     {
       label: t('kpis.transitions_label'),
