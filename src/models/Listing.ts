@@ -79,6 +79,7 @@ ListingSchema.pre('validate', function () {
 // deep-paged queries spill to an in-memory sort and fail on shared
 // Atlas tiers with the 32MB sort-buffer cap (error code 292).
 ListingSchema.index({ status: 1, createdAt: -1 });
+ListingSchema.index({ createdAt: -1, _id: -1 }, { name: 'createdAt_id_desc' }); // admin newest sort, no status filter
 ListingSchema.index({ status: 1, featured: -1, createdAt: -1, _id: -1 }, { name: 'browse_default' });
 ListingSchema.index({ status: 1, valuationNum: 1, createdAt: -1, _id: -1 }, { name: 'browse_valuation_asc' });
 ListingSchema.index({ status: 1, valuationNum: -1, createdAt: -1, _id: -1 }, { name: 'browse_valuation_desc' });

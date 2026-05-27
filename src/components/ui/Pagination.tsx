@@ -73,24 +73,37 @@ export default function Pagination({
         </button>
 
         <div className="flex items-center gap-1">
-          {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
-            const pageNum = Math.max(1, Math.min(totalPages - 4, page - 2)) + i;
-            const isActive = pageNum === page;
-            return (
-              <button
-                key={pageNum}
-                onClick={() => handlePageChange(pageNum)}
-                className={cn(
-                  'h-9 w-9 rounded-lg text-sm font-medium transition-colors',
-                  isActive
-                    ? 'bg-primary text-on-primary'
-                    : 'border border-outline-variant hover:bg-surface-container'
-                )}
-              >
-                {pageNum}
-              </button>
-            );
-          })}
+          {(() => {
+            // Sliding window of up to 5 page buttons centered on `page`,
+            // clamped to [1, totalPages]. Works correctly for any
+            // totalPages including small values (1–4) where the old
+            // formula could render phantom pages past the end.
+            const windowSize = Math.min(5, totalPages);
+            const half = Math.floor(windowSize / 2);
+            let start = page - half;
+            let end = start + windowSize - 1;
+            if (start < 1) { start = 1; end = windowSize; }
+            if (end > totalPages) { end = totalPages; start = totalPages - windowSize + 1; }
+            const pages: number[] = [];
+            for (let p = start; p <= end; p++) pages.push(p);
+            return pages.map((pageNum) => {
+              const isActive = pageNum === page;
+              return (
+                <button
+                  key={pageNum}
+                  onClick={() => handlePageChange(pageNum)}
+                  className={cn(
+                    'h-9 w-9 rounded-lg text-sm font-medium transition-colors',
+                    isActive
+                      ? 'bg-primary text-on-primary'
+                      : 'border border-outline-variant hover:bg-surface-container'
+                  )}
+                >
+                  {pageNum}
+                </button>
+              );
+            });
+          })()}
         </div>
 
         <button

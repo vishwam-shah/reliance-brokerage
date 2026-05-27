@@ -65,16 +65,32 @@ export default function ListingsPage() {
   const loadListings = useCallback(async () => {
     setLoadingData(true);
     try {
-      const statusParam = listingFilter === 'all' ? '' : `&status=${listingFilter}`;
-      const res = await fetch(`/api/listings?page=${listingPage}&limit=${listingLimit}${statusParam}&sort=newest`, {
+      const params = new URLSearchParams({
+        page: String(listingPage),
+        limit: String(listingLimit),
+        sort: 'newest',
+      });
+      if (listingFilter !== 'all') params.set('status', listingFilter);
+
+      const res = await fetch(`/api/listings?${params.toString()}`, {
         credentials: 'include',
         cache: 'no-store',
       });
-      const data = await res.json();
-      if (res.ok) {
-        setListings(data.items ?? []);
-        setListingTotal(data.total ?? 0);
+      const data = await res.json().catch(() => null);
+      if (!res.ok) {
+        // Clear stale data so the UI does not appear to "repeat" the
+        // previous page when a request fails (e.g. server error).
+        setListings([]);
+        setListingTotal(0);
+        toast.error(data?.error?.message ?? 'Failed to load listings');
+        return;
       }
+      setListings(data.items ?? []);
+      setListingTotal(data.total ?? 0);
+    } catch (err) {
+      setListings([]);
+      setListingTotal(0);
+      toast.error(err instanceof Error ? err.message : 'Failed to load listings');
     } finally {
       setLoadingData(false);
     }
