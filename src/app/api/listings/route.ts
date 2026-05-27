@@ -41,24 +41,29 @@ export const GET = withErrorHandler(async (req: NextRequest) => {
     ];
   }
 
+  // Always include `_id` as a final tie-breaker so skip/limit pagination
+  // is deterministic even when the primary sort keys collide (e.g. many
+  // listings sharing the same `featured`/`createdAt`). Without this,
+  // deep pages can drop or duplicate rows.
   const sort: Record<string, 1 | -1> = {};
   if (query.sort === 'valuation_asc') { sort.valuationNum = 1; sort.createdAt = -1; }
   else if (query.sort === 'valuation_desc') { sort.valuationNum = -1; sort.createdAt = -1; }
   else if (query.sort === 'revenue_desc') { sort.revenueNum = -1; sort.createdAt = -1; }
   else if (query.sort === 'newest') { sort.createdAt = -1; }
   else { sort.featured = -1; sort.createdAt = -1; } // default: featured first
+  sort._id = -1;
 
   const skip = (query.page - 1) * query.limit;
-  
-  const listingsQuery = Listing.find(filter)
-    .sort(sort)
-    .skip(skip)
-    .limit(query.limit)
-    .allowDiskUse(true);
-  
+
   const [items, total] = await Promise.all([
-    listingsQuery.lean(),
-    Listing.countDocuments(filter),
+    Listing.find(filter)
+      .sort(sort)
+      .skip(skip)
+      .limit(query.limit)
+      .maxTimeMS(15000)
+      .allowDiskUse(true)
+      .lean(),
+    Listing.countDocuments(filter).maxTimeMS(15000),
   ]);
 
   return json({

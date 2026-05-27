@@ -74,7 +74,15 @@ ListingSchema.pre('validate', function () {
   }
 });
 
+// Compound indexes that fully cover the sorts used by /api/listings
+// (including the `_id` tie-breaker added in the route). Without these,
+// deep-paged queries spill to an in-memory sort and fail on shared
+// Atlas tiers with the 32MB sort-buffer cap (error code 292).
 ListingSchema.index({ status: 1, createdAt: -1 });
+ListingSchema.index({ status: 1, featured: -1, createdAt: -1, _id: -1 }, { name: 'browse_default' });
+ListingSchema.index({ status: 1, valuationNum: 1, createdAt: -1, _id: -1 }, { name: 'browse_valuation_asc' });
+ListingSchema.index({ status: 1, valuationNum: -1, createdAt: -1, _id: -1 }, { name: 'browse_valuation_desc' });
+ListingSchema.index({ status: 1, revenueNum: -1, createdAt: -1, _id: -1 }, { name: 'browse_revenue_desc' });
 ListingSchema.index({ sector: 1, status: 1 });
 ListingSchema.index({ createdBy: 1, status: 1 });
 ListingSchema.index({ title: 'text', description: 'text', location: 'text' });
