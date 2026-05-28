@@ -60,5 +60,24 @@ export async function connectDB(): Promise<typeof mongoose> {
   }
 
   cache.conn = await cache.promise;
+  await runOneTimeMigrations(cache.conn);
   return cache.conn;
+}
+
+let migrationsRan = false;
+async function runOneTimeMigrations(conn: typeof mongoose) {
+  if (migrationsRan) return;
+  migrationsRan = true;
+  try {
+    // Backfill legacy listings where `featured` is null/missing so that
+    // sort({ featured: -1 }) produces stable pagination (null/false/true
+    // would otherwise form three distinct buckets and shuffle page boundaries).
+    await conn.connection.collection('listings').updateMany(
+      { $or: [{ featured: { $exists: false } }, { featured: null }] },
+      { $set: { featured: false } },
+    );
+  } catch (err) {
+    migrationsRan = false;
+    console.error('[mongodb] one-time migration failed:', err);
+  }
 }
