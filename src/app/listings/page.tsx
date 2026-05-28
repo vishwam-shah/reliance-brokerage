@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { Icon } from '@iconify/react';
 import { useLanguage } from '@/hooks/useLanguage';
@@ -44,7 +44,6 @@ const SECTOR_OPTIONS = [
 export default function ListingsPage() {
   const { translate: t } = useLanguage();
   const { user } = useSession();
-  const listingsTopRef = useRef<HTMLDivElement | null>(null);
   const [sector, setSector] = useState('All');
   const [availability, setAvailability] = useState<'all' | 'buy' | 'rent'>('all');
   const [sort, setSort] = useState<'default' | 'valuation_asc' | 'valuation_desc' | 'revenue_desc'>('default');
@@ -54,6 +53,7 @@ export default function ListingsPage() {
   const [listings, setListings] = useState<Listing[]>([]);
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
   const [filtersOpen, setFiltersOpen] = useState(false);
 
   // Debounce search
@@ -64,6 +64,11 @@ export default function ListingsPage() {
     }, 300);
     return () => clearTimeout(id);
   }, [searchInput]);
+
+  // Reset to page 1 whenever filters/search/sort change
+  useEffect(() => {
+    setPage(1);
+  }, [sector, availability, sort, search]);
 
   useEffect(() => {
     const ctrl = new AbortController();
@@ -76,19 +81,31 @@ export default function ListingsPage() {
     if (search) params.set('search', search);
     if (sector && sector !== 'All') params.set('sector', sector);
 
-    setLoading(true);
+    const isFirstPage = page === 1;
+    if (isFirstPage) setLoading(true);
+    else setLoadingMore(true);
+
     fetch(`/api/listings?${params.toString()}`, { signal: ctrl.signal })
       .then((r) => r.json())
       .then((data) => {
-        setListings(data.items ?? []);
+        const items: Listing[] = data.items ?? [];
+        setListings((prev) => {
+          if (isFirstPage) return items;
+          // De-dupe by _id in case of overlapping pages
+          const seen = new Set(prev.map((l) => l._id));
+          return [...prev, ...items.filter((l) => !seen.has(l._id))];
+        });
         setTotal(data.total ?? 0);
       })
       .catch(() => {})
-      .finally(() => setLoading(false));
+      .finally(() => {
+        setLoading(false);
+        setLoadingMore(false);
+      });
     return () => ctrl.abort();
   }, [page, sector, availability, sort, search]);
 
-  const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+  const hasMore = listings.length < total;
 
   const activeFilterCount = useMemo(() => {
     let n = 0;
@@ -104,12 +121,11 @@ export default function ListingsPage() {
     setSort('default');
     setSearchInput('');
     setSearch('');
-    setPage(1);
   };
 
-  const handlePageChange = (nextPage: number) => {
-    setPage(nextPage);
-    listingsTopRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  const handleLoadMore = () => {
+    if (loadingMore || !hasMore) return;
+    setPage((p) => p + 1);
   };
 
   const isSeller = user?.role === 'seller';
@@ -181,7 +197,7 @@ export default function ListingsPage() {
         )}
 
         {/* ── Filter bar ── */}
-        <div ref={listingsTopRef} className="mt-8">
+        <div className="mt-8">
           {/* Mobile filter toggle */}
           <div className="sm:hidden flex items-center justify-between mb-4">
             <p className="text-body-sm text-on-surface-variant">
@@ -212,7 +228,7 @@ export default function ListingsPage() {
                   <select
                     className="w-full h-11 pl-3 pr-9 rounded-xl border border-outline-variant bg-white text-sm text-on-surface outline-none focus:ring-2 focus:ring-accent appearance-none cursor-pointer"
                     value={sector}
-                    onChange={(e) => { setSector(e.target.value); setPage(1); }}
+                    onChange={(e) => setSector(e.target.value)}
                   >
                     {SECTOR_OPTIONS.map((s) => (
                       <option key={s}>{s}</option>
@@ -234,7 +250,7 @@ export default function ListingsPage() {
                   ] as const).map(({ v, label }) => (
                     <button
                       key={v}
-                      onClick={() => { setAvailability(v); setPage(1); }}
+                      onClick={() => setAvailability(v)}
                       className={`h-9 rounded-lg text-xs font-semibold transition-colors ${
                         availability === v
                           ? 'bg-white text-on-surface shadow-sm'
@@ -255,7 +271,7 @@ export default function ListingsPage() {
                   <select
                     className="w-full h-11 pl-3 pr-9 rounded-xl border border-outline-variant bg-white text-sm text-on-surface outline-none focus:ring-2 focus:ring-accent appearance-none cursor-pointer"
                     value={sort}
-                    onChange={(e) => { setSort(e.target.value as typeof sort); setPage(1); }}
+                    onChange={(e) => setSort(e.target.value as typeof sort)}
                   >
                     <option value="default">Featured first</option>
                     <option value="valuation_asc">Price: Low to High</option>
@@ -285,10 +301,10 @@ export default function ListingsPage() {
         </div>
 
         {/* ── Results header (desktop) ── */}
-        {!loading && !filtersOpen && (
+        {!loading && !filtersOpen && listings.length > 0 && (
           <p className="hidden sm:block text-body-sm text-on-surface-variant mb-5">
-            Showing <span className="font-semibold text-on-surface">{listings.length}</span> of{' '}
-            <span className="font-semibold text-on-surface">{total}</span> listings
+            Showing <span className="font-semibold text-on-surface">1–{listings.length}</span>{' '}
+            of <span className="font-semibold text-on-surface">{total}</span> listings
             {search && <> for &quot;<span className="font-semibold text-on-surface">{search}</span>&quot;</>}
           </p>
         )}
@@ -419,48 +435,35 @@ export default function ListingsPage() {
           </div>
         )}
 
-        {/* ── Pagination ── */}
-        {totalPages > 1 && !loading && (
-          <div className="mt-12 flex items-center justify-center gap-2">
-            <button
-              onClick={() => handlePageChange(Math.max(1, page - 1))}
-              disabled={page === 1}
-              className="h-10 w-10 rounded-xl flex items-center justify-center bg-white border border-outline-variant text-on-surface hover:border-accent disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
-              aria-label="Previous page"
-            >
-              <Icon icon="mdi:chevron-left" style={{ width: 18, height: 18 }} />
-            </button>
-
-            <div className="flex items-center gap-1">
-              {Array.from({ length: totalPages }, (_, i) => i + 1)
-                .filter((p) => p === 1 || p === totalPages || Math.abs(p - page) <= 1)
-                .map((p, i, arr) => (
-                  <span key={p} className="contents">
-                    {i > 0 && p - arr[i - 1] > 1 && (
-                      <span className="px-1 text-on-surface-variant">…</span>
-                    )}
-                    <button
-                      onClick={() => handlePageChange(p)}
-                      className={`h-10 min-w-[40px] px-3 rounded-xl font-label font-semibold text-sm transition-colors ${
-                        page === p
-                          ? 'bg-on-surface text-white shadow-card'
-                          : 'bg-white border border-outline-variant text-on-surface hover:border-accent'
-                      }`}
-                    >
-                      {p}
-                    </button>
-                  </span>
-                ))}
-            </div>
-
-            <button
-              onClick={() => handlePageChange(Math.min(totalPages, page + 1))}
-              disabled={page === totalPages}
-              className="h-10 w-10 rounded-xl flex items-center justify-center bg-white border border-outline-variant text-on-surface hover:border-accent disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
-              aria-label="Next page"
-            >
-              <Icon icon="mdi:chevron-right" style={{ width: 18, height: 18 }} />
-            </button>
+        {/* ── Load more ── */}
+        {!loading && listings.length > 0 && (
+          <div className="mt-12 flex flex-col items-center gap-3">
+            {hasMore ? (
+              <button
+                onClick={handleLoadMore}
+                disabled={loadingMore}
+                className="inline-flex items-center justify-center gap-2 h-12 px-8 rounded-xl bg-white border border-outline-variant text-on-surface font-semibold text-sm hover:border-accent hover:text-accent disabled:opacity-60 disabled:cursor-not-allowed transition-colors shadow-card"
+              >
+                {loadingMore ? (
+                  <>
+                    <span className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
+                    Loading…
+                  </>
+                ) : (
+                  <>
+                    <Icon icon="mdi:plus" style={{ width: 18, height: 18 }} />
+                    Load more listings
+                  </>
+                )}
+              </button>
+            ) : (
+              <p className="text-body-sm text-on-surface-variant">
+                You&apos;ve reached the end · {total} listings shown
+              </p>
+            )}
+            <p className="text-label-sm text-on-surface-variant">
+              {listings.length} of {total}
+            </p>
           </div>
         )}
 
