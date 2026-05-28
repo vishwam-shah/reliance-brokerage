@@ -26,6 +26,7 @@ export const POST = withErrorHandler(async (req: NextRequest, ctx) => {
     return json({ error: { message: 'Listing is already closed' } }, { status: 400 });
   }
 
+  const previousStatus = listing.status;
   listing.status = 'closed';
   await listing.save();
 
@@ -36,7 +37,7 @@ export const POST = withErrorHandler(async (req: NextRequest, ctx) => {
     targetId: String(listing._id),
     ip: getClientIp(req),
     userAgent: req.headers.get('user-agent') ?? '',
-    meta: { from: listing.status, to: 'closed' },
+    meta: { from: previousStatus, to: 'closed' },
   });
 
   return json({ ok: true });

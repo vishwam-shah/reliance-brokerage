@@ -1,4 +1,5 @@
 import { NextRequest } from 'next/server';
+import type { PipelineStage } from 'mongoose';
 import { connectDB } from '@/lib/mongodb';
 import Listing from '@/models/Listing';
 import { listingSchema, listingQuerySchema } from '@/lib/validation';
@@ -41,28 +42,44 @@ export const GET = withErrorHandler(async (req: NextRequest) => {
     ];
   }
 
-  // Always include `_id` as a final tie-breaker so skip/limit pagination
-  // is deterministic even when the primary sort keys collide (e.g. many
-  // listings sharing the same `featured`/`createdAt`). Without this,
-  // deep pages can drop or duplicate rows.
+  // Deterministic sort: every branch ends with `_id` as the final tie-breaker
+  // so skip/limit pagination cannot drop or duplicate rows across pages.
+  // We use an aggregation so we can coerce legacy docs missing `featured`
+  // (stored as `null`) to a real boolean — otherwise null/false/true form
+  // three buckets and the boundary between pages shuffles on every query.
   const sort: Record<string, 1 | -1> = {};
   if (query.sort === 'valuation_asc') { sort.valuationNum = 1; sort.createdAt = -1; }
   else if (query.sort === 'valuation_desc') { sort.valuationNum = -1; sort.createdAt = -1; }
   else if (query.sort === 'revenue_desc') { sort.revenueNum = -1; sort.createdAt = -1; }
   else if (query.sort === 'newest') { sort.createdAt = -1; }
-  else { sort.featured = -1; sort.createdAt = -1; } // default: featured first
+  else { sort._featuredSort = -1; sort.createdAt = -1; } // default: featured first
   sort._id = -1;
 
   const skip = (query.page - 1) * query.limit;
 
+  const usesFeaturedSort = query.sort !== 'valuation_asc'
+    && query.sort !== 'valuation_desc'
+    && query.sort !== 'revenue_desc'
+    && query.sort !== 'newest';
+
+  const pipeline: PipelineStage[] = [{ $match: filter }];
+  if (usesFeaturedSort) {
+    pipeline.push({
+      $addFields: {
+        _featuredSort: { $cond: [{ $eq: ['$featured', true] }, 1, 0] },
+      },
+    });
+  }
+  pipeline.push({ $sort: sort });
+  pipeline.push({ $skip: skip });
+  pipeline.push({ $limit: query.limit });
+  if (usesFeaturedSort) {
+    pipeline.push({ $project: { _featuredSort: 0 } });
+  }
+
   const [items, total] = await Promise.all([
-    Listing.find(filter)
-      .sort(sort)
-      .skip(skip)
-      .limit(query.limit)
-      .maxTimeMS(15000)
-      .allowDiskUse(true)
-      .lean(),
+    Listing.aggregate(pipeline)
+      .option({ maxTimeMS: 15000, allowDiskUse: true }),
     Listing.countDocuments(filter).maxTimeMS(15000),
   ]);
 
